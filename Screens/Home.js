@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Button, StyleSheet, Text } from "react-native";
+import Header from "../Header/Header";
 
 //send props for navigation that it can navigate between screen
-export default function Home() {
+export default function Home({ navigation }) {
   return (
-    <View>
-      <View>
-        <Text>Home is here!!</Text>
+    <View style={styles.container}>
+      <Header title="Home" navigation={navigation} />
+      <View style={styles.content}>
+        <Text style={styles.text}>Home is here!!</Text>
       </View>
     </View>
   );
