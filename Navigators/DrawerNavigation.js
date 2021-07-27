@@ -11,8 +11,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { Platform } from "react-native";
 
 import Home from "../Screens/Home";
-import Contact from "../Screens/Contact";
-import About from "../Screens/About";
+import Orders from "../Screens/Orders";
+import Reservations from "../Screens/Reservations";
 
 function CustomerDrawerContent(props) {
   return (
@@ -49,8 +49,8 @@ function MyDrawer() {
       drawerContent={(props) => <CustomerDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="About" component={About} />
-      <Drawer.Screen name="Contact" component={Contact} />
+      <Drawer.Screen name="Reservations" component={Reservations} />
+      <Drawer.Screen name="Orders" component={Orders} />
     </Drawer.Navigator>
   );
 }

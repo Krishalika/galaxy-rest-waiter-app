@@ -3,12 +3,12 @@ import { View, StyleSheet, Text, Button } from "react-native";
 import Header from "../Header/Header";
 
 //send props for navigation that it can navigate between screen
-export default function About({ navigation }) {
+export default function Orders({ navigation }) {
   return (
     <View style={styles.container}>
-      <Header title="About" navigation={navigation} />
+      <Header title="Place orders" navigation={navigation} />
       <View style={styles.content}>
-        <Text style={styles.text}>About Us</Text>
+        <Text style={styles.text}>Order Details</Text>
         <Button title="Go back" onPress={() => navigation.goBack()}></Button>
       </View>
     </View>
@@ -17,10 +17,10 @@ export default function About({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1, //to center the content
   },
   content: {
-    backgroundColor: "#03498f",
+    backgroundColor: "#000220",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
