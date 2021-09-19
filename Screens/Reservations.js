@@ -6,6 +6,8 @@ import {
   Modal,
   Button,
   ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
@@ -17,6 +19,16 @@ import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const addReservation = (reservation) => {
+    //create a random key
+    reservation.key = Math.random().toString();
+    setReservation((currentReservation) => {
+      return [reservation, ...currentReservation];
+    });
+    setModalVisible(false);
+  };
+
   const numColumns = 4;
 
   const ReservationsCard = ({ item }) => {
@@ -30,7 +42,7 @@ export default function Reservations({ navigation }) {
               style={{ ...styles.modalToggle, ...styles.modalClose }}
               onPress={() => setModalVisible(false)}
             ></Icon>
-            <ReservationsForm />
+            <ReservationsForm addReservation={addReservation} />
           </Modal>
           <View style={styles.tableNumCon}>
             <Text
@@ -96,15 +108,15 @@ export default function Reservations({ navigation }) {
         navigation={navigation}
         style={styles.header}
       />
-      {/* <View style={styles.tableContent}> */}
-
-      <Modal
-        visible={modalVisible}
-        animationType="fade"
-        style={styles.modalToggle}
-      >
-        <ReservationsForm />
-      </Modal>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+        <Modal
+          visible={modalVisible}
+          animationType="fade"
+          style={styles.modalToggle}
+        >
+          <ReservationsForm />
+        </Modal>
+      </TouchableWithoutFeedback>
 
       <View
         style={{
@@ -113,33 +125,7 @@ export default function Reservations({ navigation }) {
         }}
       >
         <Button title="ADD" onPress={() => setModalVisible(true)} />
-        {/* 
-        <Icon
-          name="add"
-          size={24}
-          onPress={() => setModalVisible(true)}
-          style={styles.modalToggle}
-        /> */}
       </View>
-
-      {/* <Button
-          title="ADD"
-          Icon={
-            <Icon
-              name="add"
-              size={24}
-              style={{ ...styles.modalToggle, ...styles.modalClose }}
-              onPress={() => setModalVisible(false)}
-            ></Icon>
-          }
-        /> */}
-      {/* <Button
-        large
-        iconLeft
-        fontWeight="bold"
-        backgroundColor="#3b5998"
-        title="ADD"
-      /> */}
 
       <View>
         <ScrollView
@@ -158,7 +144,6 @@ export default function Reservations({ navigation }) {
             showsHorizontalScrollIndicator={false}
             data={ReservationsList}
             renderItem={({ item }) => <TableCard item={item} />}
-            // contentContainerStyle={{ paddingBottom: 80 }}
           />
         </ScrollView>
       </View>
