@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, ScrollView, Text, View } from "react-native";
+import { StyleSheet, ScrollView, Text, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createDrawerNavigator,
@@ -13,18 +13,28 @@ import { Platform } from "react-native";
 import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
 import Reservations from "../Screens/Reservations";
+import DetailsScreen from "../Screens/DetailsScreen";
+import Cart from "../Screens/Cart";
+import COLORS from "../src/consts/colors";
+import OrderDetails from "../Screens/OrderDetails";
 
 function CustomerDrawerContent(props) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
         <View>
-          <Text style={styles.drawerHeaderText}>Drawer Menu</Text>
+          <View style={styles.logo}>
+            <Image
+              style={styles.headerLogo}
+              source={require("../assets/logo.png")}
+            />
+          </View>
+          <Text style={styles.drawerHeaderText}>Galaxy Rest</Text>
         </View>
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        <DrawerItem
+        {/* <DrawerItem
           icon={() => (
             <Icon
               name={Platform.OS === "ios" ? "ios-close" : "md-close"}
@@ -34,7 +44,7 @@ function CustomerDrawerContent(props) {
           )}
           label="Close drawer"
           onPress={() => props.navigation.closeDrawer()}
-        ></DrawerItem>
+        ></DrawerItem> */}
       </DrawerContentScrollView>
     </ScrollView>
   );
@@ -47,10 +57,13 @@ function MyDrawer() {
     <Drawer.Navigator
       backBehavior="history"
       drawerContent={(props) => <CustomerDrawerContent {...props} />}
+      style={styles.drawerItem}
     >
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Reservations" component={Reservations} />
       <Drawer.Screen name="Orders" component={Orders} />
+      {/* <Drawer.Screen name="DetailsScreen" component={DetailsScreen} /> */}
+      <Drawer.Screen name="Cart" component={Cart} />
+      <Drawer.Screen name="Reservations" component={Reservations} />
     </Drawer.Navigator>
   );
 }
@@ -60,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1, //to center the content
   },
   drawerHeader: {
-    backgroundColor: "#03cafc",
+    backgroundColor: COLORS.primary,
     height: 150,
     alignItems: "center",
     justifyContent: "center",
@@ -71,6 +84,22 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
+  },
+  headerLogo: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    position: "absolute",
+  },
+  logo: {
+    position: "absolute",
+    right: 175,
+    paddingBottom: 45,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  drawerItem: {
+    fontSize: 30,
   },
 });
 
