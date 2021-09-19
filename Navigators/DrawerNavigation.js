@@ -5,18 +5,12 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
-import Icon from "react-native-vector-icons/Ionicons";
-import { Platform } from "react-native";
-
 import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
 import Reservations from "../Screens/Reservations";
-import DetailsScreen from "../Screens/DetailsScreen";
 import Cart from "../Screens/Cart";
 import COLORS from "../src/consts/colors";
-import OrderDetails from "../Screens/OrderDetails";
 
 function CustomerDrawerContent(props) {
   return (
@@ -34,17 +28,6 @@ function CustomerDrawerContent(props) {
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        {/* <DrawerItem
-          icon={() => (
-            <Icon
-              name={Platform.OS === "ios" ? "ios-close" : "md-close"}
-              color="black"
-              size={22}
-            />
-          )}
-          label="Close drawer"
-          onPress={() => props.navigation.closeDrawer()}
-        ></DrawerItem> */}
       </DrawerContentScrollView>
     </ScrollView>
   );
@@ -59,11 +42,46 @@ function MyDrawer() {
       drawerContent={(props) => <CustomerDrawerContent {...props} />}
       style={styles.drawerItem}
     >
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Orders" component={Orders} />
-      {/* <Drawer.Screen name="DetailsScreen" component={DetailsScreen} /> */}
-      <Drawer.Screen name="Cart" component={Cart} />
-      <Drawer.Screen name="Reservations" component={Reservations} />
+      <Drawer.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: "Home",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      />
+      <Drawer.Screen
+        name="Reservations"
+        component={Reservations}
+        options={{
+          title: "Reservations",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      />
+      <Drawer.Screen
+        name="Orders"
+        component={Orders}
+        options={{
+          title: "Orders",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      />
+      <Drawer.Screen
+        name="Cart"
+        component={Cart}
+        options={{
+          title: "Cart",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -100,6 +118,7 @@ const styles = StyleSheet.create({
   },
   drawerItem: {
     fontSize: 30,
+    fontWeight: "bold",
   },
 });
 

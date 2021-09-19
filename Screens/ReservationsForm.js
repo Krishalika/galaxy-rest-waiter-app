@@ -8,7 +8,7 @@ export default function ReservationsForm() {
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ Table: "", State: "", Price: "" }}
+        initialValues={{ Table: "", Name: "", Date: "", Price: "" }}
         onSubmit={(values) => {
           console.log(values);
         }}
@@ -16,7 +16,7 @@ export default function ReservationsForm() {
         {(props) => (
           <View>
             <TextInput
-              // keyboardType='numberic'
+              // keyboardType="numberic"
               style={globalStyles.input}
               placeholder="Table Number" //on the values it updates table prop
               onChangeText={props.handleChange("Table")}
@@ -24,13 +24,19 @@ export default function ReservationsForm() {
             ></TextInput>
             <TextInput
               style={globalStyles.input}
-              placeholder="Reservation Status" //on the values it updates table prop
-              onChangeText={props.handleChange("State")}
-              value={props.values.State}
+              placeholder="Customer Name"
+              onChangeText={props.handleChange("Name")}
+              value={props.values.Name}
             ></TextInput>
             <TextInput
               style={globalStyles.input}
-              placeholder="Total Price" //on the values it updates table prop
+              placeholder="Date"
+              onChangeText={props.handleChange("Date")}
+              value={props.values.Date}
+            ></TextInput>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Total Price"
               onChangeText={props.handleChange("Price")}
               value={props.values.Price}
             ></TextInput>

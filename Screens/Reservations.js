@@ -21,14 +21,9 @@ export default function Reservations({ navigation }) {
 
   const ReservationsCard = ({ item }) => {
     return (
-      <TouchableHighlight
-        underlayColor={COLORS.white}
-        activeOpacity={0.9}
-        // onPress={() => setModalVisible(true)}
-      >
+      <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
         <View style={styles.ReservationsCard}>
           <Modal visible={modalVisible} animationType="fade">
-            <View style={styles.modalContent}></View>
             <Icon
               name="close"
               size={24}
@@ -102,8 +97,32 @@ export default function Reservations({ navigation }) {
         style={styles.header}
       />
       {/* <View style={styles.tableContent}> */}
-      <View>
-        {/* <Button
+
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        style={styles.modalToggle}
+      >
+        <ReservationsForm />
+      </Modal>
+
+      <View
+        style={{
+          justifyContent: "flex-end",
+          alignItems: "flex-end",
+        }}
+      >
+        <Button title="ADD" onPress={() => setModalVisible(true)} />
+        {/* 
+        <Icon
+          name="add"
+          size={24}
+          onPress={() => setModalVisible(true)}
+          style={styles.modalToggle}
+        /> */}
+      </View>
+
+      {/* <Button
           title="ADD"
           Icon={
             <Icon
@@ -114,20 +133,13 @@ export default function Reservations({ navigation }) {
             ></Icon>
           }
         /> */}
-        <Button
-          large
-          iconLeft
-          fontWeight="bold"
-          backgroundColor="#3b5998"
-          icon={{ name: "add" }}
-          title="ADD"
-        />
-        <Modal visible={modalVisible} animationType="fade">
-          <View style={styles.modalContent}></View>
-
-          <ReservationsForm />
-        </Modal>
-      </View>
+      {/* <Button
+        large
+        iconLeft
+        fontWeight="bold"
+        backgroundColor="#3b5998"
+        title="ADD"
+      /> */}
 
       <View>
         <ScrollView
@@ -258,9 +270,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
+    marginLeft: "auto",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    alignSelf: "flex-end",
+    width: 50,
+    justifyContent: "flex-end",
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
