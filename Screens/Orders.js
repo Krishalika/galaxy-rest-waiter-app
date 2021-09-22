@@ -5,12 +5,8 @@ import COLORS from "../src/consts/colors";
 import OrdersList from "../src/consts/OrdersList";
 // import { Picker } from "@react-native-picker/picker";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import DropDownPicker from "react-native-dropdown-picker";
 import OrderForm from "./OrderForm";
-
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-
-// import { Dropdown } from "react-native-material-dropdown";
 
 //send props for navigation that it can navigate between screen
 export default function Orders({ navigation }) {
@@ -21,36 +17,9 @@ export default function Orders({ navigation }) {
       <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
-        onPress={
-          () => setModalVisible(true)
-
-          // onPress={() => navigation.navigate("OrderDetails")
-        }
+        onPress={() => setModalVisible(true)}
       >
         <View style={styles.orderCard}>
-          {/* <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            statusBarTranslucent={true}
-            // presentationStyle={"fullScreen"}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>Hello World!</Text>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-                >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-                </Pressable>
-              </View>
-            </View>
-          </Modal> */}
           <Modal visible={modalVisible} animationType="fade">
             <View style={styles.modalContent}></View>
             <Icon
@@ -61,7 +30,6 @@ export default function Orders({ navigation }) {
             ></Icon>
             <OrderForm />
           </Modal>
-          {/* <Image source={item.image} style={{ height: 80, width: 80 }} /> */}
           <View style={styles.tableNumCon}>
             <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
@@ -85,29 +53,15 @@ export default function Orders({ navigation }) {
             </Text>
           </View>
           <View>
-            {/* <DropDownPicker
-            items={[
-              { label: "In the queue", value: "queue" },
-              { label: "Processing", value: "processing" },
-              { label: "Prepared", value: "prepared" },
-            ]}
-            defaultIndex={1}
-            containerStyle={{ height: 40, width: 150 }}
-            onChangeItem={(item) => console.log(item.label, item.value)}
-          /> */}
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               {item.state}
             </Text>
           </View>
-          {/* <View>
-            <Icon name="delete" size={22} />
-          </View> */}
           <View style={{ marginRight: 20, alignItems: "center" }}></View>
         </View>
       </TouchableHighlight>
     );
   };
-  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <View style={styles.container}>
@@ -117,60 +71,12 @@ export default function Orders({ navigation }) {
         style={styles.header}
       />
       <View style={styles.content}>
-        {/* <Text style={styles.text}>Order Details</Text>
-        <Button title="Go back" onPress={() => navigation.goBack()}></Button> */}
-        {/* <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginVertical: -5,
-            paddingHorizontal: 20,
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>Table Number</Text>
-          <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              borderRadius: 30,
-              width: 80,
-              paddingHorizontal: 5,
-              justifyContent: "center",
-              alignContent: "center",
-              flexDirection: "row",
-              backgroundColor: COLORS.primary,
-              color: COLORS.white,
-            }}
-            onChangeText={(text) => setTextInputValue(text)}
-            value={TextInputValue}
-          />
-        </View> */}
-
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
           data={OrdersList}
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
-          // ListFooterComponent={() => (
-          //   <View>
-          //     <View
-          //       style={{
-          //         flexDirection: "row",
-          //         justifyContent: "space-between",
-          //         marginVertical: 15,
-          //       }}
-          //     >
-          //       {/* <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          //         Total Price
-          //       </Text> */}
-          //       {/* <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-          //         Rs. 3000
-          //       </Text> */}
-          //     </View>
-          //   </View>
-          // )}
         />
       </View>
     </View>
@@ -281,7 +187,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 5,
   },
-  // modalContent: {
-  //   flex: 1,
-  // },
 });

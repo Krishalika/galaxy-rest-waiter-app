@@ -99,7 +99,6 @@ export default function Reservations({ navigation }) {
       </TouchableHighlight>
     );
   };
-  const [selectedValue, setSelectedValue] = useState("");
 
   return (
     <View style={styles.container}>

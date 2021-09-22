@@ -23,21 +23,50 @@ const Cart = ({ navigation }) => {
           style={{ height: 100, marginLeft: 10, paddingVertical: 10, flex: 1 }}
         >
           <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.name}</Text>
-          <Text style={{ fontWeight: "bold", fontSize: 17 }}>
-            Rs.{item.price}
-          </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item.price}</Text>
         </View>
         <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>1</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
           <View style={styles.actionBtn}>
-            <Icon name="remove" size={25} color={COLORS.white}></Icon>
-            <Icon name="add" size={25} color={COLORS.white}></Icon>
+            <Icon
+              name="remove"
+              size={25}
+              color={COLORS.white}
+              onPress={decQuantity}
+            ></Icon>
+            <Icon
+              name="add"
+              size={25}
+              color={COLORS.white}
+              onPress={incQuantity}
+            ></Icon>
           </View>
         </View>
       </View>
     );
   };
+
+  const cartIteam = [
+    {
+      id: "2",
+      name: "Cheese Pizza",
+      price: "2100.00",
+      image: require("../assets/cheesePizza.jpg"),
+    },
+  ];
   const [TextInputValue, setTextInputValue] = React.useState("");
+
+  const [quantity, setQuantity] = React.useState(1);
+
+  const incQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
@@ -45,21 +74,6 @@ const Cart = ({ navigation }) => {
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Cart</Text>
       </View>
-
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: -5,
-        }}
-      >
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>Table Number</Text>
-        <TextInput
-          label="TableNumber"
-          value={TextInputValue}
-          onChangeText={(text) => setTextInputValue(text)}
-        />
-      </View> */}
       <View
         style={{
           flexDirection: "row",
@@ -91,7 +105,7 @@ const Cart = ({ navigation }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 80 }}
-        data={foods}
+        data={cartIteam}
         renderItem={({ item }) => <CartCard item={item} />}
         ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
         ListFooterComponent={() => (

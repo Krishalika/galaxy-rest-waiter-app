@@ -12,6 +12,8 @@ import {
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
 import foods from "../src/consts/Foods";
+import { useDispatch } from "react-redux";
+
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
 
@@ -40,7 +42,6 @@ export default function Home({ navigation }) {
                 ...styles.categoryBtn,
               }}
             >
-              {/* <View style={styles.categoryBtnImgCon}> */}
               <View>
                 <Image
                   source={category.image}
@@ -74,10 +75,10 @@ export default function Home({ navigation }) {
       <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
-        onPress={() => navigation.navigate("Cart", food)}
+        onPress={() => navigation.navigate("DetailsScreen", food)}
       >
         <View style={styles.card}>
-          <View style={{ alignItems: "center", top: -40 }}>
+          <View style={{ alignItems: "center" }}>
             <Image source={food.image} style={{ height: 120, width: 120 }} />
           </View>
           <View style={{ marginHorizontal: 20 }}>
@@ -189,7 +190,7 @@ const styles = StyleSheet.create({
     width: cardWidth,
     marginHorizontal: 10,
     marginBottom: 20,
-    marginTop: 50,
+    marginTop: 20,
     borderRadius: 15,
     elevation: 13, //shadow
     backgroundColor: COLORS.white,

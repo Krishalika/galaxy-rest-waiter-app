@@ -11,6 +11,8 @@ import Orders from "../Screens/Orders";
 import Reservations from "../Screens/Reservations";
 import Cart from "../Screens/Cart";
 import COLORS from "../src/consts/colors";
+import DetailsScreen from "../Screens/DetailsScreen";
+import LoginScreen from "../Screens/LoginScreen";
 
 function CustomerDrawerContent(props) {
   return (
@@ -42,6 +44,18 @@ function MyDrawer() {
       drawerContent={(props) => <CustomerDrawerContent {...props} />}
       style={styles.drawerItem}
     >
+      <Drawer.Screen
+        name="LoginScreen"
+        component={LoginScreen}
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      />
       <Drawer.Screen
         name="Home"
         component={Home}
@@ -80,6 +94,19 @@ function MyDrawer() {
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
+        }}
+      />
+      <Drawer.Screen
+        name="DetailsScreen"
+        component={DetailsScreen}
+        options={{
+          // title: "Details",
+          // headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          // headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          // headerTintColor: "#03498f",
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
         }}
       />
     </Drawer.Navigator>

@@ -14,7 +14,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = (props) => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,6 +34,29 @@ const LoginScreen = (props) => {
       alignItems: "center",
     },
   });
+  const sendCred = async (props) => {
+    fetch("http://10.0.2.2:5000/auth/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then(async (data) => {
+        try {
+          await AsyncStorage.setItem("token", data.token);
+          props.navigation.replace("DrawerNavigation");
+          // props.navigation.replace("homeScreen");
+        } catch (e) {
+          console.log("error hai", e);
+          Alert(e);
+        }
+      });
+  };
 
   return (
     <>
@@ -53,12 +76,11 @@ const LoginScreen = (props) => {
           Welcome to
         </Text>
         <View>
-          <View style={styles.logo}>
-            <Image
-              style={styles.headerLogo}
-              source={require("../assets/logo.png")}
-            />
-          </View>
+          {/* <View style={styles.logo}> */}
+          <Image
+            // style={styles.headerLogo}
+            source={require("../assets/logo.png")}
+          />
         </View>
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -107,7 +129,7 @@ const LoginScreen = (props) => {
           }}
           //   onPress={() => sendCred(props)}
 
-          onPress={() => props.navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Drawernavigation")}
         />
 
         <Text
@@ -117,7 +139,7 @@ const LoginScreen = (props) => {
             color: "#03498f",
           }}
         >
-          {/* Login */}
+          Login
         </Text>
         {/* </Button> */}
         <TouchableOpacity>
@@ -131,7 +153,7 @@ const LoginScreen = (props) => {
             }}
             // onPress={() => props.navigation.replace("signup")}
           >
-            Forgot password ?
+            Don't have an account ?
           </Text>
         </TouchableOpacity>
 
@@ -141,4 +163,4 @@ const LoginScreen = (props) => {
   );
 };
 
-export default LoginScreen;
+export default Login;

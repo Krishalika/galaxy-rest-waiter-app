@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Button, TextInput, View, Text } from "react-native";
+import { Button, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
@@ -10,8 +10,6 @@ export default function ReservationsForm() {
       <Formik
         initialValues={{ Table: "", Name: "", Date: "", Price: "" }}
         onSubmit={(values) => {
-          // actions.resetForm();
-          // addReservation(values);
           console.log(values);
         }}
       >
@@ -54,5 +52,3 @@ export default function ReservationsForm() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

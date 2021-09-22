@@ -29,12 +29,6 @@ export default function OrderForm() {
               onChangeText={props.handleChange("State")}
               value={props.values.State}
             ></TextInput>
-            {/* <TextInput
-              style={globalStyles.input}
-              placeholder="Total Price" //on the values it updates table prop
-              onChangeText={props.handleChange("Price")}
-              value={props.values.Price}
-            ></TextInput> */}
             <Button
               title="SAVE"
               color={COLORS.primary}
@@ -46,5 +40,3 @@ export default function OrderForm() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});
