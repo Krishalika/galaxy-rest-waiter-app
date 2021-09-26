@@ -86,6 +86,7 @@ const Cart = ({ navigation }) => {
           paddingHorizontal: 20,
         }}
       >
+        <Text>{items.length}</Text>
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Table Number</Text>
         <TextInput
           style={{

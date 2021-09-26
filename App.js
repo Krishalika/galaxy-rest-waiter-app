@@ -11,16 +11,23 @@ import store from "./redux/store";
 //components
 import DrawerNavigation from "./Navigators/DrawerNavigation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import Toast from 'react-native-toast-message';
 // import { Provider } from "react-redux";
 import Context from "./src/context/Context";
-
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistStore} from 'redux-persist';
 const Stack = createStackNavigator();
 
 export default function App() {
+
+  const persistor = persistStore(store);
+
   return (
     <Provider store={store}>
+      <PersistGate persistor={persistor}>
       <DrawerNavigation />
+      <Toast ref={(ref) => Toast.setRef(ref)}/>
+      </PersistGate>
     </Provider>
   );
 
