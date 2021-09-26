@@ -1,4 +1,6 @@
 import * as actionTypes from "./cartActions";
+import {persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   items: [],
@@ -16,4 +18,11 @@ function reducer(state = initialState, action) {
   }
 }
 
-export default reducer;
+const persistConfig = {
+  keyPrefix: 'galaxy-rest-',
+  key: 'cart-list',
+  blacklist: ['loading'],
+  storage:AsyncStorage,
+};
+
+export default persistReducer(persistConfig, reducer);
