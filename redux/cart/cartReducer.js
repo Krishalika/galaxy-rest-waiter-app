@@ -4,6 +4,7 @@ const initialState = {
   items: [],
 };
 
+// state and action -> new state
 function reducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.RESET_CART:

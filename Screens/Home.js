@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -12,7 +12,7 @@ import {
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
 import foods from "../src/consts/Foods";
-import { useDispatch } from "react-redux";
+// import { CartState } from "../src/context/Context";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
@@ -108,9 +108,14 @@ export default function Home({ navigation }) {
       </TouchableHighlight>
     );
   };
+
+  // const { state } = CartState();
+  // console.log(state);
+
   return (
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
+
       <View
         style={{ marginTop: 40, flexDirection: "row", paddingHorizontal: 20 }}
       >
@@ -118,7 +123,14 @@ export default function Home({ navigation }) {
           {/* <Icon name="search" size={28} /> */}
           <TextInput
             style={{ flex: 1, fontSize: 18 }}
-            placeholder="Search for food items"
+            placeholder="item name"
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          {/* <Icon name="search" size={28} /> */}
+          <TextInput
+            style={{ flex: 1, fontSize: 18 }}
+            placeholder="item code"
           />
         </View>
         <View style={styles.sortBtn}>

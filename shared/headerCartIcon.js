@@ -10,7 +10,9 @@ function HeaderCartIcon({ navigation }) {
   return (
     <>
       <View style={{ flexDirection: "row" }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
+
           <AntDesign name="shoppingcart" size={30} color="black" />
         </TouchableOpacity>
         <Badge

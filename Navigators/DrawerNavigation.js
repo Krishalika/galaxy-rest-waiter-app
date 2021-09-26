@@ -13,6 +13,9 @@ import Cart from "../Screens/Cart";
 import COLORS from "../src/consts/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
+import { AntDesign } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import LoadingScreen from "../Screens/LoadingScreen";
 
 function CustomerDrawerContent(props) {
   return (
@@ -44,6 +47,18 @@ function MyDrawer() {
       drawerContent={(props) => <CustomerDrawerContent {...props} />}
       style={styles.drawerItem}
     >
+      {/* <Drawer.Screen
+        name="LoadingScreen"
+        component={LoadingScreen}
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      /> */}
       <Drawer.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -96,6 +111,16 @@ function MyDrawer() {
           headerTintColor: "#03498f",
         }}
       />
+      {/* <Drawer.Screen
+        name="OrderCart"
+        component={OrderCart}
+        options={{
+          title: "Order Cart",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+        }}
+      /> */}
       <Drawer.Screen
         name="DetailsScreen"
         component={DetailsScreen}

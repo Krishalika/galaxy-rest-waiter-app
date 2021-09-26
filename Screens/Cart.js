@@ -13,6 +13,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
 import foods from "../src/consts/Foods";
 import { PrimaryButton } from "../components/Button";
+import Header from "../Header/Header";
 
 const Cart = ({ navigation }) => {
   const CartCard = ({ item }) => {
@@ -70,10 +71,11 @@ const Cart = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-      <View style={styles.header}>
+      {/* <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Cart</Text>
-      </View>
+      </View> */}
+      <Header title="Cart " navigation={navigation} style={styles.header} />
       <View
         style={{
           flexDirection: "row",
@@ -105,7 +107,7 @@ const Cart = ({ navigation }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 80 }}
-        data={cartIteam}
+        // data={cartIteam}
         renderItem={({ item }) => <CartCard item={item} />}
         ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
         ListFooterComponent={() => (

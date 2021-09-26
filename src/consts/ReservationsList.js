@@ -5,6 +5,7 @@ const ReservationsList = [
     cusName: "A. B. Perera",
     date: "10-10-2021",
     price: 3500.0,
+    time: 15.0,
   },
   {
     id: "2",
