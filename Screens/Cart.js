@@ -14,8 +14,10 @@ import COLORS from "../src/consts/colors";
 import foods from "../src/consts/Foods";
 import { PrimaryButton } from "../components/Button";
 import Header from "../Header/Header";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = ({ navigation }) => {
+  const items = useSelector((state) => state.cartReducer.items);
   const CartCard = ({ item }) => {
     return (
       <View style={styles.cartCard}>

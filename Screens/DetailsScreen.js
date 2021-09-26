@@ -15,17 +15,20 @@ import { SecondaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
 import foods from "../src/consts/Foods";
 import Toast from "react-native-toast-message";
-// import HeaderCartIcon from "../shared/headerCartIcon";
-// import { addToCart } from "../redux/cart/cartActions";
-// import { connect } from "react-redux";
+import { addToCart } from "../redux";
+import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 //navigation-> allows to navigate between screen
+//To hold food details passed by the home screen
+
 const DetailsScreen = ({ navigation, route }) => {
-  //To hold food details passed by the home screen
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = React.useState(1);
+
   const item = route.params;
-  console.log(item);
   const addThisToCart = () => {
-    dispatch(addToCart({ ...item, qty }));
+    dispatch(addToCart({ ...item, quantity }));
     setQuantity(1);
     Toast.show({
       topOffset: 10,
@@ -35,7 +38,6 @@ const DetailsScreen = ({ navigation, route }) => {
       text1: "Successfully added to the cart",
     });
   };
-  const [quantity, setQuantity] = React.useState(1);
 
   const incQuantity = () => {
     setQuantity(quantity + 1);
@@ -47,31 +49,25 @@ const DetailsScreen = ({ navigation, route }) => {
     }
   };
 
+  // const mapStateToProps = (state) => {
+  //   return {
+  //     numOfItems: state.numOfItems,
+  //   };
+  // };
+
   // const mapDispatchToProps = (dispatch) => {
   //   return {
-  //     addItemToCart:()
-  //   }
-  // }
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     headerTitle: () => (
-  //       <View style={{ flexDirection: "row", alignItems: "center" }}>
-  //         <Text style={{ color: "black", fontWeight: "700", fontSize: 20 }}>
-  //           {route.params.item.name || "Loading"}
-  //         </Text>
-  //       </View>
-  //     ),
-  //     headerRight: () => <HeaderCartIcon navigation={navigation} />,
-  //   });
-  // }, [navigation]);
+  //     addToCart: () => dispatch(addToCart()),
+  //   };
+  // };
+
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
-        {/* <HeaderCartIcon //onPress={() => navigation.navigate("Cart", foods)}
-        /> */}
+
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
             {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
@@ -139,8 +135,8 @@ const DetailsScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <SecondaryButton
               title={"Add to Cart"}
-              onPress={() => navigation.navigate("Cart", foods)}
-              // onPress={addThisToCart}
+              // onPress={() => navigation.navigate("Cart", foods)}
+              onPress={addThisToCart}
               disabled={quantity > 0 ? false : true}
             />
           </View>
@@ -183,5 +179,7 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
 });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(DetailsScreen);
 
 export default DetailsScreen;
