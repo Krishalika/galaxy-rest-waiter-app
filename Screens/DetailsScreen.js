@@ -1,13 +1,23 @@
 import React, { useLayoutEffect } from "react";
-import { SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { AntDesign } from "@expo/vector-icons";
+import { Badge } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SecondaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
 import foods from "../src/consts/Foods";
 import Toast from "react-native-toast-message";
-import HeaderCartIcon from "../shared/headerCartIcon";
-import { addToCart } from "../redux/cart/cartActions";
+// import HeaderCartIcon from "../shared/headerCartIcon";
+// import { addToCart } from "../redux/cart/cartActions";
+// import { connect } from "react-redux";
 
 //navigation-> allows to navigate between screen
 const DetailsScreen = ({ navigation, route }) => {
@@ -36,23 +46,44 @@ const DetailsScreen = ({ navigation, route }) => {
       setQuantity(quantity - 1);
     }
   };
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerTitle: () => (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ color: "black", fontWeight: "700", fontSize: 20 }}>
-            {route.params.item.name || "Loading"}
-          </Text>
-        </View>
-      ),
-      headerRight: () => <HeaderCartIcon navigation={navigation} />,
-    });
-  }, [navigation]);
+
+  // const mapDispatchToProps = (dispatch) => {
+  //   return {
+  //     addItemToCart:()
+  //   }
+  // }
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     headerTitle: () => (
+  //       <View style={{ flexDirection: "row", alignItems: "center" }}>
+  //         <Text style={{ color: "black", fontWeight: "700", fontSize: 20 }}>
+  //           {route.params.item.name || "Loading"}
+  //         </Text>
+  //       </View>
+  //     ),
+  //     headerRight: () => <HeaderCartIcon navigation={navigation} />,
+  //   });
+  // }, [navigation]);
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
+
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
+        {/* <HeaderCartIcon //onPress={() => navigation.navigate("Cart", foods)}
+        /> */}
+        <View style={{ flexDirection: "row" }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
+
+            <AntDesign name="shoppingcart" size={30} color="black" />
+          </TouchableOpacity>
+          <Badge
+            // value={items.length}
+            status="error"
+            containerStyle={{ position: "absolute", top: -8, right: -10 }}
+          />
+        </View>
         {/* <HeaderCartIcon navigation={navigation} /> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -108,8 +139,8 @@ const DetailsScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <SecondaryButton
               title={"Add to Cart"}
-              // onPress={() => navigation.navigate("Cart", foods)}
-              onPress={addThisToCart}
+              onPress={() => navigation.navigate("Cart", foods)}
+              // onPress={addThisToCart}
               disabled={quantity > 0 ? false : true}
             />
           </View>

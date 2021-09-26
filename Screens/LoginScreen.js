@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, TextInput } from "react-native-paper";
 import {
   StyleSheet,
@@ -13,7 +13,15 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-
+// async removeItemValue(key) {
+//     try {
+//         await AsyncStorage.removeItem(key);
+//         return true;
+//     }
+//     catch(exception) {
+//         return false;
+//     }
+// }
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,6 +43,48 @@ const LoginScreen = (props) => {
     },
   });
 
+  const sendCred = async (props) => {
+    fetch("http://10.0.2.2:5000/waiters/signin", {
+      // fetch("http://10.0.2.2:5000/auth/signin", {
+      // fetch("http://10.0.2.2:5000/auth/waiterLog", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      // .then((res) => res.json())
+      .then((res) => res.text())
+
+      .then(async (data) => {
+        try {
+          await AsyncStorage.setItem("token", data.token);
+          // props.navigation.replace("DrawerNavigation");
+          props.navigation.replace("Home");
+          // navigation.navigate("Home");
+          // props.navigation.replace("homeScreen");
+        } catch (e) {
+          console.log("error hai", e);
+          Alert(e);
+        }
+      });
+  };
+  const detectLogin = async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      // props.navigation.replace("homeScreen");
+      props.navigation.replace("Home");
+    }
+    // else {
+    //   props.navigation.replace("LoginScreen");
+    // }
+  };
+  useEffect(() => {
+    detectLogin();
+  }, []);
   return (
     <>
       <View style={styles.container}>
@@ -52,13 +102,11 @@ const LoginScreen = (props) => {
         >
           Welcome to
         </Text>
-        <View>
-          <View style={styles.logo}>
-            <Image
-              style={styles.headerLogo}
-              source={require("../assets/logo.png")}
-            />
-          </View>
+        <View style={styles.logo}>
+          <Image
+            style={styles.headerLogo}
+            source={require("../assets/logo.png")}
+          />
         </View>
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -72,7 +120,7 @@ const LoginScreen = (props) => {
                 alignSelf: "center",
                 height: 30,
                 width: "60%",
-                fontFamily: "nunito-bold",
+                // fontFamily: "nunito-bold",
               }}
               theme={{ colors: { primary: "#08b8e1" } }}
               onChangeText={(text) => setEmail(text)}
@@ -105,35 +153,33 @@ const LoginScreen = (props) => {
             width: "60%",
             backgroundColor: "#08b8e1",
           }}
-          //   onPress={() => sendCred(props)}
-
+          // onPress={() => sendCred(props)}
           onPress={() => props.navigation.navigate("Home")}
-        />
-
-        <Text
-          style={{
-            fontSize: 13,
-            //   fontFamily: "nunito-bold",
-            color: "#03498f",
-          }}
         >
-          {/* Login */}
-        </Text>
-        {/* </Button> */}
-        <TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 13,
+              // fontFamily: "nunito-bold",
+              color: "#03498f",
+            }}
+          >
+            Login
+          </Text>
+        </Button>
+        {/* <TouchableOpacity>
           <Text
             style={{
               fontSize: 18,
               marginTop: 20,
-              //   fontFamily: "nunito-bold",
+              fontFamily: "nunito-bold",
               color: "#03498f",
               alignSelf: "center",
             }}
-            // onPress={() => props.navigation.replace("signup")}
+            onPress={() => props.navigation.replace("signup")}
           >
-            Forgot password ?
+            Don't have an account ?
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {/* </KeyboardAvoidingView> */}
       </View>
