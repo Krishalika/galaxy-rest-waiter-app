@@ -12,6 +12,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 import { useNavigation } from "@react-navigation/native";
 // async removeItemValue(key) {
 //     try {
@@ -42,11 +43,12 @@ const LoginScreen = (props) => {
       alignItems: "center",
     },
   });
-
+  // const sendCred = async (props) => {
+  // AsyncStorage.removeItem("token", (err) => console.log("userId", err));
   const sendCred = async (props) => {
+    // fetch("http://10.0.2.2:5000/waiters/signin", {
+    // fetch("http://10.0.2.2:5000/auth/signin", {
     fetch("http://10.0.2.2:5000/waiters/signin", {
-      // fetch("http://10.0.2.2:5000/auth/signin", {
-      // fetch("http://10.0.2.2:5000/auth/waiterLog", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,19 +58,24 @@ const LoginScreen = (props) => {
         password: password,
       }),
     })
-      // .then((res) => res.json())
-      .then((res) => res.text())
+      .then((res) => res.json())
 
       .then(async (data) => {
         try {
           await AsyncStorage.setItem("token", data.token);
-          // props.navigation.replace("DrawerNavigation");
-          props.navigation.replace("Home");
-          // navigation.navigate("Home");
+          // props.navigation.replace("Home");
+          props.navigation.navigate("Home");
           // props.navigation.replace("homeScreen");
         } catch (e) {
           console.log("error hai", e);
-          Alert(e);
+          // Alert(e);
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: "Email or password is incorrect!",
+          });
         }
       });
   };
@@ -153,8 +160,8 @@ const LoginScreen = (props) => {
             width: "60%",
             backgroundColor: "#08b8e1",
           }}
-          // onPress={() => sendCred(props)}
-          onPress={() => props.navigation.navigate("Home")}
+          onPress={() => sendCred(props)}
+          // onPress={() => props.navigation.navigate("Home")}
         >
           <Text
             style={{
