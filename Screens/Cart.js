@@ -6,7 +6,14 @@ import {
   Text,
   Image,
   TextInput,
+  ScrollView,
+  TouchableOpacity,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Button, Divider } from "react-native-elements";
+import Toast from "react-native-toast-message";
+import { removeCartItem, resetCart } from "../redux/cart/cartActions";
+
 // import NumericInput from "react-native-numeric-input";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -17,7 +24,17 @@ import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 
 const Cart = ({ navigation }) => {
+  const dispatch = useDispatch();
   const items = useSelector((state) => state.cartReducer.items);
+
+  const calculateTotal = () => {
+    let totalPrice = 0;
+    items.forEach((el) => {
+      totalPrice += el.price;
+    });
+    return totalPrice;
+  };
+
   const CartCard = ({ item }) => {
     return (
       <View style={styles.cartCard}>
@@ -71,22 +88,56 @@ const Cart = ({ navigation }) => {
     }
   };
 
+  const placeOrder = () => {
+    const data = {
+      customerName,
+      idNumber,
+      tableNumber,
+      foodItems: items.map((el) => {
+        return {
+          item: el._id,
+          quantity: el.quantity,
+          // qty: el.qty,
+          // soldPrice: el.discount
+          //   ? (el.price - (el.price * el.discount) / 100).toFixed(2)
+          //   : el.price,
+          soldPrice: el.price,
+        };
+      }),
+    };
+    axios
+      .post(`${config.API}/order`, data)
+      .then(({ data }) => {
+        dispatch(resetCart());
+        Toast.show({
+          topOffset: 40,
+          visibilityTime: 1500,
+          position: "top",
+          type: "success",
+          text1: "Order is placed successfully",
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       {/* <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Cart</Text>
       </View> */}
-      <Header title="Cart " navigation={navigation} style={styles.header} />
-      <View
+      <Header title="Cart" navigation={navigation} style={styles.header} />
+      {/* <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
           marginVertical: -5,
           paddingHorizontal: 20,
         }}
-      >
-        <Text>{items.length}</Text>
+      > */}
+      {/* <Text>{items.length}</Text>
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>Table Number</Text>
         <TextInput
           style={{
@@ -104,10 +155,129 @@ const Cart = ({ navigation }) => {
           }}
           onChangeText={(text) => setTextInputValue(text)}
           value={TextInputValue}
+        /> */}
+      {/* </View> */}
+      {/* <View> */}
+      <ScrollView style={styles.container}>
+        {items.length > 0 ? (
+          <>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 16,
+              }}
+            >
+              Order Details
+            </Text>
+            <View style={{ marginTop: 20 }}>
+              {items.map((item, index) => (
+                <View
+                  key={`${index}_cart_items`}
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 10,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <View>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri: item.img,
+                      }}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      marginLeft: 3,
+                      width: 120,
+                    }}
+                  >
+                    <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                  </View>
+                  <View style={{ justifyContent: "center", marginLeft: 3 }}>
+                    <Text style={{ fontWeight: "bold" }}>{item.qty}</Text>
+                  </View>
+                  <View style={{ justifyContent: "center", marginLeft: 3 }}>
+                    <Text style={{ fontWeight: "bold", color: "#9F7591" }}>
+                      Rs. {item.price}
+                    </Text>
+                  </View>
+                  <View style={{ justifyContent: "center", marginLeft: 3 }}>
+                    <TouchableOpacity>
+                      <MaterialIcons
+                        onPress={() => dispatch(removeCartItem(item))}
+                        name="delete"
+                        size={24}
+                        color="#F7685B"
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
+            <Divider
+              style={{ marginBottom: 30, marginTop: 20 }}
+              orientation="horizontal"
+            />
+            <View
+              style={{
+                justifyContent: "space-between",
+                flexDirection: "row",
+              }}
+            >
+              <Text style={{ fontSize: 16 }}>
+                {/* Sub Total ({items.length} Items)  */}
+                Total items ({items.length} Items)
+              </Text>
+              {/* <Text style={{ fontSize: 14, color: "#9F7591" }}> */}
+              {/* Rs. {calculateTotal().toFixed(2)} */}
+              {/* Rs. {calculateTotal().toFixed} */}
+              {/* </Text> */}
+            </View>
+            <View
+              style={{
+                justifyContent: "space-between",
+                flexDirection: "row",
+                marginTop: 15,
+              }}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                Order Total
+              </Text>
+              <Text
+                style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
+              >
+                Rs. {calculateTotal().toFixed(2)}
+                {/* Rs. {calculateTotal()} */}
+              </Text>
+            </View>
+          </>
+        ) : (
+          <View style={{ alignItems: "center", marginTop: 50 }}>
+            <Text style={{ color: "#4B76D1", fontSize: 18 }}>
+              Your Cart seems to be Empty...
+            </Text>
+            <View style={{ alignItems: "center", marginTop: 10 }}>
+              <Text>Add a few of our great items and comeback</Text>
+              <Text>We will be waiting...</Text>
+            </View>
+          </View>
+        )}
+        <View style={{ height: 30 }} />
+      </ScrollView>
+      <View style={{ alignItems: "center" }}>
+        <Button
+          onPress={placeOrder}
+          disabled={items.length > 0 ? false : true}
+          buttonStyle={{ height: 55 }}
+          containerStyle={styles.button}
+          title="Place Order"
         />
       </View>
-
-      <FlatList
+      {/* </View> */}
+      {/* <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 80 }}
         // data={cartIteam}
@@ -133,12 +303,17 @@ const Cart = ({ navigation }) => {
             </View>
           </View>
         )}
-      />
+      /> */}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    padding: 12,
+  },
   header: {
     marginTop: 20,
     paddingVertical: 40,
@@ -165,6 +340,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
+  },
+  image: {
+    width: 60,
+    height: 45,
+    resizeMode: "cover",
+    borderRadius: 8,
+  },
+  button: {
+    width: "90%",
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 8,
+    color: COLORS.primary,
   },
 });
 

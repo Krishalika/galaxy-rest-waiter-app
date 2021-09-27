@@ -35,7 +35,7 @@ const Header = ({ navigation, title }) => {
 const styles = StyleSheet.create({
   header: {
     //flex: 1,
-    marginTop: 26,
+    marginTop: 0,
     // width: "100%",
     height: "100%",
     flexDirection: "row",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    right: 130,
+    right: -160,
     paddingBottom: 45,
     alignItems: "center",
   },
