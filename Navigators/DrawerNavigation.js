@@ -13,11 +13,11 @@ import Cart from "../Screens/Cart";
 import COLORS from "../src/consts/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
-import { AntDesign } from "@expo/vector-icons";
+import Logout from "../Screens/Logout";
+import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import LoadingScreen from "../Screens/LoadingScreen";
 
-function CustomerDrawerContent(props) {
+function CustomDrawerContent(props) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
@@ -44,21 +44,9 @@ function MyDrawer() {
   return (
     <Drawer.Navigator
       backBehavior="history"
-      drawerContent={(props) => <CustomerDrawerContent {...props} />}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       style={styles.drawerItem}
     >
-      {/* <Drawer.Screen
-        name="LoadingScreen"
-        component={LoadingScreen}
-        options={{
-          drawerLabel: () => null,
-          title: null,
-          drawerIcon: () => null,
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          headerTintColor: "#03498f",
-        }}
-      /> */}
       <Drawer.Screen
         name="LoginScreen"
         component={LoginScreen}
@@ -79,6 +67,7 @@ function MyDrawer() {
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
+          drawerIcon: () => <AntDesign name="home" size={24} color="black" />,
         }}
       />
       <Drawer.Screen
@@ -89,6 +78,7 @@ function MyDrawer() {
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
+          drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
         }}
       />
       <Drawer.Screen
@@ -99,6 +89,7 @@ function MyDrawer() {
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
+          drawerIcon: () => <Feather name="list" size={24} color="black" />,
         }}
       />
       <Drawer.Screen
@@ -109,29 +100,32 @@ function MyDrawer() {
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
+          drawerIcon: () => (
+            <AntDesign name="shoppingcart" size={24} color="black" />
+          ),
         }}
       />
-      {/* <Drawer.Screen
-        name="OrderCart"
-        component={OrderCart}
-        options={{
-          title: "Order Cart",
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          headerTintColor: "#03498f",
-        }}
-      /> */}
       <Drawer.Screen
         name="DetailsScreen"
         component={DetailsScreen}
         options={{
-          // title: "Details",
-          // headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          // headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          // headerTintColor: "#03498f",
           drawerLabel: () => null,
           title: null,
           drawerIcon: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name="Logout"
+        component={Logout}
+        style={{ bottom: 0, position: "absolute" }}
+        options={{
+          title: "Logout",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+          drawerIcon: () => (
+            <MaterialIcons name="logout" size={24} color="black" />
+          ),
         }}
       />
     </Drawer.Navigator>

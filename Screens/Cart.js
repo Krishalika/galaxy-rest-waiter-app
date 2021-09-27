@@ -249,8 +249,8 @@ const Cart = ({ navigation }) => {
               <Text
                 style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
               >
-                Rs. {calculateTotal().toFixed(2)}
-                {/* Rs. {calculateTotal()} */}
+                {/* Rs. {calculateTotal().toFixed(2)} */}
+                Rs. {calculateTotal()}
               </Text>
             </View>
           </>
