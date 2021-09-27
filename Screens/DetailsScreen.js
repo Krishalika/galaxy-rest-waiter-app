@@ -72,13 +72,18 @@ const DetailsScreen = ({ navigation, route }) => {
           <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
             {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
 
-            <AntDesign name="shoppingcart" size={30} color="black" />
+            <AntDesign
+              name="shoppingcart"
+              size={30}
+              color="black"
+              style={{ justifyContent: "flex-end", paddingHorizontal: 160 }}
+            />
           </TouchableOpacity>
-          <Badge
+          {/* <Badge
             // value={items.length}
             status="error"
             containerStyle={{ position: "absolute", top: -8, right: -10 }}
-          />
+          /> */}
         </View>
         {/* <HeaderCartIcon navigation={navigation} /> */}
       </View>
@@ -105,7 +110,7 @@ const DetailsScreen = ({ navigation, route }) => {
             >
               {item.name}
             </Text>
-            <View style={{ marginRight: 20, alignItems: "center" }}>
+            <View style={{ marginRight: 0, alignItems: "center" }}>
               <Text
                 style={{
                   fontWeight: "bold",
@@ -148,8 +153,7 @@ const DetailsScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   header: {
-    marginTop: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
     flexDirection: "row",
     alignItems: "center",
     marginHorizontal: 20,

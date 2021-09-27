@@ -83,7 +83,8 @@ const LoginScreen = (props) => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
       // props.navigation.replace("homeScreen");
-      props.navigation.replace("Home");
+      // props.navigation.replace("Home");
+      props.navigation.navigate("Home");
     }
     // else {
     //   props.navigation.replace("LoginScreen");

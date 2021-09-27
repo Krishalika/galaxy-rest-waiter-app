@@ -13,6 +13,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
+import { SecondaryButton } from "../components/Button";
 
 // import NumericInput from "react-native-numeric-input";
 import { FlatList } from "react-native-gesture-handler";
@@ -200,7 +201,7 @@ const Cart = ({ navigation }) => {
                     <Text style={{ fontWeight: "bold" }}>{item.qty}</Text>
                   </View>
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
-                    <Text style={{ fontWeight: "bold", color: "#9F7591" }}>
+                    <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
                       Rs. {item.price}
                     </Text>
                   </View>
@@ -208,6 +209,7 @@ const Cart = ({ navigation }) => {
                     <TouchableOpacity>
                       <MaterialIcons
                         onPress={() => dispatch(removeCartItem(item))}
+                        // onPress={() => dispatch(resetCart())}
                         name="delete"
                         size={24}
                         color="#F7685B"
@@ -257,19 +259,15 @@ const Cart = ({ navigation }) => {
         ) : (
           <View style={{ alignItems: "center", marginTop: 50 }}>
             <Text style={{ color: "#4B76D1", fontSize: 18 }}>
-              Your Cart seems to be Empty...
+              Your Cart is Empty !
             </Text>
-            <View style={{ alignItems: "center", marginTop: 10 }}>
-              <Text>Add a few of our great items and comeback</Text>
-              <Text>We will be waiting...</Text>
-            </View>
           </View>
         )}
         <View style={{ height: 30 }} />
       </ScrollView>
       <View style={{ alignItems: "center" }}>
         <Button
-          onPress={placeOrder}
+          // onPress={placeOrder}
           disabled={items.length > 0 ? false : true}
           buttonStyle={{ height: 55 }}
           containerStyle={styles.button}

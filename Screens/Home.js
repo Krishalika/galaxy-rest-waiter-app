@@ -12,7 +12,6 @@ import {
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
 import foods from "../src/consts/Foods";
-// import { CartState } from "../src/context/Context";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
@@ -109,9 +108,6 @@ export default function Home({ navigation }) {
     );
   };
 
-  // const { state } = CartState();
-  // console.log(state);
-
   return (
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
@@ -176,7 +172,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   categoriesListContainer: {
-    paddingVertical: 30,
+    paddingVertical: 20,
     alignItems: "center",
     paddingHorizontal: 20,
   },
@@ -202,7 +198,7 @@ const styles = StyleSheet.create({
     width: cardWidth,
     marginHorizontal: 10,
     marginBottom: 20,
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 15,
     elevation: 13, //shadow
     backgroundColor: COLORS.white,
