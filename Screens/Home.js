@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -27,6 +27,27 @@ const cardWidth = width / 2 - 20;
 //send props for navigation that it can navigate between screen
 export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
+  const [categoryItems, setcategoryItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const ListofCategories = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+    fetch("http://10.0.2.2:5000/category")
+      .then((res) => res.json())
+      .then((results) => {
+        setcategoryItems(results);
+
+        console.log(results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+  useEffect(() => {
+    ListofCategories();
+  }, []);
   const ListCategories = () => {
     return (
       <ScrollView
@@ -34,7 +55,9 @@ export default function Home({ navigation }) {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.categoriesListContainer}
       >
-        {categories.map((category, index) => (
+        {/* {categories.map((category, index) => ( */}
+
+        {categoryItems.map((category, index) => (
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
@@ -51,7 +74,8 @@ export default function Home({ navigation }) {
             >
               <View>
                 <Image
-                  source={category.image}
+                  // source={category.image}
+                  source={{ uri: category.img }}
                   style={{
                     height: 45,
                     width: 45,
@@ -159,6 +183,7 @@ export default function Home({ navigation }) {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
+        // data={categoryItems} //import foods
         data={foods} //import foods
         renderItem={({ item }) => <Card food={item} />}
       />

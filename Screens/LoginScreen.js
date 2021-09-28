@@ -43,11 +43,7 @@ const LoginScreen = (props) => {
       alignItems: "center",
     },
   });
-  // const sendCred = async (props) => {
-  // AsyncStorage.removeItem("token", (err) => console.log("userId", err));
   const sendCred = async (props) => {
-    // fetch("http://10.0.2.2:5000/waiters/signin", {
-    // fetch("http://10.0.2.2:5000/auth/signin", {
     fetch("http://10.0.2.2:5000/waiters/signin", {
       method: "POST",
       headers: {
