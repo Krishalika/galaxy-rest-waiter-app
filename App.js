@@ -5,7 +5,6 @@ import store from "./redux/store";
 import DrawerNavigation from "./Navigators/DrawerNavigation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Toast from "react-native-toast-message";
-import Context from "./src/context/Context";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 const Stack = createStackNavigator();

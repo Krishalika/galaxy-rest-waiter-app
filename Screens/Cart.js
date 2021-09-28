@@ -23,6 +23,7 @@ import foods from "../src/consts/Foods";
 import { PrimaryButton } from "../components/Button";
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
+import { color } from "react-native-reanimated";
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -98,10 +99,6 @@ const Cart = ({ navigation }) => {
         return {
           item: el._id,
           quantity: el.quantity,
-          // qty: el.qty,
-          // soldPrice: el.discount
-          //   ? (el.price - (el.price * el.discount) / 100).toFixed(2)
-          //   : el.price,
           soldPrice: el.price,
         };
       }),
@@ -198,7 +195,7 @@ const Cart = ({ navigation }) => {
                     <Text style={{ fontSize: 16 }}>{item.name}</Text>
                   </View>
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
-                    <Text style={{ fontWeight: "bold" }}>{item.qty}</Text>
+                    <Text style={{ fontWeight: "bold" }}>{item.quantity}</Text>
                   </View>
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Text style={{ fontWeight: "bold", color: COLORS.primary }}>

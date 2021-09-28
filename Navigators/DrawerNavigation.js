@@ -16,6 +16,7 @@ import LoginScreen from "../Screens/LoginScreen";
 import Logout from "../Screens/Logout";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function CustomDrawerContent(props) {
   return (
@@ -39,7 +40,11 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
-
+const logout = (props) => {
+  AsyncStorage.removeItem("token").then(() => {
+    navigation.replace("login");
+  });
+};
 function MyDrawer() {
   return (
     <Drawer.Navigator
@@ -71,17 +76,6 @@ function MyDrawer() {
         }}
       />
       <Drawer.Screen
-        name="Reservations"
-        component={Reservations}
-        options={{
-          title: "Reservations",
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          headerTintColor: "#03498f",
-          drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
-        }}
-      />
-      <Drawer.Screen
         name="Orders"
         component={Orders}
         options={{
@@ -92,6 +86,18 @@ function MyDrawer() {
           drawerIcon: () => <Feather name="list" size={24} color="black" />,
         }}
       />
+      <Drawer.Screen
+        name="Reservations"
+        component={Reservations}
+        options={{
+          title: "Reservations",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+          drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
+        }}
+      />
+
       <Drawer.Screen
         name="Cart"
         component={Cart}
@@ -114,7 +120,7 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="Logout"
         component={Logout}
         style={{ bottom: 0, position: "absolute" }}
@@ -127,7 +133,7 @@ function MyDrawer() {
             <MaterialIcons name="logout" size={24} color="black" />
           ),
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }

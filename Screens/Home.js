@@ -2,7 +2,14 @@ import React, { useContext } from "react";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+} from "react-native";
 import {
   FlatList,
   ScrollView,
@@ -12,6 +19,7 @@ import {
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
 import foods from "../src/consts/Foods";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
@@ -107,13 +115,25 @@ export default function Home({ navigation }) {
       </TouchableHighlight>
     );
   };
+  const logout = (props) => {
+    AsyncStorage.removeItem("token").then(() => {
+      //  navigation.replace("login");
+      navigation.navigate("LoginScreen");
+    });
+  };
 
   return (
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
-
+      <Icon
+        name="logout"
+        size={24}
+        color="black"
+        onPress={logout}
+        style={{ marginLeft: 360 }}
+      />
       <View
-        style={{ marginTop: 40, flexDirection: "row", paddingHorizontal: 20 }}
+        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
       >
         <View style={styles.inputContainer}>
           {/* <Icon name="search" size={28} /> */}

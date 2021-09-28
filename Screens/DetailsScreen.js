@@ -38,6 +38,17 @@ const DetailsScreen = ({ navigation, route }) => {
       text1: "Successfully added to the cart",
     });
   };
+  // const addThisToCart = (props) => {
+  //   dispatch(addToCart({ ...item, quantity }));
+  //   setQuantity(props);
+  //   Toast.show({
+  //     topOffset: 10,
+  //     visibilityTime: 2000,
+  //     position: "top",
+  //     type: "success",
+  //     text1: "Successfully added to the cart",
+  //   });
+  // };
 
   const incQuantity = () => {
     setQuantity(quantity + 1);
