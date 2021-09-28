@@ -7,7 +7,7 @@ import OrdersList from "../src/consts/OrdersList";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-
+import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 //send props for navigation that it can navigate between screen
 export default function Orders({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,7 +17,7 @@ export default function Orders({ navigation }) {
       <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
-        onPress={() => setModalVisible(true)}
+        // onPress={() => setModalVisible(true)}
       >
         <View style={styles.orderCard}>
           <Modal visible={modalVisible} animationType="fade">
@@ -69,6 +69,13 @@ export default function Orders({ navigation }) {
         title="Order Details"
         navigation={navigation}
         style={styles.header}
+      />
+      <Feather
+        name="edit"
+        size={24}
+        color="black"
+        onPress={() => setModalVisible(true)}
+        style={{ marginLeft: 330, paddingBottom: 10 }}
       />
       <View style={styles.content}>
         <FlatList

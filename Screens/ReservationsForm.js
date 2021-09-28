@@ -1,30 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
-// import DatePicker from "react-native-neat-date-picker";
-import DateField from "react-native-datefield";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { Dropdown } from "react-native-material-dropdown-v2-fixed";
+// import moment from "moment";
+import DatePicker from "react-native-datepicker";
 
 export default function ReservationsForm() {
-  // const [showDatePicker, setShowDatePicker] = useState(false);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
-  // const openDatePicker = () => {
-  //   setShowDatePicker(true);
-  // };
+  //datepicker
+  const [startDate, setDate] = useState(new Date());
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+    chosenDate: "";
+  };
 
-  // const onCancel = () => {
-  //   // You should close the modal in here
-  //   setShowDatePicker(false);
-  // };
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
 
-  // const onConfirm = (date) => {
-  //   // You should close the modal in here
-  //   setShowDatePicker(false);
+  const handleConfirm = (date) => {
+    hideDatePicker();
+  };
 
-  //   // The parameter 'date' is a Date object so that you can use any Date prototype method.
-  //   console.log(date.getDate());
-  // };
+  //timePicker
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+    chosenDate: "";
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleConfirmTime = (time) => {
+    hideTimePicker();
+  };
   return (
     <View style={globalStyles.container}>
       <Formik
@@ -61,24 +76,53 @@ export default function ReservationsForm() {
               placeholder="Date"
               onChangeText={props.handleChange("Date")}
               value={props.values.Date}
+              editable={false}
             />
-            {/* <DatePicker
-              isVisible={showDatePicker}
-              mode={"single"}
-              onCancel={onCancel}
-              onConfirm={onConfirm}
+            {/* <Button title="Show Date Picker" onPress={showDatePicker} /> */}
+            {/* <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              minimumDate={new Date()}
+              date={startDate}
+              onDateChange={(date1) => setDate(date1)}
             /> */}
+            {/* <DatePicker
+              style={{ width: 200 }}
+              date={props.values.Date}
+              mode="date"
+              placeholder="Date"
+              format="DD-MM-YYYY"
+              minDate={new Date()}
+              confirmBtnText="Confirm"
+              cancelBtnText="Cancel"
+              showIcon={true}
+              onDateChange={(date3) => setDate(date3)}
+            /> */}
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Time"
+              onChangeText={props.handleChange("Date")}
+              value={props.values.Date}
+              editable={false}
+            />
+            {/* <Button title="Show Time Picker" onPress={showTimePicker} />
+
+            <DateTimePickerModal
+              isVisible={isTimePickerVisible}
+              mode="time"
+              onConfirm={handleConfirmTime}
+              onCancel={hideTimePicker}
+              is24Hour={true}
+              onDateChange={(time1) => setTime(time1)}
+            /> */}
+
             <TextInput
               style={globalStyles.input}
               placeholder="Duration"
               onChangeText={props.handleChange("Duration")}
               value={props.values.Duration}
-            />
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Time"
-              onChangeText={props.handleChange("Time")}
-              value={props.values.Time}
             />
             <TextInput
               style={globalStyles.input}

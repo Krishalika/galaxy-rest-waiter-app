@@ -29,8 +29,6 @@ export default function Reservations({ navigation }) {
     setModalVisible(false);
   };
 
-  const numColumns = 4;
-
   const ReservationsCard = ({ item }) => {
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
@@ -65,6 +63,9 @@ export default function Reservations({ navigation }) {
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}
+            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              {item.time}
             </Text>
           </View>
           <View>
@@ -126,7 +127,7 @@ export default function Reservations({ navigation }) {
         <Button title="ADD" onPress={() => setModalVisible(true)} />
       </View>
 
-      <View>
+      {/* <View>
         <ScrollView
           horizontal
           showsVerticalScrollIndicator={false}
@@ -145,7 +146,7 @@ export default function Reservations({ navigation }) {
             renderItem={({ item }) => <TableCard item={item} />}
           />
         </ScrollView>
-      </View>
+      </View> */}
 
       <View style={styles.content}>
         <FlatList

@@ -5,7 +5,7 @@ const ReservationsList = [
     cusName: "A. B. Perera",
     date: "10-10-2021",
     price: 3500.0,
-    time: 15.0,
+    time: "3 PM",
   },
   {
     id: "2",
@@ -13,6 +13,7 @@ const ReservationsList = [
     cusName: "B. Rathnayake",
     date: "21-10-2021",
     price: 2500.0,
+    time: "4 PM",
   },
   {
     id: "3",
@@ -20,6 +21,7 @@ const ReservationsList = [
     cusName: "L. Gunasekara",
     date: "09-10-2021",
     price: 3200.0,
+    time: "10 AM",
   },
   {
     id: "4",
@@ -27,6 +29,7 @@ const ReservationsList = [
     cusName: "K. Jayasuriya",
     date: "12-10-2021",
     price: 1400.0,
+    time: "11 AM",
   },
 ];
 

@@ -82,13 +82,14 @@ const LoginScreen = (props) => {
   const detectLogin = async () => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
+      console.log("success");
       // props.navigation.replace("homeScreen");
       // props.navigation.replace("Home");
       props.navigation.navigate("Home");
+    } else {
+      console.log("error");
+      //props.navigation.replace("LoginScreen");
     }
-    // else {
-    //   props.navigation.replace("LoginScreen");
-    // }
   };
   useEffect(() => {
     detectLogin();
@@ -174,22 +175,6 @@ const LoginScreen = (props) => {
             Login
           </Text>
         </Button>
-        {/* <TouchableOpacity>
-          <Text
-            style={{
-              fontSize: 18,
-              marginTop: 20,
-              fontFamily: "nunito-bold",
-              color: "#03498f",
-              alignSelf: "center",
-            }}
-            onPress={() => props.navigation.replace("signup")}
-          >
-            Don't have an account ?
-          </Text>
-        </TouchableOpacity> */}
-
-        {/* </KeyboardAvoidingView> */}
       </View>
     </>
   );
