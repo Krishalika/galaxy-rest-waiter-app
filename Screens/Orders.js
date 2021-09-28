@@ -7,8 +7,7 @@ import OrdersList from "../src/consts/OrdersList";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
-//send props for navigation that it can navigate between screen
+import { Feather } from "@expo/vector-icons";
 export default function Orders({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
