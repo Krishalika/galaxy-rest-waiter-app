@@ -20,14 +20,13 @@ export default function OrderForm() {
     { value: "In Queue" },
     { value: "Processing" },
     { value: "Prepared" },
-    // { value: "Ready to serve" },
     { value: "Closed" },
   ];
   const [status, setStatus] = useState("");
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ Table: "", State: "", Price: "" }}
+        initialValues={{ Table: "", State: "" }}
         onSubmit={(values) => {
           console.log(values);
         }}
@@ -43,12 +42,6 @@ export default function OrderForm() {
               onChangeText={props.handleChange("Table")}
               value={props.values.Table}
             ></TextInput>
-            {/* <TextInput
-              style={globalStyles.input}
-              placeholder="Order Status" //on the values it updates table prop
-              onChangeText={props.handleChange("State")}
-              value={props.values.State}
-            ></TextInput> */}
             <Dropdown
               label="Order status"
               data={statusData}
