@@ -38,17 +38,6 @@ const DetailsScreen = ({ navigation, route }) => {
       text1: "Successfully added to the cart",
     });
   };
-  // const addThisToCart = (props) => {
-  //   dispatch(addToCart({ ...item, quantity }));
-  //   setQuantity(props);
-  //   Toast.show({
-  //     topOffset: 10,
-  //     visibilityTime: 2000,
-  //     position: "top",
-  //     type: "success",
-  //     text1: "Successfully added to the cart",
-  //   });
-  // };
 
   const incQuantity = () => {
     setQuantity(quantity + 1);
@@ -87,7 +76,7 @@ const DetailsScreen = ({ navigation, route }) => {
               name="shoppingcart"
               size={30}
               color="black"
-              style={{ justifyContent: "flex-end", paddingHorizontal: 160 }}
+              style={{ paddingHorizontal: 160 }}
             />
           </TouchableOpacity>
           {/* <Badge

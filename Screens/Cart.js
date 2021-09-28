@@ -14,7 +14,7 @@ import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
 import { SecondaryButton } from "../components/Button";
-
+import config from "../config/config.json";
 // import NumericInput from "react-native-numeric-input";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -32,9 +32,17 @@ const Cart = ({ navigation }) => {
   const calculateTotal = () => {
     let totalPrice = 0;
     items.forEach((el) => {
-      totalPrice += el.price;
+      totalPrice += el.price * el.quantity;
     });
     return totalPrice;
+  };
+
+  const calculateItemTotal = () => {
+    let totalQty = 0;
+    items.forEach((el) => {
+      totalQty += el.quantity;
+    });
+    return totalQty;
   };
 
   const CartCard = ({ item }) => {
@@ -122,40 +130,8 @@ const Cart = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-      {/* <View style={styles.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Cart</Text>
-      </View> */}
       <Header title="Cart" navigation={navigation} style={styles.header} />
-      {/* <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginVertical: -5,
-          paddingHorizontal: 20,
-        }}
-      > */}
-      {/* <Text>{items.length}</Text>
-        <Text style={{ fontSize: 18, fontWeight: "bold" }}>Table Number</Text>
-        <TextInput
-          style={{
-            height: 40,
-            borderColor: "gray",
-            borderWidth: 1,
-            borderRadius: 30,
-            width: 80,
-            paddingHorizontal: 5,
-            justifyContent: "center",
-            alignContent: "center",
-            flexDirection: "row",
-            backgroundColor: COLORS.primary,
-            color: COLORS.white,
-          }}
-          onChangeText={(text) => setTextInputValue(text)}
-          value={TextInputValue}
-        /> */}
-      {/* </View> */}
-      {/* <View> */}
+
       <ScrollView style={styles.container}>
         {items.length > 0 ? (
           <>
@@ -177,14 +153,6 @@ const Cart = ({ navigation }) => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <View>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri: item.img,
-                      }}
-                    />
-                  </View>
                   <View
                     style={{
                       justifyContent: "center",
@@ -197,11 +165,13 @@ const Cart = ({ navigation }) => {
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Text style={{ fontWeight: "bold" }}>{item.quantity}</Text>
                   </View>
+
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
-                      Rs. {item.price}
+                      Rs. {item.price} (1)
                     </Text>
                   </View>
+
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <TouchableOpacity>
                       <MaterialIcons
@@ -228,7 +198,8 @@ const Cart = ({ navigation }) => {
             >
               <Text style={{ fontSize: 16 }}>
                 {/* Sub Total ({items.length} Items)  */}
-                Total items ({items.length} Items)
+                Total items ({calculateItemTotal()})
+                {/* Total items ({items.length} Items)  */}
               </Text>
               {/* <Text style={{ fontSize: 14, color: "#9F7591" }}> */}
               {/* Rs. {calculateTotal().toFixed(2)} */}
@@ -243,7 +214,7 @@ const Cart = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 16, fontWeight: "bold" }}>
-                Order Total
+                Total Price
               </Text>
               <Text
                 style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
@@ -271,34 +242,6 @@ const Cart = ({ navigation }) => {
           title="Place Order"
         />
       </View>
-      {/* </View> */}
-      {/* <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 80 }}
-        // data={cartIteam}
-        renderItem={({ item }) => <CartCard item={item} />}
-        ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
-        ListFooterComponent={() => (
-          <View>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginVertical: 15,
-              }}
-            >
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                Total Price
-              </Text>
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>Rs. 3000</Text>
-            </View>
-
-            <View style={{ marginHorizontal: 30 }}>
-              <PrimaryButton title="Place Order" />
-            </View>
-          </View>
-        )}
-      /> */}
     </SafeAreaView>
   );
 };
