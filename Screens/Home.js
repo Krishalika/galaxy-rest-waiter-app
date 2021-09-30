@@ -9,6 +9,7 @@ import {
   Text,
   View,
   Button,
+  Alert,
 } from "react-native";
 import {
   FlatList,
@@ -18,6 +19,7 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
+import axios from "axios";
 import foods from "../src/consts/Foods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -29,11 +31,21 @@ export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
   const [categoryItems, setcategoryItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortedItems, setsortedItems] = useState([]);
+  const [types, setTypes] = React.useState([]);
+  const [names, setNames] = React.useState([]);
+  const [codes, setCodes] = React.useState([]);
+  const [textName, onChangeText] = React.useState("");
+  const [textNumber, onChangeNumber] = React.useState("");
+
+  const [refreshPage, setRefreshPage] = useState("");
 
   const ListofCategories = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
+    // https://galaxy-rest-be.herokuapp.com
     fetch("http://10.0.2.2:5000/category")
+      // fetch(" https://galaxy-rest-be.herokuapp.com/category")
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);
@@ -45,9 +57,109 @@ export default function Home({ navigation }) {
         Alert.alert(err);
       });
   };
+
   useEffect(() => {
     ListofCategories();
   }, []);
+  // fetch("localhost:5000/food/by-category?category=Pizza");
+
+  //localhost:5000/food/by-category?category=Pizza
+  const ListofCategoryItems = async (category) => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+    fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
+      .then((res) => res.json())
+      .then((results) => {
+        setsortedItems(results);
+
+        console.log(results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+
+  const res = async (category) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-category`, {
+        params: { category: category },
+      })
+      .then(({ data }) => {
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  useEffect(() => {
+    // res(categoryItems[0].name);
+    res("Pizza");
+    // res(categoryItems[0].name);
+    // console.log("items", categoryItems[selectedCategoryIndex].name);
+  }, []);
+
+  const resNames = async (name) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-name`, {
+        params: { name: name },
+      })
+      .then(({ data }) => {
+        // setNames(data);
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  const resCodes = async (code) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-code`, {
+        params: { code: code },
+      })
+      .then(({ data }) => {
+        // setCodes(data);
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  // const getProduct = (category) => axios.get(`product/${id}`);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get(`http://10.0.2.2:5000/food/by-category`, {
+  //       params: { category: "Pizza" },
+  //     })
+  //     .then(({ data }) => {
+  //       setTypes(data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
+
+  // console.log("Pizza items", types.length);
+
+  // const ListofCategoryItems = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   console.log(token);
+  //   fetch("localhost:5000/food/by-category"), URLSearchParams(category.name)
+  //     .setTypes(data);
+
+  //       console.log(results);
+
+  //     })
+  //     .catch((err) => {
+  //       Alert.alert(err);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   ListofCategoryItems();
+  // }, []);
+
   const ListCategories = () => {
     return (
       <ScrollView
@@ -61,7 +173,12 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => setselectedCategoryIndex(index)} //to select category
+            onPress={() => {
+              setselectedCategoryIndex(index);
+              res(categoryItems[selectedCategoryIndex].name);
+              // window.location.reload(true);
+            }}
+            // onPress={ListofCategoryItems} //to select category
           >
             <View
               style={{
@@ -110,15 +227,26 @@ export default function Home({ navigation }) {
       >
         <View style={styles.card}>
           <View style={{ alignItems: "center" }}>
-            <Image source={food.image} style={{ height: 120, width: 120 }} />
+            {/* <Image source={food.image} style={{ height: 120, width: 120 }} /> */}
+
+            <Image
+              source={{ uri: food.img }}
+              style={{
+                height: 130,
+                width: 120,
+                borderRadius: 30,
+                paddingTop: 10,
+              }}
+            />
           </View>
           <View style={{ marginHorizontal: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              {/* {food.name} */}
               {food.name}
             </Text>
-            <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
+            {/* <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
               {food.ingredients}
-            </Text>
+            </Text> */}
           </View>
           <View
             style={{
@@ -160,22 +288,53 @@ export default function Home({ navigation }) {
         style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
       >
         <View style={styles.inputContainer}>
-          {/* <Icon name="search" size={28} /> */}
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="item name"
+          <Icon
+            name="search"
+            size={28}
+            onPress={() => {
+              if (textNumber != "")
+                resCodes(textNumber), console.log(codes.length);
+            }}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          {/* <Icon name="search" size={28} /> */}
           <TextInput
             style={{ flex: 1, fontSize: 18 }}
             placeholder="item code"
+            onChangeText={onChangeNumber}
+            value={textNumber}
           />
         </View>
-        <View style={styles.sortBtn}>
-          <Icon name="search" size={28} color={COLORS.white} />
+        <View style={styles.inputContainer}>
+          <Icon
+            name="search"
+            size={28}
+            onPress={() => {
+              if (textName != "") resNames(textName), console.log(names.length);
+            }}
+          />
+          <TextInput
+            style={{ flex: 1, fontSize: 18 }}
+            placeholder="item name"
+            onChangeText={onChangeText}
+            value={textName}
+          />
         </View>
+        {/* <View style={styles.sortBtn}>
+          <Icon
+            name="search"
+            size={28}
+            color={COLORS.white}
+            onPress={() => {
+              // if (this.state.newRating===""){ alert("try again"); }
+              // else { this.functionToBeCalled()
+              if (textNumber != "" && textName != "")
+                resCodes(textNumber),
+                  resNames(textName),
+                  console.log(names.length + codes.length);
+              // console.log("Code is null");
+              else if (textName === "") console.log("Name is null");
+            }}
+          />
+        </View> */}
       </View>
       <View>
         <ListCategories />
@@ -184,8 +343,11 @@ export default function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         // data={categoryItems} //import foods
-        data={foods} //import foods
+        // data={foods} //import foods
+        data={types} //import foods
         renderItem={({ item }) => <Card food={item} />}
+        // keyExtractor={this._keyExtractor}
+        keyExtractor={types._id}
       />
     </View>
   );
