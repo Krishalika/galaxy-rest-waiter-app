@@ -33,6 +33,7 @@ export default function Home({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [sortedItems, setsortedItems] = useState([]);
   const [types, setTypes] = React.useState([]);
+  const [refreshPage, setRefreshPage] = useState("");
 
   const ListofCategories = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -87,7 +88,10 @@ export default function Home({ navigation }) {
       });
 
   useEffect(() => {
-    res(categoryItems[0].name);
+    // res(categoryItems[0].name);
+    res("Pizza");
+    // res(categoryItems[0].name);
+    // console.log("items", categoryItems[selectedCategoryIndex].name);
   }, []);
 
   // const getProduct = (category) => axios.get(`product/${id}`);
@@ -105,7 +109,7 @@ export default function Home({ navigation }) {
   //     });
   // }, []);
 
-  console.log("Pizza items", types.length);
+  // console.log("Pizza items", types.length);
 
   // const ListofCategoryItems = async () => {
   //   const token = await AsyncStorage.getItem("token");
@@ -124,6 +128,7 @@ export default function Home({ navigation }) {
   // useEffect(() => {
   //   ListofCategoryItems();
   // }, []);
+
   const ListCategories = () => {
     return (
       <ScrollView
@@ -137,7 +142,11 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => setselectedCategoryIndex(index)}
+            onPress={() => {
+              setselectedCategoryIndex(index);
+              res(categoryItems[selectedCategoryIndex].name);
+              // window.location.reload(true);
+            }}
             // onPress={ListofCategoryItems} //to select category
           >
             <View
@@ -191,7 +200,12 @@ export default function Home({ navigation }) {
 
             <Image
               source={{ uri: food.img }}
-              style={{ height: 120, width: 120 }}
+              style={{
+                height: 130,
+                width: 120,
+                borderRadius: 30,
+                paddingTop: 10,
+              }}
             />
           </View>
           <View style={{ marginHorizontal: 20 }}>
