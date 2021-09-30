@@ -95,7 +95,11 @@ const DetailsScreen = ({ navigation, route }) => {
             height: 280,
           }}
         >
-          <Image source={item.image} style={{ height: 220, width: 220 }} />
+          {/* <Image source={item.image} style={{ height: 220, width: 220 }} /> */}
+          <Image
+            source={{ uri: item.img }}
+            style={{ height: 220, width: 220 }}
+          />
         </View>
         <View style={styles.details}>
           <View

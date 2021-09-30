@@ -19,6 +19,7 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import categories from "../src/consts/categories";
+import axios from "axios";
 import foods from "../src/consts/Foods";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -50,13 +51,17 @@ export default function Home({ navigation }) {
         Alert.alert(err);
       });
   };
+
+  useEffect(() => {
+    ListofCategories();
+  }, []);
   // fetch("localhost:5000/food/by-category?category=Pizza");
 
   //localhost:5000/food/by-category?category=Pizza
   const ListofCategoryItems = async (category) => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-    fetch("localhost:5000/food/by-category?category=${category}")
+    fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
       .then((res) => res.json())
       .then((results) => {
         setsortedItems(results);
@@ -68,6 +73,39 @@ export default function Home({ navigation }) {
         Alert.alert(err);
       });
   };
+
+  const res = async (category) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-category`, {
+        params: { category: category },
+      })
+      .then(({ data }) => {
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  useEffect(() => {
+    res(categoryItems[0].name);
+  }, []);
+
+  // const getProduct = (category) => axios.get(`product/${id}`);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get(`http://10.0.2.2:5000/food/by-category`, {
+  //       params: { category: "Pizza" },
+  //     })
+  //     .then(({ data }) => {
+  //       setTypes(data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }, []);
+
+  console.log("Pizza items", types.length);
 
   // const ListofCategoryItems = async () => {
   //   const token = await AsyncStorage.getItem("token");
@@ -83,9 +121,6 @@ export default function Home({ navigation }) {
   //     });
   // };
 
-  useEffect(() => {
-    ListofCategories();
-  }, []);
   // useEffect(() => {
   //   ListofCategoryItems();
   // }, []);
@@ -152,15 +187,21 @@ export default function Home({ navigation }) {
       >
         <View style={styles.card}>
           <View style={{ alignItems: "center" }}>
-            <Image source={food.image} style={{ height: 120, width: 120 }} />
+            {/* <Image source={food.image} style={{ height: 120, width: 120 }} /> */}
+
+            <Image
+              source={{ uri: food.img }}
+              style={{ height: 120, width: 120 }}
+            />
           </View>
           <View style={{ marginHorizontal: 20 }}>
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              {/* {food.name} */}
               {food.name}
             </Text>
-            <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
+            {/* <Text style={{ fontSize: 14, color: COLORS.grey, marginTop: 2 }}>
               {food.ingredients}
-            </Text>
+            </Text> */}
           </View>
           <View
             style={{
@@ -226,7 +267,8 @@ export default function Home({ navigation }) {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         // data={categoryItems} //import foods
-        data={foods} //import foods
+        // data={foods} //import foods
+        data={types} //import foods
         renderItem={({ item }) => <Card food={item} />}
       />
     </View>
