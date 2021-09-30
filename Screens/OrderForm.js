@@ -6,6 +6,8 @@ import {
   View,
   Text,
   LogBox,
+  Device,
+  Alert,
 } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
@@ -35,8 +37,8 @@ export default function OrderForm() {
           <View>
             <TextInput
               required
-              // keyboardType='numberic'
-
+              keyboardType={"numeric"}
+              // keyboardType={Device.isAndroid ? "numeric" : "number-pad"}
               style={globalStyles.input}
               placeholder="Table Number" //on the values it updates table prop
               onChangeText={props.handleChange("Table")}

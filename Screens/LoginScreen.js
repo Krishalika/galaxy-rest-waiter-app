@@ -62,13 +62,13 @@ const LoginScreen = (props) => {
           props.navigation.navigate("Home");
           // props.navigation.replace("homeScreen");
         } catch (e) {
-          console.log("error hai", e);
+          //console.log("error hai", e);
           // Alert(e);
           Toast.show({
             topOffset: 40,
             visibilityTime: 1500,
             position: "top",
-            type: "success",
+            type: "error",
             text1: "Email or password is incorrect!",
           });
         }

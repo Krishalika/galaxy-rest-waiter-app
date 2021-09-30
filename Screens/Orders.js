@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, Modal, Pressable } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Alert,
+  Modal,
+  Pressable,
+  Dimensions,
+} from "react-native";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
 import OrdersList from "../src/consts/OrdersList";
@@ -9,6 +17,9 @@ import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const { width } = Dimensions.get("screen");
+const cardWidth = width / 2 - 20;
 
 export default function Orders({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,6 +49,8 @@ export default function Orders({ navigation }) {
       <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
+        onPress={() => navigation.navigate("OrderDetails", item)}
+
         // onPress={() => setModalVisible(true)}
       >
         <View style={styles.orderCard}>
@@ -92,21 +105,23 @@ export default function Orders({ navigation }) {
         navigation={navigation}
         style={styles.header}
       />
-      <Feather
+      {/* <Feather
         name="edit"
         size={24}
         color="black"
         onPress={() => setModalVisible(true)}
         style={{ marginLeft: 330, paddingBottom: 10 }}
-      />
+      /> */}
       <View style={styles.content}>
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
           // data={OrdersList}
+          numColumns={2}
           data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+          keyExtractor={(item, _id) => _id.toString()}
         />
       </View>
     </View>
@@ -137,10 +152,10 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   orderCard: {
-    height: 80,
+    height: 90,
     borderRadius: 10,
     elevation: 15,
-    width: 360,
+    width: 160,
     backgroundColor: COLORS.white,
     marginVertical: 10,
     marginHorizontal: 20,

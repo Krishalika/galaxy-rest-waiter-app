@@ -346,8 +346,9 @@ export default function Home({ navigation }) {
         // data={foods} //import foods
         data={types} //import foods
         renderItem={({ item }) => <Card food={item} />}
-        // keyExtractor={this._keyExtractor}
-        keyExtractor={types._id}
+        // keyExtractor={types._id}
+        // renderItem={({ item, _id }) => <Card food={(item, _id)} />}
+        keyExtractor={(item, _id) => _id.toString()}
       />
     </View>
   );

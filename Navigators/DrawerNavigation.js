@@ -13,6 +13,7 @@ import Cart from "../Screens/Cart";
 import COLORS from "../src/consts/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
+import OrderDetails from "../Screens/OrderDetails";
 import Logout from "../Screens/Logout";
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -114,6 +115,15 @@ function MyDrawer() {
       <Drawer.Screen
         name="DetailsScreen"
         component={DetailsScreen}
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+        }}
+      />
+      <Drawer.Screen
+        name="OrderDetails"
+        component={OrderDetails}
         options={{
           drawerLabel: () => null,
           title: null,
