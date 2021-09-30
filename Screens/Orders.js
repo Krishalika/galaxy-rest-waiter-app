@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Alert, Modal, Pressable } from "react-native";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
@@ -8,9 +8,31 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import { Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 export default function Orders({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [orderItems, setorderItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  //localhost:5000/order
 
+  const ListofOrders = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+    fetch("http://10.0.2.2:5000/order")
+      .then((res) => res.json())
+      .then((results) => {
+        setorderItems(results);
+        console.log(results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+  useEffect(() => {
+    ListofOrders();
+  }, []);
   const OrderCard = ({ item }) => {
     return (
       <TouchableHighlight
@@ -33,7 +55,8 @@ export default function Orders({ navigation }) {
             <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
             >
-              {item.table}
+              {/* {item.table} */}
+              {item.tableNumber}
             </Text>
           </View>
           <View
@@ -44,12 +67,12 @@ export default function Orders({ navigation }) {
               flex: 1,
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+            {/* <Text style={{ fontWeight: "bold", fontSize: 20 }}>
               {item.name}
-            </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+            </Text> */}
+            {/* <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}
-            </Text>
+            </Text> */}
           </View>
           <View>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
@@ -80,7 +103,8 @@ export default function Orders({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          data={OrdersList}
+          // data={OrdersList}
+          data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
         />

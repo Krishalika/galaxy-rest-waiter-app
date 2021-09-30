@@ -14,7 +14,7 @@ import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
 import { SecondaryButton } from "../components/Button";
-import config from "../config/config.json";
+// import config from "../config/config.json";
 // import NumericInput from "react-native-numeric-input";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";

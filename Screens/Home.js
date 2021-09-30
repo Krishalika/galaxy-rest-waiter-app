@@ -9,6 +9,7 @@ import {
   Text,
   View,
   Button,
+  Alert,
 } from "react-native";
 import {
   FlatList,
@@ -29,11 +30,15 @@ export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
   const [categoryItems, setcategoryItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sortedItems, setsortedItems] = useState([]);
+  const [types, setTypes] = React.useState([]);
 
   const ListofCategories = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
+    // https://galaxy-rest-be.herokuapp.com
     fetch("http://10.0.2.2:5000/category")
+      // fetch(" https://galaxy-rest-be.herokuapp.com/category")
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);
@@ -45,9 +50,45 @@ export default function Home({ navigation }) {
         Alert.alert(err);
       });
   };
+  // fetch("localhost:5000/food/by-category?category=Pizza");
+
+  //localhost:5000/food/by-category?category=Pizza
+  const ListofCategoryItems = async (category) => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+    fetch("localhost:5000/food/by-category?category=${category}")
+      .then((res) => res.json())
+      .then((results) => {
+        setsortedItems(results);
+
+        console.log(results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+
+  // const ListofCategoryItems = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   console.log(token);
+  //   fetch("localhost:5000/food/by-category"), URLSearchParams(category.name)
+  //     .setTypes(data);
+
+  //       console.log(results);
+
+  //     })
+  //     .catch((err) => {
+  //       Alert.alert(err);
+  //     });
+  // };
+
   useEffect(() => {
     ListofCategories();
   }, []);
+  // useEffect(() => {
+  //   ListofCategoryItems();
+  // }, []);
   const ListCategories = () => {
     return (
       <ScrollView
@@ -61,7 +102,8 @@ export default function Home({ navigation }) {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
-            onPress={() => setselectedCategoryIndex(index)} //to select category
+            onPress={() => setselectedCategoryIndex(index)}
+            // onPress={ListofCategoryItems} //to select category
           >
             <View
               style={{
