@@ -33,6 +33,11 @@ export default function Home({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [sortedItems, setsortedItems] = useState([]);
   const [types, setTypes] = React.useState([]);
+  const [names, setNames] = React.useState([]);
+  const [codes, setCodes] = React.useState([]);
+  const [textName, onChangeText] = React.useState("");
+  const [textNumber, onChangeNumber] = React.useState("");
+
   const [refreshPage, setRefreshPage] = useState("");
 
   const ListofCategories = async () => {
@@ -93,6 +98,32 @@ export default function Home({ navigation }) {
     // res(categoryItems[0].name);
     // console.log("items", categoryItems[selectedCategoryIndex].name);
   }, []);
+
+  const resNames = async (name) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-name`, {
+        params: { name: name },
+      })
+      .then(({ data }) => {
+        // setNames(data);
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+  const resCodes = async (code) =>
+    await axios
+      .get(`http://10.0.2.2:5000/food/by-code`, {
+        params: { code: code },
+      })
+      .then(({ data }) => {
+        // setCodes(data);
+        setTypes(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
   // const getProduct = (category) => axios.get(`product/${id}`);
 
@@ -257,22 +288,53 @@ export default function Home({ navigation }) {
         style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
       >
         <View style={styles.inputContainer}>
-          {/* <Icon name="search" size={28} /> */}
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="item name"
+          <Icon
+            name="search"
+            size={28}
+            onPress={() => {
+              if (textNumber != "")
+                resCodes(textNumber), console.log(codes.length);
+            }}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          {/* <Icon name="search" size={28} /> */}
           <TextInput
             style={{ flex: 1, fontSize: 18 }}
             placeholder="item code"
+            onChangeText={onChangeNumber}
+            value={textNumber}
           />
         </View>
-        <View style={styles.sortBtn}>
-          <Icon name="search" size={28} color={COLORS.white} />
+        <View style={styles.inputContainer}>
+          <Icon
+            name="search"
+            size={28}
+            onPress={() => {
+              if (textName != "") resNames(textName), console.log(names.length);
+            }}
+          />
+          <TextInput
+            style={{ flex: 1, fontSize: 18 }}
+            placeholder="item name"
+            onChangeText={onChangeText}
+            value={textName}
+          />
         </View>
+        {/* <View style={styles.sortBtn}>
+          <Icon
+            name="search"
+            size={28}
+            color={COLORS.white}
+            onPress={() => {
+              // if (this.state.newRating===""){ alert("try again"); }
+              // else { this.functionToBeCalled()
+              if (textNumber != "" && textName != "")
+                resCodes(textNumber),
+                  resNames(textName),
+                  console.log(names.length + codes.length);
+              // console.log("Code is null");
+              else if (textName === "") console.log("Name is null");
+            }}
+          />
+        </View> */}
       </View>
       <View>
         <ListCategories />
@@ -284,6 +346,8 @@ export default function Home({ navigation }) {
         // data={foods} //import foods
         data={types} //import foods
         renderItem={({ item }) => <Card food={item} />}
+        // keyExtractor={this._keyExtractor}
+        keyExtractor={types._id}
       />
     </View>
   );
