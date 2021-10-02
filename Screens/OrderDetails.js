@@ -4,10 +4,8 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  TouchableOpacity,
-  TextInput,
   LogBox,
+  Alert,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -16,7 +14,9 @@ import COLORS from "../src/consts/colors";
 import Toast from "react-native-toast-message";
 import { Dropdown } from "react-native-material-dropdown";
 import { globalStyles } from "../styles/global";
-
+import { Value } from "react-native-reanimated";
+// console.disableYellowBox = true;
+LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route }) => {
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
@@ -28,8 +28,66 @@ const OrderDetails = ({ navigation, route }) => {
     { value: "Prepared" },
     { value: "Closed" },
   ];
-  const [state, setstate] = useState("In Queue");
-  const [tableNumber, settableNumber] = useState(0);
+  const [state, setstate] = useState("Processing");
+
+  const getDetails = (type) => {
+    switch (type) {
+      case "customerName":
+        return item.customerName;
+      case "idNumber":
+        return item.idNumber;
+      case "foodItems":
+        return item.foodItems;
+      case "tableNumber":
+        return item.tableNumber;
+    }
+    return "";
+  };
+
+  console.log(item._id);
+  console.log(state);
+  console.log(getDetails("customerName"));
+  console.log(getDetails("foodItems"));
+  //  customerName: req.body.customerName,
+  //       idNumber: req.body.idNumber,
+  //       foodItems: req.body.foodItems,
+  //       state: req.body.state,
+  //       tableNumber: Number(req.body.tableNumber),
+
+  const updateDetails = () => {
+    // const data = { state };
+
+    // if (data.state.length > 3) {
+    fetch("http://10.0.2.2:5000/order/update" + item._id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        customerName: getDetails("customerName"),
+        idNumber: getDetails("idNumber"),
+        foodItems: getDetails("foodItems"),
+        state: "Processing",
+        tableNumber: getDetails("tableNumber"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
+        // navigation.navigate("Orders");
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+    // } else {
+    //   if (data.state) {
+    //     Alert.alert("Please try again");
+    //   } else {
+    //     Alert.alert("Please try again");
+    //   }
+    // }
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
@@ -49,7 +107,7 @@ const OrderDetails = ({ navigation, route }) => {
           <Dropdown
             label="Order status"
             data={statusData}
-            // onChangeText={(text) => setStatus(text)}
+            onChangeText={(text) => setstate(text)}
             value={state}
           />
         </View>
@@ -63,7 +121,8 @@ const OrderDetails = ({ navigation, route }) => {
           <PrimaryButton
             title={"SAVE"}
             // onPress={() => navigation.navigate("Cart", foods)}
-            //   onPress={addThisToCart}
+            // onPress={updateDetails}
+
             //   disabled={quantity > 0 ? false : true}
           />
         </View>

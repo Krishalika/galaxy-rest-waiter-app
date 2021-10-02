@@ -19,6 +19,8 @@ import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import login from "../Screens/login";
+
 function CustomDrawerContent(props) {
   return (
     <ScrollView style={styles.container}>
@@ -54,7 +56,8 @@ function MyDrawer() {
       style={styles.drawerItem}
     >
       <Drawer.Screen
-        name="LoginScreen"
+        // name="LoginScreen"
+        name="login"
         component={LoginScreen}
         options={{
           drawerLabel: () => null,

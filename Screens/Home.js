@@ -270,7 +270,8 @@ export default function Home({ navigation }) {
   const logout = (props) => {
     AsyncStorage.removeItem("token").then(() => {
       //  navigation.replace("login");
-      navigation.navigate("LoginScreen");
+      navigation.navigate("login");
+      // navigation.navigate("LoginScreen");
     });
   };
 
