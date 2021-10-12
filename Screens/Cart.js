@@ -13,17 +13,12 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
-import { SecondaryButton } from "../components/Button";
-// import config from "../config/config.json";
-// import NumericInput from "react-native-numeric-input";
-import { FlatList } from "react-native-gesture-handler";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
-import foods from "../src/consts/Foods";
-import { PrimaryButton } from "../components/Button";
+
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { color } from "react-native-reanimated";
 import axios from "axios";
 
 const Cart = ({ navigation }) => {
@@ -161,24 +156,10 @@ const Cart = ({ navigation }) => {
           required
           keyboardType={"numeric"}
           placeholder="Enter Table Number"
-          // keyboardType={Device.isAndroid ? "numeric" : "number-pad"}
           style={{ width: 150 }}
-          // onChangeText={props.handleChange("Table")}
           value={tableNumber}
         ></TextInput>
       </View>
-      {/* <View
-        style={{
-          justifyContent: "center",
-          marginLeft: 3,
-          width: 120,
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>Table</Text>
-      </View>
-      <View style={{ justifyContent: "center", marginLeft: 3 }}>
-        <TextInput style={{ fontWeight: "bold" }}></TextInput>
-      </View> */}
 
       <ScrollView style={styles.container}>
         {items.length > 0 ? (
@@ -224,7 +205,6 @@ const Cart = ({ navigation }) => {
                     <TouchableOpacity>
                       <MaterialIcons
                         onPress={() => dispatch(removeCartItem(item))}
-                        // onPress={() => dispatch(resetCart())}
                         name="delete"
                         size={24}
                         color="#F7685B"
@@ -245,14 +225,8 @@ const Cart = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 16 }}>
-                {/* Sub Total ({items.length} Items)  */}
                 Total items ({calculateItemTotal()})
-                {/* Total items ({items.length} Items)  */}
               </Text>
-              {/* <Text style={{ fontSize: 14, color: "#9F7591" }}> */}
-              {/* Rs. {calculateTotal().toFixed(2)} */}
-              {/* Rs. {calculateTotal().toFixed} */}
-              {/* </Text> */}
             </View>
             <View
               style={{
@@ -267,7 +241,6 @@ const Cart = ({ navigation }) => {
               <Text
                 style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
               >
-                {/* Rs. {calculateTotal().toFixed(2)} */}
                 Rs. {calculateTotal()}
               </Text>
             </View>

@@ -14,12 +14,8 @@ import COLORS from "../src/consts/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
-import Logout from "../Screens/Logout";
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import login from "../Screens/login";
 
 function CustomDrawerContent(props) {
   return (
@@ -56,7 +52,6 @@ function MyDrawer() {
       style={styles.drawerItem}
     >
       <Drawer.Screen
-        // name="LoginScreen"
         name="login"
         component={LoginScreen}
         options={{
@@ -133,27 +128,13 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
-      {/* <Drawer.Screen
-        name="Logout"
-        component={Logout}
-        style={{ bottom: 0, position: "absolute" }}
-        options={{
-          title: "Logout",
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          headerTintColor: "#03498f",
-          drawerIcon: () => (
-            <MaterialIcons name="logout" size={24} color="black" />
-          ),
-        }}
-      /> */}
     </Drawer.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, //to center the content
+    flex: 1,
   },
   drawerHeader: {
     backgroundColor: COLORS.primary,

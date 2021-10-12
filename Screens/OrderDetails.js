@@ -11,11 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
-import Toast from "react-native-toast-message";
 import { Dropdown } from "react-native-material-dropdown";
-import { globalStyles } from "../styles/global";
-import { Value } from "react-native-reanimated";
-// console.disableYellowBox = true;
 LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route }) => {
   useEffect(() => {
@@ -48,16 +44,8 @@ const OrderDetails = ({ navigation, route }) => {
   console.log(state);
   console.log(getDetails("customerName"));
   console.log(getDetails("foodItems"));
-  //  customerName: req.body.customerName,
-  //       idNumber: req.body.idNumber,
-  //       foodItems: req.body.foodItems,
-  //       state: req.body.state,
-  //       tableNumber: Number(req.body.tableNumber),
 
   const updateDetails = () => {
-    // const data = { state };
-
-    // if (data.state.length > 3) {
     fetch("http://10.0.2.2:5000/order/update" + item._id, {
       method: "POST",
       headers: {
@@ -74,18 +62,10 @@ const OrderDetails = ({ navigation, route }) => {
       .then((res) => res.json())
       .then((result) => {
         Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
-        // navigation.navigate("Orders");
       })
       .catch((err) => {
         Alert.alert(err);
       });
-    // } else {
-    //   if (data.state) {
-    //     Alert.alert("Please try again");
-    //   } else {
-    //     Alert.alert("Please try again");
-    //   }
-    // }
   };
 
   return (
@@ -112,21 +92,9 @@ const OrderDetails = ({ navigation, route }) => {
           />
         </View>
 
-        {/* <View style={styles.details}> */}
-
-        {/* <Text style={styles.detailsText}>{item.tableNumber}</Text> */}
-
-        {/* <Text style={styles.detailsText}>{item._id}</Text> */}
         <View style={styles.button}>
-          <PrimaryButton
-            title={"SAVE"}
-            // onPress={() => navigation.navigate("Cart", foods)}
-            // onPress={updateDetails}
-
-            //   disabled={quantity > 0 ? false : true}
-          />
+          <PrimaryButton title={"SAVE"} />
         </View>
-        {/* </View> */}
       </ScrollView>
     </SafeAreaView>
   );

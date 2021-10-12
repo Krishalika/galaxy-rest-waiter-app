@@ -3,10 +3,8 @@ import { Button, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Dropdown } from "react-native-material-dropdown-v2-fixed";
+
 // import moment from "moment";
-import DatePicker from "react-native-datepicker";
 
 export default function ReservationsForm() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -58,7 +56,6 @@ export default function ReservationsForm() {
         {(props) => (
           <View>
             <TextInput
-              // keyboardType="numberic"
               required
               style={globalStyles.input}
               placeholder="Table Number" //on the values it updates table prop
@@ -78,28 +75,7 @@ export default function ReservationsForm() {
               value={props.values.Date}
               editable={false}
             />
-            {/* <Button title="Show Date Picker" onPress={showDatePicker} /> */}
-            {/* <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-              minimumDate={new Date()}
-              date={startDate}
-              onDateChange={(date1) => setDate(date1)}
-            /> */}
-            {/* <DatePicker
-              style={{ width: 200 }}
-              date={props.values.Date}
-              mode="date"
-              placeholder="Date"
-              format="DD-MM-YYYY"
-              minDate={new Date()}
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              showIcon={true}
-              onDateChange={(date3) => setDate(date3)}
-            /> */}
+
             <TextInput
               style={globalStyles.input}
               placeholder="Time"
@@ -107,16 +83,6 @@ export default function ReservationsForm() {
               value={props.values.Date}
               editable={false}
             />
-            {/* <Button title="Show Time Picker" onPress={showTimePicker} />
-
-            <DateTimePickerModal
-              isVisible={isTimePickerVisible}
-              mode="time"
-              onConfirm={handleConfirmTime}
-              onCancel={hideTimePicker}
-              is24Hour={true}
-              onDateChange={(time1) => setTime(time1)}
-            /> */}
 
             <TextInput
               style={globalStyles.input}
@@ -130,14 +96,7 @@ export default function ReservationsForm() {
               onChangeText={props.handleChange("Price")}
               value={props.values.Price}
             />
-            {/* <DateField onSubmit={(value) => console.log(value)} />
 
-            <DateField
-              labelDate="Input date"
-              labelMonth="Input month"
-              labelYear="Input year"
-              onSubmit={(value) => console.log(value)}
-            /> */}
             <Button
               title="SAVE"
               color={COLORS.primary}

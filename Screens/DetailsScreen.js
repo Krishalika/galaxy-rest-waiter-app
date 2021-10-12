@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { Badge } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SecondaryButton } from "../components/Button";
@@ -16,7 +15,6 @@ import COLORS from "../src/consts/colors";
 import foods from "../src/consts/Foods";
 import Toast from "react-native-toast-message";
 import { addToCart } from "../redux";
-import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 
 //navigation-> allows to navigate between screen
@@ -49,18 +47,6 @@ const DetailsScreen = ({ navigation, route }) => {
     }
   };
 
-  // const mapStateToProps = (state) => {
-  //   return {
-  //     numOfItems: state.numOfItems,
-  //   };
-  // };
-
-  // const mapDispatchToProps = (dispatch) => {
-  //   return {
-  //     addToCart: () => dispatch(addToCart()),
-  //   };
-  // };
-
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
@@ -70,8 +56,6 @@ const DetailsScreen = ({ navigation, route }) => {
 
         <View style={{ flexDirection: "row" }}>
           <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
-            {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
-
             <AntDesign
               name="shoppingcart"
               size={30}
@@ -79,13 +63,7 @@ const DetailsScreen = ({ navigation, route }) => {
               style={{ paddingHorizontal: 160 }}
             />
           </TouchableOpacity>
-          {/* <Badge
-            // value={items.length}
-            status="error"
-            containerStyle={{ position: "absolute", top: -8, right: -10 }}
-          /> */}
         </View>
-        {/* <HeaderCartIcon navigation={navigation} /> */}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -95,7 +73,6 @@ const DetailsScreen = ({ navigation, route }) => {
             height: 280,
           }}
         >
-          {/* <Image source={item.image} style={{ height: 220, width: 220 }} /> */}
           <Image
             source={{ uri: item.img }}
             style={{ height: 220, width: 220 }}
@@ -144,7 +121,6 @@ const DetailsScreen = ({ navigation, route }) => {
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <SecondaryButton
               title={"Add to Cart"}
-              // onPress={() => navigation.navigate("Cart", foods)}
               onPress={addThisToCart}
               disabled={quantity > 0 ? false : true}
             />
@@ -187,7 +163,5 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
 });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(DetailsScreen);
 
 export default DetailsScreen;
