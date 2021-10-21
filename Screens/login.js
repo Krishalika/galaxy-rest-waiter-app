@@ -11,8 +11,8 @@ import {
   ScrollView,
 } from "react-native";
 import { globalStyles } from "../styles/global";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
+// import FontAwesome from "react-native-vector-icons/FontAwesome";
+// import Feather from "react-native-vector-icons/Feather";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 console.disableYellowBox = true;
@@ -92,20 +92,22 @@ const LoginScreen = (props) => {
           <View style={styles.logo}>
             <Image
               style={styles.headerLogo}
+              testID="background" 
               source={require("../assets/logo.png")}
             />
           </View>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
               <View style={styles.action}>
-                <FontAwesome
+                {/* <FontAwesome
                   style={{ padding: 12 }}
                   name="user-o"
                   color={colors.accent}
                   size={20}
-                />
+                /> */}
                 <TextInput
                   style={globalStyles.input}
+                  accessibilityLabel="Email"
                   label="Email"
                   mode="outlined"
                   value={email}
@@ -125,19 +127,22 @@ const LoginScreen = (props) => {
                     },
                   }}
                   onChangeText={(text) => setEmail(text)}
+                  testID="LoginScreen.emailInput"
                 />
               </View>
               <View style={styles.action2}>
-                <Feather
+                {/* <Feather
                   style={{ padding: 12 }}
                   name="lock"
                   color={colors.accent}
                   size={20}
-                />
+                /> */}
                 <TextInput
                   style={globalStyles.input}
+                  accessibilityLabel="Password"
                   label="Password"
                   mode="outlined"
+                  testID="LoginScreen.passInput"
                   secureTextEntry={true}
                   value={password}
                   onChangeText={(text) => {
@@ -178,6 +183,7 @@ const LoginScreen = (props) => {
                 fontSize: 13,
                 color: "#03498f",
               }}
+              testID="LoginScreen.Button"
             >
               Login
             </Text>
