@@ -21,7 +21,6 @@ export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const addReservation = (reservation) => {
-    //create a random key
     reservation.key = Math.random().toString();
     setReservation((currentReservation) => {
       return [reservation, ...currentReservation];
@@ -126,27 +125,6 @@ export default function Reservations({ navigation }) {
       >
         <Button title="ADD" onPress={() => setModalVisible(true)} />
       </View>
-
-      {/* <View>
-        <ScrollView
-          horizontal
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingVertical: 5 }}
-        >
-          <FlatList
-            scrollEnabled={false}
-            contentContainerStyle={{
-              alignSelf: "flex-start",
-            }}
-            numColumns={numColumns}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            data={ReservationsList}
-            renderItem={({ item }) => <TableCard item={item} />}
-          />
-        </ScrollView>
-      </View> */}
 
       <View style={styles.content}>
         <FlatList

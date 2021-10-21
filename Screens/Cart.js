@@ -13,17 +13,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
-import { SecondaryButton } from "../components/Button";
-// import config from "../config/config.json";
-// import NumericInput from "react-native-numeric-input";
-import { FlatList } from "react-native-gesture-handler";
+
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
-import foods from "../src/consts/Foods";
-import { PrimaryButton } from "../components/Button";
+
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { color } from "react-native-reanimated";
+import axios from "axios";
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -84,7 +80,7 @@ const Cart = ({ navigation }) => {
       image: require("../assets/cheesePizza.jpg"),
     },
   ];
-  const [TextInputValue, setTextInputValue] = React.useState("");
+  const [tableNumber, settableNumber] = React.useState();
 
   const [quantity, setQuantity] = React.useState(1);
 
@@ -97,6 +93,8 @@ const Cart = ({ navigation }) => {
       setQuantity(quantity - 1);
     }
   };
+  const [customerName, setcustomerName] = React.useState("By Waiter");
+  const [idNumber, setidNumber] = React.useState("000000000V");
 
   const placeOrder = () => {
     const data = {
@@ -112,7 +110,7 @@ const Cart = ({ navigation }) => {
       }),
     };
     axios
-      .post(`${config.API}/order`, data)
+      .post(`http://10.0.2.2:5000/order`, data)
       .then(({ data }) => {
         dispatch(resetCart());
         Toast.show({
@@ -124,13 +122,44 @@ const Cart = ({ navigation }) => {
         });
       })
       .catch((e) => {
-        console.log(e);
+        Toast.show({
+          topOffset: 40,
+          visibilityTime: 1500,
+          position: "top",
+          type: "error",
+          text1: "Order is not placed",
+        });
       });
   };
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
       <Header title="Cart" navigation={navigation} style={styles.header} />
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginLeft: 30,
+        }}
+      >
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            alignItems: "center",
+            marginLeft: -20,
+          }}
+        >
+          Table
+        </Text>
+        <TextInput
+          required
+          keyboardType={"numeric"}
+          placeholder="Enter Table Number"
+          style={{ width: 150 }}
+          value={tableNumber}
+        ></TextInput>
+      </View>
 
       <ScrollView style={styles.container}>
         {items.length > 0 ? (
@@ -176,7 +205,6 @@ const Cart = ({ navigation }) => {
                     <TouchableOpacity>
                       <MaterialIcons
                         onPress={() => dispatch(removeCartItem(item))}
-                        // onPress={() => dispatch(resetCart())}
                         name="delete"
                         size={24}
                         color="#F7685B"
@@ -197,14 +225,8 @@ const Cart = ({ navigation }) => {
               }}
             >
               <Text style={{ fontSize: 16 }}>
-                {/* Sub Total ({items.length} Items)  */}
                 Total items ({calculateItemTotal()})
-                {/* Total items ({items.length} Items)  */}
               </Text>
-              {/* <Text style={{ fontSize: 14, color: "#9F7591" }}> */}
-              {/* Rs. {calculateTotal().toFixed(2)} */}
-              {/* Rs. {calculateTotal().toFixed} */}
-              {/* </Text> */}
             </View>
             <View
               style={{
@@ -219,7 +241,6 @@ const Cart = ({ navigation }) => {
               <Text
                 style={{ fontSize: 14, fontWeight: "bold", color: "black" }}
               >
-                {/* Rs. {calculateTotal().toFixed(2)} */}
                 Rs. {calculateTotal()}
               </Text>
             </View>
@@ -235,7 +256,7 @@ const Cart = ({ navigation }) => {
       </ScrollView>
       <View style={{ alignItems: "center" }}>
         <Button
-          // onPress={placeOrder}
+          onPress={placeOrder}
           disabled={items.length > 0 ? false : true}
           buttonStyle={{ height: 55 }}
           containerStyle={styles.button}

@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Button,
-  TextInput,
-  View,
-  Text,
-  LogBox,
-} from "react-native";
+import { Button, TextInput, View, LogBox } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
@@ -35,8 +28,7 @@ export default function OrderForm() {
           <View>
             <TextInput
               required
-              // keyboardType='numberic'
-
+              keyboardType={"numeric"}
               style={globalStyles.input}
               placeholder="Table Number" //on the values it updates table prop
               onChangeText={props.handleChange("Table")}
@@ -45,7 +37,6 @@ export default function OrderForm() {
             <Dropdown
               label="Order status"
               data={statusData}
-              // onChangeText={(text) => setStatus(text)}
               value={props.values.State}
             />
             <Button

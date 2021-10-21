@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, View, Text, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 const Header = ({ navigation, title }) => {
@@ -10,9 +8,6 @@ const Header = ({ navigation, title }) => {
   };
   return (
     <View style={styles.header}>
-      {/* <TouchableOpacity style={styles.icons} onPress={openMenu}>
-        <Ionicons name="md-menu" size={28} color="black" />
-      </TouchableOpacity> */}
       <MaterialIcons
         name="menu"
         size={28}
@@ -34,9 +29,8 @@ const Header = ({ navigation, title }) => {
 
 const styles = StyleSheet.create({
   header: {
-    //flex: 1,
     marginTop: 0,
-    // width: "100%",
+
     height: "100%",
     flexDirection: "row",
     alignContent: "center",
@@ -55,10 +49,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#03498f",
     letterSpacing: 1,
-    // paddingTop:5,
+
     alignSelf: "center",
-    // textShadowColor: "rgba(0, 0, 0, 0.75)",
-    // textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
     position: "absolute",
   },
