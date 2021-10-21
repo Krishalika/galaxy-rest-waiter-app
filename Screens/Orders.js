@@ -18,7 +18,7 @@ export default function Orders({ navigation }) {
   const ListofOrders = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-    fetch("http://10.0.2.2:5000/order")
+    fetch("https://galaxy-rest-be.herokuapp.com/order")
       .then((res) => res.json())
       .then((results) => {
         setorderItems(results);
