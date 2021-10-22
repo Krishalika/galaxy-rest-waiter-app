@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useDispatch } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -10,8 +10,8 @@ import { persistStore } from "redux-persist";
 const Stack = createStackNavigator();
 
 export default function App() {
-  const persistor = persistStore(store);
-
+  // const persistor = persistStore(store);
+  const dispatch = useDispatch();
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

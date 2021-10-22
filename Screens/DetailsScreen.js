@@ -76,6 +76,7 @@ const DetailsScreen = ({ navigation, route }) => {
           <Image
             source={{ uri: item.img }}
             style={{ height: 220, width: 220 }}
+            testID="picture"
           />
         </View>
         <View style={styles.details}>
@@ -87,7 +88,11 @@ const DetailsScreen = ({ navigation, route }) => {
             }}
           >
             <Text
-              style={{ fontSize: 25, color: COLORS.white, fontWeight: "bold" }}
+              style={{
+                fontSize: 25,
+                color: COLORS.white,
+                fontWeight: "bold",
+              }}
             >
               {item.name}
             </Text>
@@ -123,6 +128,7 @@ const DetailsScreen = ({ navigation, route }) => {
               title={"Add to Cart"}
               onPress={addThisToCart}
               disabled={quantity > 0 ? false : true}
+              testID="DetailsScreen.Button"
             />
           </View>
         </View>

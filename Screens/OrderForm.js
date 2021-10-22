@@ -36,6 +36,7 @@ export default function OrderForm() {
             ></TextInput>
             <Dropdown
               label="Order status"
+              accessibilityLabel="OrderStatus"
               data={statusData}
               value={props.values.State}
             />

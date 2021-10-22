@@ -73,7 +73,7 @@ const OrderDetails = ({ navigation, route }) => {
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Order Details</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }} >Order Details</Text>
         <View style={styles.tableNumCon}>
           <Text
             style={{ fontSize: 25, color: COLORS.white, fontWeight: "bold" }}
@@ -89,6 +89,7 @@ const OrderDetails = ({ navigation, route }) => {
             data={statusData}
             onChangeText={(text) => setstate(text)}
             value={state}
+            testID="OrderDetails.orderStatus"
           />
         </View>
 

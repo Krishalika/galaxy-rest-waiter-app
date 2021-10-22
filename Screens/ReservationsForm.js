@@ -65,8 +65,11 @@ export default function ReservationsForm() {
             <TextInput
               style={globalStyles.input}
               placeholder="Customer Name"
+              accessibilityLabel="CustomerName"
               onChangeText={props.handleChange("Name")}
               value={props.values.Name}
+              testID="ReservationsForm.customerName"
+
             />
             <TextInput
               style={globalStyles.input}
@@ -93,14 +96,18 @@ export default function ReservationsForm() {
             <TextInput
               style={globalStyles.input}
               placeholder="Total Price"
+              accessibilityLabel="Price"
               onChangeText={props.handleChange("Price")}
               value={props.values.Price}
+              testID="ReservationsForm.price"
+
             />
 
             <Button
               title="SAVE"
               color={COLORS.primary}
               onPress={props.handleSubmit}
+              testID="ReservationsForm.Button"
             />
           </View>
         )}
