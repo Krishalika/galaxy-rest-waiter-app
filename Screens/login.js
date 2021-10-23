@@ -6,7 +6,6 @@ import {
   View,
   Text,
   StatusBar,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
@@ -28,8 +27,6 @@ const LoginScreen = (props) => {
       email,
     };
     if (data2.password.length > 4 && data2.email.length > 10) {
-      //http://10.0.2.2:5000/waiters/signin
-      // fetch("https://galaxy-rest-be.herokuapp.com/auth/signin", {
       fetch("http://10.0.2.2:5000/waiters/signin", {
         method: "POST",
         headers: {
@@ -40,7 +37,6 @@ const LoginScreen = (props) => {
           password: password,
         }),
       })
-        // .then((res) => res.json())
         .then((res) => res.text())
 
         .then(async (data) => {
@@ -80,7 +76,6 @@ const LoginScreen = (props) => {
   return (
     <>
       <View style={styles.container}>
-        {/* <KeyboardAvoidingView behavior="position" backgroundColor='white'> */}
         <StatusBar backgroundColor="#03498f" barStyle="light-content" />
         <ScrollView>
           <Toast ref={(ref) => Toast.setRef(ref)} />
@@ -90,7 +85,6 @@ const LoginScreen = (props) => {
               fontSize: 25,
               textAlign: "center",
               color: "#08b8e1",
-              // fontFamily: "nunito-bold",
             }}
           >
             Welcome!
@@ -118,13 +112,10 @@ const LoginScreen = (props) => {
                   style={{
                     height: 40,
                     width: "65%",
-                    // fontFamily: "nunito-bold",
                   }}
                   theme={{
                     fonts: {
-                      regular: {
-                        // fontFamily: "nunito-bold",
-                      },
+                      regular: {},
                     },
                     colors: {
                       primary: "#08b8e1",
@@ -155,14 +146,10 @@ const LoginScreen = (props) => {
                   style={{
                     height: 40,
                     width: "65%",
-                    // fontFamily: "nunito-bold",
                   }}
-                  // theme={{colors:{primary:"#08b8e1",fonts: { regular: "" } }}}
                   theme={{
                     fonts: {
-                      regular: {
-                        // fontFamily: "nunito-bold",
-                      },
+                      regular: {},
                     },
                     colors: {
                       primary: "#08b8e1",
@@ -189,41 +176,12 @@ const LoginScreen = (props) => {
             <Text
               style={{
                 fontSize: 13,
-                // fontFamily: "nunito-bold",
                 color: "#03498f",
               }}
             >
               Login
             </Text>
           </Button>
-
-          {/* <Text
-            style={{
-              fontSize: 18,
-              marginTop: 20,
-              // fontFamily: "nunito-bold",
-              color: "#03498f",
-              alignSelf: "center",
-            }}
-            onPress={() => props.navigation.replace("signup")}
-          >
-            Don't have an account ?
-          </Text>
-          <TouchableOpacity>
-            <Text
-              style={{
-                fontSize: 18,
-                marginTop: 20,
-                // fontFamily: "nunito-bold",
-                color: "#08b8e1",
-                alignSelf: "center",
-              }}
-              onPress={() => props.navigation.replace("signup")}
-            >
-              Sign Up
-            </Text>
-          </TouchableOpacity> */}
-          {/* </KeyboardAvoidingView> */}
         </ScrollView>
       </View>
     </>
