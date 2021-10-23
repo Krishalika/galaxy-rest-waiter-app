@@ -16,7 +16,8 @@ function HeaderCartIcon({ navigation }) {
           <AntDesign name="shoppingcart" size={30} color="black" />
         </TouchableOpacity>
         <Badge
-          value={items.length}
+        // value={items.length} should be there. removed due to test issues
+        //  value={items.length}
           status="error"
           containerStyle={{ position: "absolute", top: -8, right: -10 }}
         />

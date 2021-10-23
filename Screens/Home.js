@@ -165,6 +165,7 @@ export default function Home({ navigation }) {
         underlayColor={COLORS.white}
         activeOpacity={0.9}
         onPress={() => navigation.navigate("DetailsScreen", food)}
+        testID = "Home.toDetails"
       >
         <View style={styles.card}>
           <View style={{ alignItems: "center" }}>
@@ -217,6 +218,7 @@ export default function Home({ navigation }) {
         color="black"
         onPress={logout}
         style={{ marginLeft: 360 }}
+        testID = "Home.logout"
       />
       <View
         style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
@@ -235,6 +237,8 @@ export default function Home({ navigation }) {
             placeholder="item code"
             onChangeText={onChangeNumber}
             value={textNumber}
+            testID = "Home.codeSearch"
+            accessibilityLabel = "CodeSearch"
           />
         </View>
         <View style={styles.inputContainer}>
@@ -250,6 +254,7 @@ export default function Home({ navigation }) {
             placeholder="item name"
             onChangeText={onChangeText}
             value={textName}
+            testID = "Home.nameSearch"
           />
         </View>
       </View>
