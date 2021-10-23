@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
+// window.location.reload(false);
 
 //send props for navigation that it can navigate between screen
 export default function Home({ navigation }) {
@@ -33,7 +34,6 @@ export default function Home({ navigation }) {
     console.log(token);
     // fetch("http://10.0.2.2:5000/category")
     fetch("https://galaxy-rest-be.herokuapp.com/category")
-
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);

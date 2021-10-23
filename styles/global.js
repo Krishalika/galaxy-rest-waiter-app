@@ -28,6 +28,7 @@ export const globalStyles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 6,
     paddingBottom: 5,
+    margin: 10,
   },
   errorText: {
     color: "#03498f",
