@@ -32,8 +32,10 @@ export default function Home({ navigation }) {
   const ListofCategories = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
+
     // fetch("http://10.0.2.2:5000/category")
     fetch("https://galaxy-rest-be.herokuapp.com/category")
+
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);

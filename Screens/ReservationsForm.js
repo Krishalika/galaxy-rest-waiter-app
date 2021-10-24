@@ -3,7 +3,9 @@ import { Button, TextInput, View } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
+
 import CustomInput from './CustomInput'
+
 
 // import moment from "moment";
 

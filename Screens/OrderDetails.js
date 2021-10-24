@@ -11,8 +11,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
+
  //import { Dropdown } from "react-native-material-dropdown";
 import {Dropdown} from "react-native-material-dropdown-v2-fixed";
+
 LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route }) => {
   useEffect(() => {
@@ -47,7 +49,9 @@ const OrderDetails = ({ navigation, route }) => {
   console.log(getDetails("foodItems"));
 
   const updateDetails = () => {
+
     fetch("https://galaxy-rest-be.herokuapp.com/order/update" + item._id, {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json",

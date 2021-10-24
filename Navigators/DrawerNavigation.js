@@ -51,7 +51,9 @@ function MyDrawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       style={styles.drawerItem}
     >
+
       {/* <Drawer.Screen
+
         name="login"
         component={LoginScreen}
         options={{

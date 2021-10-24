@@ -27,7 +27,11 @@ const LoginScreen = (props) => {
       email,
     };
     if (data2.password.length > 4 && data2.email.length > 10) {
+
       fetch("https://galaxy-rest-be.herokuapp.com/waiters/signin", {
+
+      fetch("http://10.0.2.2:5000/waiters/signin", {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
