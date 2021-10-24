@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -15,12 +15,16 @@ import ReservationsList from "../src/consts/ReservationsList";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReservationsForm1 from "./ReservationsForm1";
 import CustomForm from "./CustomForm";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [reservationItem, setreservationItem] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  //////find on add reservations
   const addReservation = (reservation) => {
     reservation.key = Math.random().toString();
     setReservation((currentReservation) => {
@@ -28,6 +32,28 @@ export default function Reservations({ navigation }) {
     });
     setModalVisible(false);
   };
+
+  var now = new Date();
+  console.log((now));
+  const ListofReservations = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+    fetch(`https://galaxy-rest-be.herokuapp.com/tableres`)
+      .then((res) => res.json())
+      .then((results) => {
+        setreservationItem(results);
+        console.log(results);
+        setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+  useEffect(() => {
+    ListofReservations();
+  }, []);
+
+console.log(reservationItem)
 
   const ReservationsCard = ({ item }) => {
     return (
@@ -44,11 +70,11 @@ export default function Reservations({ navigation }) {
             {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
           <View style={styles.tableNumCon}>
-            <Text
+            {/* <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
             >
               {item.table}
-            </Text>
+            </Text> */}
           </View>
           <View
             style={{
@@ -60,18 +86,27 @@ export default function Reservations({ navigation }) {
             }}
           >
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {item.cusName}
+              {/* {item.cusName} */}
+              {item.customerName}
+            </Text>
+
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              {/* {item.time} */}
+              {item.startTime} - {item.endTime}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {item.time}
+            <Text style={{ fontWeight: "bold", fontSize: 14, color:"#808080" }}>
+              {item.customerEmail}
+            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 14, color:"#A9A9A9" }}>
+              {item.customerContactNumber}
             </Text>
           </View>
           <View>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {item.date}
+            <Text style={{ fontWeight: "bold", fontSize: 16, color:COLORS.primary }}>
+              {item.date.substr(0, 10)}
             </Text>
           </View>
           <View style={{ marginRight: 20, alignItems: "center" }}></View>
@@ -133,7 +168,8 @@ export default function Reservations({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          data={ReservationsList}
+          // data={ReservationsList}
+          data={reservationItem}
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
         />
@@ -184,7 +220,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   ReservationsCard: {
-    height: 80,
+    height: 150,
     borderRadius: 10,
     elevation: 15,
     width: 360,

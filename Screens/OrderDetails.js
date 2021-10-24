@@ -14,6 +14,7 @@ import COLORS from "../src/consts/colors";
 
  //import { Dropdown } from "react-native-material-dropdown";
 import {Dropdown} from "react-native-material-dropdown-v2-fixed";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route }) => {
@@ -28,6 +29,7 @@ const OrderDetails = ({ navigation, route }) => {
     { value: "Closed" },
   ];
   const [state, setstate] = useState("Processing");
+  const [loading, setLoading] = useState(true);
 
   const getDetails = (type) => {
     switch (type) {
@@ -47,6 +49,15 @@ const OrderDetails = ({ navigation, route }) => {
   console.log(state);
   console.log(getDetails("customerName"));
   console.log(getDetails("foodItems"));
+
+  const calculateTotal = () => {
+    let totalPrice = 0;
+    item.foodItems.forEach((el) => {
+      totalPrice += el.soldPrice * el.qty;
+    });
+    return totalPrice;
+  };
+
 
   const updateDetails = () => {
 
@@ -72,6 +83,26 @@ const OrderDetails = ({ navigation, route }) => {
         Alert.alert(err);
       });
   };
+  // const PopulateOrder = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   console.log(token);
+  //   // fetch("http://10.0.2.2:5000/order")
+  //   fetch(`https://galaxy-rest-be.herokuapp.com/order/${item._id}`)
+  //     .then((res) => res.json())
+  //     .then((populate) => {
+  //       // setorderItems(results);
+  //       console.log(populate);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       Alert.alert(err);
+  //     });
+  // };
+  // useEffect(() => {
+  //   PopulateOrder();
+  // }, []);
+
+
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
@@ -96,7 +127,9 @@ const OrderDetails = ({ navigation, route }) => {
             value={state}
           />
         </View>
-
+        <View style={styles.button}>
+          <Text>Customer Name: {item.customerName}</Text>
+        </View>
         <View style={styles.button}>
           <PrimaryButton title={"SAVE"} />
         </View>
