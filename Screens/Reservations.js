@@ -13,7 +13,8 @@ import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
 import ReservationsList from "../src/consts/ReservationsList";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import ReservationsForm from "./ReservationsForm";
+import ReservationsForm1 from "./ReservationsForm1";
+import CustomForm from "./CustomForm";
 
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 
@@ -39,7 +40,8 @@ export default function Reservations({ navigation }) {
               style={{ ...styles.modalToggle, ...styles.modalClose }}
               onPress={() => setModalVisible(false)}
             ></Icon>
-            <ReservationsForm addReservation={addReservation} />
+            <ReservationsForm1 addReservation={addReservation} />
+            {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
           <View style={styles.tableNumCon}>
             <Text
@@ -113,7 +115,8 @@ export default function Reservations({ navigation }) {
           animationType="fade"
           style={styles.modalToggle}
         >
-          <ReservationsForm />
+          <ReservationsForm1 />
+          {/* <CustomForm/> */}
         </Modal>
       </TouchableWithoutFeedback>
 

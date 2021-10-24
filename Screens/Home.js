@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
+// window.location.reload(false);
 
 //send props for navigation that it can navigate between screen
 export default function Home({ navigation }) {
@@ -31,7 +32,10 @@ export default function Home({ navigation }) {
   const ListofCategories = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-    fetch("http://10.0.2.2:5000/category")
+
+    // fetch("http://10.0.2.2:5000/category")
+    fetch("https://galaxy-rest-be.herokuapp.com/category")
+
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);
@@ -51,7 +55,9 @@ export default function Home({ navigation }) {
   const ListofCategoryItems = async (category) => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-    fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
+    // fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
+    fetch("https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}")
+
       .then((res) => res.json())
       .then((results) => {
         setsortedItems(results);
@@ -66,7 +72,9 @@ export default function Home({ navigation }) {
 
   const res = async (category) =>
     await axios
-      .get(`http://10.0.2.2:5000/food/by-category`, {
+      // .get(`http://10.0.2.2:5000/food/by-category`, {
+        .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
+
         params: { category: category },
       })
       .then(({ data }) => {
@@ -82,7 +90,9 @@ export default function Home({ navigation }) {
 
   const resNames = async (name) =>
     await axios
-      .get(`http://10.0.2.2:5000/food/by-name`, {
+      // .get(`http://10.0.2.2:5000/food/by-name`, {
+        .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
+
         params: { name: name },
       })
       .then(({ data }) => {
@@ -94,7 +104,9 @@ export default function Home({ navigation }) {
 
   const resCodes = async (code) =>
     await axios
-      .get(`http://10.0.2.2:5000/food/by-code`, {
+      // .get(`http://10.0.2.2:5000/food/by-code`, {
+        .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
+
         params: { code: code },
       })
       .then(({ data }) => {

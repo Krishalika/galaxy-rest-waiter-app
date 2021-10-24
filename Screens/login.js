@@ -27,7 +27,11 @@ const LoginScreen = (props) => {
       email,
     };
     if (data2.password.length > 4 && data2.email.length > 10) {
+
+      fetch("https://galaxy-rest-be.herokuapp.com/waiters/signin", {
+
       fetch("http://10.0.2.2:5000/waiters/signin", {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,6 +96,7 @@ const LoginScreen = (props) => {
           <View style={styles.logo}>
             <Image
               style={styles.headerLogo}
+              testID="background"
               source={require("../assets/logo.png")}
             />
           </View>
@@ -125,6 +130,7 @@ const LoginScreen = (props) => {
                     },
                   }}
                   onChangeText={(text) => setEmail(text)}
+                  testID="LoginScreen.emailInput"
                 />
               </View>
               <View style={styles.action2}>
@@ -143,6 +149,7 @@ const LoginScreen = (props) => {
                   onChangeText={(text) => {
                     setPassword(text);
                   }}
+                  testID="LoginScreen.pwInput"
                   style={{
                     height: 40,
                     width: "65%",
@@ -178,6 +185,7 @@ const LoginScreen = (props) => {
                 fontSize: 13,
                 color: "#03498f",
               }}
+              testID="LoginScreen.Button"
             >
               Login
             </Text>

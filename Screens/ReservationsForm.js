@@ -4,6 +4,9 @@ import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
 import COLORS from "../src/consts/colors";
 
+import CustomInput from './CustomInput'
+
+
 // import moment from "moment";
 
 export default function ReservationsForm() {
@@ -46,7 +49,7 @@ export default function ReservationsForm() {
           Name: "",
           Date: "",
           Time: "",
-          Duration: "",
+          TimeEnd: "",
           Price: "",
         }}
         onSubmit={(values) => {
@@ -78,7 +81,7 @@ export default function ReservationsForm() {
 
             <TextInput
               style={globalStyles.input}
-              placeholder="Time"
+              placeholder="Start Time"
               onChangeText={props.handleChange("Date")}
               value={props.values.Date}
               editable={false}
@@ -86,9 +89,9 @@ export default function ReservationsForm() {
 
             <TextInput
               style={globalStyles.input}
-              placeholder="Duration"
-              onChangeText={props.handleChange("Duration")}
-              value={props.values.Duration}
+              placeholder="End Time"
+              onChangeText={props.handleChange("TimeEnd")}
+              value={props.values.TimeEnd}
             />
             <TextInput
               style={globalStyles.input}
