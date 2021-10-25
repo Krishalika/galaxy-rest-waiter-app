@@ -33,11 +33,14 @@ export default function Reservations({ navigation }) {
     setModalVisible(false);
   };
 
-  var now = new Date();
-  console.log((now));
+  // var now = new Date();
+  // console.log(now);
   const ListofReservations = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
+
+    // fetch(`http://10.0.2.2:5000/tableres`)
+
     fetch(`https://galaxy-rest-be.herokuapp.com/tableres`)
       .then((res) => res.json())
       .then((results) => {
@@ -53,7 +56,7 @@ export default function Reservations({ navigation }) {
     ListofReservations();
   }, []);
 
-console.log(reservationItem)
+  console.log(reservationItem);
 
   const ReservationsCard = ({ item }) => {
     return (
@@ -70,11 +73,11 @@ console.log(reservationItem)
             {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
           <View style={styles.tableNumCon}>
-            {/* <Text
+            <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
             >
-              {item.table}
-            </Text> */}
+              {item.table.tableNumber}
+            </Text>
           </View>
           <View
             style={{
@@ -97,15 +100,25 @@ console.log(reservationItem)
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 14, color:"#808080" }}>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 14, color: "#808080" }}
+            >
               {item.customerEmail}
             </Text>
-            <Text style={{ fontWeight: "bold", fontSize: 14, color:"#A9A9A9" }}>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 14, color: "#A9A9A9" }}
+            >
               {item.customerContactNumber}
             </Text>
           </View>
           <View>
-            <Text style={{ fontWeight: "bold", fontSize: 16, color:COLORS.primary }}>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 16,
+                color: COLORS.primary,
+              }}
+            >
               {item.date.substr(0, 10)}
             </Text>
           </View>

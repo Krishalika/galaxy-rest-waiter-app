@@ -12,8 +12,8 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
 
- //import { Dropdown } from "react-native-material-dropdown";
-import {Dropdown} from "react-native-material-dropdown-v2-fixed";
+//import { Dropdown } from "react-native-material-dropdown";
+import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 LogBox.ignoreAllLogs(true);
@@ -48,21 +48,25 @@ const OrderDetails = ({ navigation, route }) => {
   console.log(item._id);
   console.log(state);
   console.log(getDetails("customerName"));
-  console.log(getDetails("foodItems"));
+  console.log(getDetails("foodItems")[0][1]);
 
   const calculateTotal = () => {
     let totalPrice = 0;
-    item.foodItems.forEach((el) => {
+    getDetails("foodItems").forEach((el) => {
       totalPrice += el.soldPrice * el.qty;
     });
     return totalPrice;
   };
 
+  console.log(calculateTotal.length);
+  const getOrderDetails = () => {
+
+  }
 
   const updateDetails = () => {
+    //fetch("https://galaxy-rest-be.herokuapp.com/order/update/{$item._id}" , {
 
     fetch("https://galaxy-rest-be.herokuapp.com/order/update" + item._id, {
-
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,8 +105,6 @@ const OrderDetails = ({ navigation, route }) => {
   // useEffect(() => {
   //   PopulateOrder();
   // }, []);
-
-
 
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>

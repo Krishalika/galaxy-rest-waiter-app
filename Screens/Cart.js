@@ -80,7 +80,7 @@ const Cart = ({ navigation }) => {
       image: require("../assets/cheesePizza.jpg"),
     },
   ];
-  const [tableNumber, settableNumber] = React.useState();
+  //const [tableNumber, settableNumber] = React.useState();
 
   const [quantity, setQuantity] = React.useState(1);
 
@@ -93,8 +93,12 @@ const Cart = ({ navigation }) => {
       setQuantity(quantity - 1);
     }
   };
-  const [customerName, setcustomerName] = React.useState("By Waiter");
-  const [idNumber, setidNumber] = React.useState("000000000V");
+  // const [customerName, setcustomerName] = React.useState("");
+  // const [idNumber, setidNumber] = React.useState("");
+  const customerName = "R.M. Rathnayake";
+  const idNumber = "982036705v"
+  const tableNumber = "7";
+  // const {customerName, idNumber, tableNumber="R.M.Rathnayake";
 
   const placeOrder = () => {
     const data = {
@@ -104,13 +108,15 @@ const Cart = ({ navigation }) => {
       foodItems: items.map((el) => {
         return {
           item: el._id,
-          quantity: el.quantity,
+          qty: el.quantity,
           soldPrice: el.price,
         };
       }),
     };
     axios
-      .post(`http://10.0.2.2:5000/order`, data)
+      // .post(`http://10.0.2.2:5000/order`, data)
+
+      .post(`https://galaxy-rest-be.herokuapp.com/order`, data)
       .then(({ data }) => {
         dispatch(resetCart());
         Toast.show({
@@ -122,6 +128,7 @@ const Cart = ({ navigation }) => {
         });
       })
       .catch((e) => {
+        console.log(e);
         Toast.show({
           topOffset: 40,
           visibilityTime: 1500,
@@ -257,6 +264,8 @@ const Cart = ({ navigation }) => {
       <View style={{ alignItems: "center" }}>
         <Button
           onPress={placeOrder}
+          // onPress={items.length > 0 ? placeOrder : ()=>navigation.navigate('Home')}
+
           disabled={items.length > 0 ? false : true}
           buttonStyle={{ height: 55 }}
           containerStyle={styles.button}
