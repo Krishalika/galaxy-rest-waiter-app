@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Image,
-  TextInput,
+  // TextInput,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -13,9 +13,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
+import { Provider, TextInput } from "react-native-paper";
+import { globalStyles } from "../styles/global";
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
+import { SecondaryButton } from "../components/Button";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,65 +45,70 @@ const Cart = ({ navigation }) => {
     return totalQty;
   };
 
-  const CartCard = ({ item }) => {
-    return (
-      <View style={styles.cartCard}>
-        <Image source={item.image} style={{ height: 80, width: 80 }} />
-        <View
-          style={{ height: 100, marginLeft: 10, paddingVertical: 10, flex: 1 }}
-        >
-          <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.name}</Text>
-          <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item.price}</Text>
-        </View>
-        <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
-          <View style={styles.actionBtn}>
-            <Icon
-              name="remove"
-              size={25}
-              color={COLORS.white}
-              onPress={decQuantity}
-            ></Icon>
-            <Icon
-              name="add"
-              size={25}
-              color={COLORS.white}
-              onPress={incQuantity}
-            ></Icon>
-          </View>
-        </View>
-      </View>
-    );
-  };
+  // const CartCard = ({ item }) => {
+  //   return (
+  //     <View style={styles.cartCard}>
+  //       <Image source={item.image} style={{ height: 80, width: 80 }} />
+  //       <View
+  //         style={{ height: 100, marginLeft: 10, paddingVertical: 10, flex: 1 }}
+  //       >
+  //         <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.name}</Text>
+  //         <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item.price}</Text>
+  //       </View>
+  //       <View style={{ marginRight: 20, alignItems: "center" }}>
+  //         <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
+  //         <View style={styles.actionBtn}>
+  //           <Icon
+  //             name="remove"
+  //             size={25}
+  //             color={COLORS.white}
+  //             onPress={decQuantity}
+  //           ></Icon>
+  //           <Icon
+  //             name="add"
+  //             size={25}
+  //             color={COLORS.white}
+  //             onPress={incQuantity}
+  //           ></Icon>
+  //         </View>
+  //       </View>
+  //     </View>
+  //   );
+  // };
 
-  const cartIteam = [
-    {
-      id: "2",
-      name: "Cheese Pizza",
-      price: "2100.00",
-      image: require("../assets/cheesePizza.jpg"),
-    },
-  ];
+  // const cartIteam = [
+  //   {
+  //     id: "2",
+  //     name: "Cheese Pizza",
+  //     price: "2100.00",
+  //     image: require("../assets/cheesePizza.jpg"),
+  //   },
+  // ];
   //const [tableNumber, settableNumber] = React.useState();
 
   const [quantity, setQuantity] = React.useState(1);
 
-  const incQuantity = () => {
-    setQuantity(quantity + 1);
-  };
+  // const incQuantity = () => {
+  //   setQuantity(quantity + 1);
+  // };
 
-  const decQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-  // const [customerName, setcustomerName] = React.useState("");
-  // const [idNumber, setidNumber] = React.useState("");
-  const customerName = "R.M. Rathnayake";
-  const idNumber = "982036705v"
-  const tableNumber = "7";
-  // const {customerName, idNumber, tableNumber="R.M.Rathnayake";
+  // const decQuantity = () => {
+  //   if (quantity > 1) {
+  //     setQuantity(quantity - 1);
+  //   }
+  // };
+  const [customerName, setcustomerName] = React.useState("");
+  const [idNumber, setidNumber] = React.useState("");
+  const [tableNumber, settableNumber] = React.useState("");
+  // const customerName = "R.M. Rathnayake";
+  // const idNumber = "982036705v";
+  // const tableNumber = "7";
 
+  const clearData = () => {
+    setcustomerName("");
+    setidNumber("");
+    settableNumber("");
+  }
   const placeOrder = () => {
     const data = {
       customerName,
@@ -114,11 +123,11 @@ const Cart = ({ navigation }) => {
       }),
     };
     axios
-      // .post(`http://10.0.2.2:5000/order`, data)
-
       .post(`https://galaxy-rest-be.herokuapp.com/order`, data)
       .then(({ data }) => {
         dispatch(resetCart());
+        clearData();
+        //add a logic with clearing values in the text fields -----------------
         Toast.show({
           topOffset: 40,
           visibilityTime: 1500,
@@ -148,25 +157,7 @@ const Cart = ({ navigation }) => {
           alignItems: "center",
           marginLeft: 30,
         }}
-      >
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 20,
-            alignItems: "center",
-            marginLeft: -20,
-          }}
-        >
-          Table
-        </Text>
-        <TextInput
-          required
-          keyboardType={"numeric"}
-          placeholder="Enter Table Number"
-          style={{ width: 150 }}
-          value={tableNumber}
-        ></TextInput>
-      </View>
+      />
 
       <ScrollView style={styles.container}>
         {items.length > 0 ? (
@@ -261,16 +252,84 @@ const Cart = ({ navigation }) => {
         )}
         <View style={{ height: 30 }} />
       </ScrollView>
-      <View style={{ alignItems: "center" }}>
-        <Button
-          onPress={placeOrder}
-          // onPress={items.length > 0 ? placeOrder : ()=>navigation.navigate('Home')}
+      <View style={styles.details}>
+        <Provider>
+          <ScrollView>
+            <Formik
+              initialValues={{
+                customerName: "",
+                idNumber: "",
+                tableNumber: "",
+              }}
+            >
+              {(props) => (
+                <View style={{ alignItems: "center" }}>
+                  <TextInput
+                    style={globalStyles.input}
+                    label="Table Number"
+                    mode="outlined"
+                    keyboardType="numeric"
+                    onChangeText={(text) => settableNumber(text)}
+                    value={tableNumber}
+                    color={COLORS.white}
+              
+                  />
+                  <TextInput
+                    style={globalStyles.input}
+                    label="Customer Name"
+                    mode="outlined"
+                    onChangeText={(text) => setcustomerName(text)}
+                    value={customerName}
+                  />
+                  <TextInput
+                    style={globalStyles.input}
+                    label="Customer NIC"
+                    mode="outlined"
+                    onChangeText={(text) => setidNumber(text)}
+                    value={idNumber}
+                  />
+                </View>
+              )}
+            </Formik>
+          </ScrollView>
+        </Provider>
+        <View style={{ alignItems: "center" }}>
+          <TextInput
+            height="55px"
+            style={styles.button}
+            placeholder="Customer Name"
+            mode="outlined"
+            onChangeText={(text) => setcustomerName(text)}
+            value={customerName}
+            clearButtonMode='always'
+          />
+          <TextInput
+            height="55px"
+            style={styles.button}
+            placeholder="Customer NIC Number"
+            mode="outlined"
+            onChangeText={(text) => setidNumber(text)}
+            value={idNumber}
+          />
+          <TextInput
+            height="55px"
+            style={styles.button}
+            placeholder="Table Number"
+            mode="outlined"
+            keyboardType="numeric"
+            onChangeText={(text) => settableNumber(text)}
+            value={tableNumber}
+          />
+          <Button
+            onPress={placeOrder}
+            // onPress={items.length > 0 ? placeOrder : ()=>navigation.navigate('Home')}
 
-          disabled={items.length > 0 ? false : true}
-          buttonStyle={{ height: 55 }}
-          containerStyle={styles.button}
-          title="Place Order"
-        />
+            disabled={items.length > 0 ? false : true}
+            buttonStyle={{ height: 55 }}
+            containerStyle={styles.button}
+            title="Place Order"
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -281,6 +340,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     padding: 12,
+  },
+  details: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: COLORS.primary,
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
+    // borderBottomLeftRadius: 40,
+    // borderBottomRightRadius: 40,
+  },
+  detailsText: {
+    marginTop: 10,
+    lineHeight: 22,
+    fontSize: 16,
+    color: COLORS.primary,
   },
   header: {
     marginTop: 20,
