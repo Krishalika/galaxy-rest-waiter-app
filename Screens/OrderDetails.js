@@ -57,15 +57,32 @@ const OrderDetails = ({ navigation, route, _id }) => {
   /////////////
  // const foodItems = item.foodItems;
   const tableNumber = item.tableNumber;
-  const state = "Prepared";
-  const foodItems = [
-    {
-        "item": "6155d44dc479c10016c63fa2",
-        "qty": 1,
-        "soldPrice": 200
-    }
-]
-console.log(foodItems);
+  const state = "Processing";
+//   const foodItems = [
+//     {
+//         "item": "6155d44dc479c10016c63fa2",
+//         "qty": 1,
+//         "soldPrice": 200
+//     },
+//     {
+//       "item": "614b6ce16851a34a7c29c95d",
+//       "qty": 1,
+//       "soldPrice": 1000
+//     }
+// ]
+
+  const foodItems = [];
+  const length = item.foodItems.length;
+
+  for (let i = 0; i < length; i++) {
+    var foodDict = {};
+    foodDict["item"] = getDetails("foodItems")[i].item._id;
+    foodDict["qty"] = getDetails("foodItems")[i].qty;
+    foodDict["soldPrice"] = getDetails("foodItems")[i].soldPrice;
+    foodItems.push(foodDict);
+  }
+
+  console.log("array",foodItems);
 
   const calculateTotal = () => {
     let totalPrice = 0;
@@ -74,13 +91,7 @@ console.log(foodItems);
     });
     return totalPrice;
   };
-//   "foodItems": [
-//     {
-//         "item": "6155d44dc479c10016c63fa2",
-//         "qty": 1,
-//         "soldPrice": 200
-//     }
-// ],
+
 
   console.log(calculateTotal.length);
   //const getOrderDetails = () => {};
