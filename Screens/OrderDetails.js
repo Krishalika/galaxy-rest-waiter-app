@@ -14,7 +14,10 @@ import COLORS from "../src/consts/colors";
 
 //import { Dropdown } from "react-native-material-dropdown";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
+//import DropDown from "react-native-paper-dropdown";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Provider} from 'react-native-paper';
 
 LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route, _id }) => {
@@ -45,7 +48,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
     }
     return "";
   };
-  // const [state, setstate] = useState(item.state);
 
   console.log(item._id);
   console.log(item.state);
@@ -55,21 +57,24 @@ const OrderDetails = ({ navigation, route, _id }) => {
   const customerName = item.customerName;
   const idNumber = item.idNumber;
   /////////////
- // const foodItems = item.foodItems;
+  // const foodItems = item.foodItems;
   const tableNumber = item.tableNumber;
-  const state = "Processing";
-//   const foodItems = [
-//     {
-//         "item": "6155d44dc479c10016c63fa2",
-//         "qty": 1,
-//         "soldPrice": 200
-//     },
-//     {
-//       "item": "614b6ce16851a34a7c29c95d",
-//       "qty": 1,
-//       "soldPrice": 1000
-//     }
-// ]
+  const [state, setstate] = useState(item.state);
+  const [showDropDown, setShowDropDown] = useState(false);
+
+  //const state = "Processing";
+  //   const foodItems = [
+  //     {
+  //         "item": "6155d44dc479c10016c63fa2",
+  //         "qty": 1,
+  //         "soldPrice": 200
+  //     },
+  //     {
+  //       "item": "614b6ce16851a34a7c29c95d",
+  //       "qty": 1,
+  //       "soldPrice": 1000
+  //     }
+  // ]
 
   const foodItems = [];
   const length = item.foodItems.length;
@@ -82,7 +87,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
     foodItems.push(foodDict);
   }
 
-  console.log("array",foodItems);
+  console.log("array", foodItems);
 
   const calculateTotal = () => {
     let totalPrice = 0;
@@ -92,18 +97,17 @@ const OrderDetails = ({ navigation, route, _id }) => {
     return totalPrice;
   };
 
-
   console.log(calculateTotal.length);
   //const getOrderDetails = () => {};
 
   const updateDetails = async (_id) => {
     const token = await AsyncStorage.getItem("token");
-   // console.log(token);
+    // console.log(token);
     fetch("https://galaxy-rest-be.herokuapp.com/order/update/" + _id, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-       // Authorization: "Bearer " + token,
+        // Authorization: "Bearer " + token,
       }),
       body: JSON.stringify({
         customerName,
@@ -190,6 +194,23 @@ const OrderDetails = ({ navigation, route, _id }) => {
             onChangeText={(text) => setstate(text)}
             value={state}
           />
+          {/* <Provider>
+          <DropDown
+            label={"Order Status"}
+            mode={"outlined"}
+            // visible={showDropDown2}
+            visible={showDropDown}
+            // showDropDown={() =>  setShowDropDown2(true)}
+            showDropDown={() => setShowDropDown(true)}
+            onDismiss={() => setShowDropDown(false)}
+            // onDismiss={() =>  setShowDropDown2(false)}
+            value={state}
+            activeColor={"#08b8e1"}
+            // dropDownItemTextStyle={{fontFamily:'nunito-bold',color:'blue'}}
+            setValue={setstate}
+            list={statusData}
+          />
+          </Provider> */}
         </View>
         <View style={styles.button}>
           <Text>Customer Name: {item.customerName}</Text>
