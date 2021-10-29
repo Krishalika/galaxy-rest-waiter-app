@@ -11,9 +11,11 @@ import {
 } from "react-native";
 import Header from "../Header/Header";
 import COLORS from "../src/consts/colors";
-import ReservationsList from "../src/consts/ReservationsList";
+//import ReservationsList from "../src/consts/ReservationsList";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import ReservationsForm1 from "./ReservationsForm1";
+// import ReservationsForm1 from "./ReservationsForm1";
+import ReservationsForm from "./ReservationsForm";
+
 import CustomForm from "./CustomForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -69,7 +71,7 @@ export default function Reservations({ navigation }) {
               style={{ ...styles.modalToggle, ...styles.modalClose }}
               onPress={() => setModalVisible(false)}
             ></Icon>
-            <ReservationsForm1 addReservation={addReservation} />
+            <ReservationsForm addReservation={addReservation} />
             {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
           <View style={styles.tableNumCon}>
@@ -163,7 +165,7 @@ export default function Reservations({ navigation }) {
           animationType="fade"
           style={styles.modalToggle}
         >
-          <ReservationsForm1 />
+          <ReservationsForm />
           {/* <CustomForm/> */}
         </Modal>
       </TouchableWithoutFeedback>

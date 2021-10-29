@@ -12,7 +12,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SecondaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
-import foods from "../src/consts/Foods";
+//import foods from "../src/consts/Foods";
 import Toast from "react-native-toast-message";
 import { addToCart } from "../redux";
 import { useDispatch } from "react-redux";
