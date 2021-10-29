@@ -17,7 +17,7 @@ import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 LogBox.ignoreAllLogs(true);
-const OrderDetails = ({ navigation, route }) => {
+const OrderDetails = ({ navigation, route, _id }) => {
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
   }, []);
@@ -28,7 +28,6 @@ const OrderDetails = ({ navigation, route }) => {
     { value: "Prepared" },
     { value: "Closed" },
   ];
-  const [state, setstate] = useState("Processing");
   const [loading, setLoading] = useState(true);
 
   const getDetails = (type) => {
@@ -41,14 +40,32 @@ const OrderDetails = ({ navigation, route }) => {
         return item.foodItems;
       case "tableNumber":
         return item.tableNumber;
+      case "state":
+        return item.state;
     }
     return "";
   };
+  // const [state, setstate] = useState(item.state);
 
   console.log(item._id);
-  console.log(state);
+  console.log(item.state);
   console.log(getDetails("customerName"));
-  console.log(getDetails("foodItems")[0][1]);
+  console.log(getDetails("foodItems"));
+
+  const customerName = item.customerName;
+  const idNumber = item.idNumber;
+  /////////////
+ // const foodItems = item.foodItems;
+  const tableNumber = item.tableNumber;
+  const state = "Prepared";
+  const foodItems = [
+    {
+        "item": "6155d44dc479c10016c63fa2",
+        "qty": 1,
+        "soldPrice": 200
+    }
+]
+console.log(foodItems);
 
   const calculateTotal = () => {
     let totalPrice = 0;
@@ -57,36 +74,70 @@ const OrderDetails = ({ navigation, route }) => {
     });
     return totalPrice;
   };
+//   "foodItems": [
+//     {
+//         "item": "6155d44dc479c10016c63fa2",
+//         "qty": 1,
+//         "soldPrice": 200
+//     }
+// ],
 
   console.log(calculateTotal.length);
-  const getOrderDetails = () => {
+  //const getOrderDetails = () => {};
 
-  }
-
-  const updateDetails = () => {
-    //fetch("https://galaxy-rest-be.herokuapp.com/order/update/{$item._id}" , {
-
-    fetch("https://galaxy-rest-be.herokuapp.com/order/update" + item._id, {
+  const updateDetails = async (_id) => {
+    const token = await AsyncStorage.getItem("token");
+   // console.log(token);
+    fetch("https://galaxy-rest-be.herokuapp.com/order/update/" + _id, {
       method: "POST",
-      headers: {
+      headers: new Headers({
         "Content-Type": "application/json",
-      },
+       // Authorization: "Bearer " + token,
+      }),
       body: JSON.stringify({
-        customerName: getDetails("customerName"),
-        idNumber: getDetails("idNumber"),
-        foodItems: getDetails("foodItems"),
-        state: "Processing",
-        tableNumber: getDetails("tableNumber"),
+        customerName,
+        idNumber,
+        foodItems,
+        state,
+        tableNumber,
       }),
     })
       .then((res) => res.json())
       .then((result) => {
-        Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
+        console.log("Order status updated");
+        //Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
       })
       .catch((err) => {
-        Alert.alert(err);
+        console.log("Error");
+        //Alert.alert(err);
       });
   };
+
+  // const updateDetails = () => {
+  //   //fetch("https://galaxy-rest-be.herokuapp.com/order/update/{$item._id}" , {
+
+  //   fetch("https://galaxy-rest-be.herokuapp.com/order/update" + item._id, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       customerName: getDetails("customerName"),
+  //       idNumber: getDetails("idNumber"),
+  //       foodItems: getDetails("foodItems"),
+  //       state: "Processing",
+  //       tableNumber: getDetails("tableNumber"),
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
+  //     })
+  //     .catch((err) => {
+  //       Alert.alert(err);
+  //     });
+  // };
+
   // const PopulateOrder = async () => {
   //   const token = await AsyncStorage.getItem("token");
   //   console.log(token);
@@ -133,7 +184,10 @@ const OrderDetails = ({ navigation, route }) => {
           <Text>Customer Name: {item.customerName}</Text>
         </View>
         <View style={styles.button}>
-          <PrimaryButton title={"SAVE"} />
+          <PrimaryButton
+            title={"SAVE"}
+            onPress={() => updateDetails(item._id)}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
