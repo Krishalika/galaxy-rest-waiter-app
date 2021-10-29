@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../components/Button";
 import COLORS from "../src/consts/colors";
+import Toast from "react-native-toast-message";
 
 //import { Dropdown } from "react-native-material-dropdown";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
@@ -119,11 +120,25 @@ const OrderDetails = ({ navigation, route, _id }) => {
     })
       .then((res) => res.json())
       .then((result) => {
+        Toast.show({
+          topOffset: 40,
+          visibilityTime: 1500,
+          position: "top",
+          type: "success",
+          text1: "Order status updated successfully!",
+        });
         console.log("Order status updated");
         //Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
       })
       .catch((err) => {
         console.log("Error");
+        Toast.show({
+          topOffset: 40,
+          visibilityTime: 1500,
+          position: "top",
+          type: "error",
+          text1: "Something went wrong!",
+        });
         //Alert.alert(err);
       });
   };
