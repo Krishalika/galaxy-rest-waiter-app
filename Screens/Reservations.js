@@ -20,7 +20,9 @@ import CustomForm from "./CustomForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-
+// import moment from "moment";
+import Moment from "react-moment";
+import moment from "moment";
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [reservationItem, setreservationItem] = useState([]);
@@ -97,7 +99,16 @@ export default function Reservations({ navigation }) {
 
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               {/* {item.time} */}
-              {item.startTime} - {item.endTime}
+              {/* {item.date.substr(0, 10)} */}
+              {/* {new Date(item.startTime).toLocaleTimeString() - new Date(item.endTime).toLocaleTimeString()} */}
+              {/* {(new Date((item.startTime).getTime() - (item.startTime).getTimezoneOffset()*60*1000)) - (new Date((item.endTime).getTime() - (item.endTime).getTimezoneOffset()*60*1000))} */}
+              {/* new Date(utcDate) */}
+              {/* const m = moment(new Date('2019/06/01 14:04:03'));
+
+m.format('h:mma'); // '2:04pm' */}
+              {moment(new Date(item.startTime)).format("h:mma")} -{" "}
+              {moment(new Date(item.endTime)).format("h:mma")}
+              {/* {item.startTime.substr(11,12)} - {item.endTime.substr(11,16)} */}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}

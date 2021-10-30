@@ -24,27 +24,40 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
   const [customerEmail, setcustomerEmail] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState("");
   const [customerContactNumber, setcustomerContactNumber] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isStartTimePickerVisible, setStartTimePickerVisibility] =
     useState(false);
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
+  const [types, setTypes] = React.useState([]);
 
   const findTableID = async (tableNumber) =>
     await axios
       // .get(`http://10.0.2.2:5000/food/by-name`, {
-      .get(`https://galaxy-rest-be.herokuapp.com/table/by-tableNo/`, {
+      .get(`https://galaxy-rest-be.herokuapp.com/table/by-tableNo`, {
         params: { tableNumber: tableNumber },
         //params: { name: name },
       })
       .then(({ data }) => {
-        setTable(data);
+        setTypes(data);
       })
       .catch((e) => {
         console.log(e);
       });
 
+  const clearData = () => {
+    setTableNo("");
+    setName("");
+    setDate("");
+    setStartTime("");
+    setEndTime("");
+    setcustomerEmail("");
+    setPrice("");
+    setcustomerContactNumber("");
+  };
+
+  //console.log("hello",findTableID("12")[0]._id);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -89,7 +102,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
 
   const submitReservation = () => {
     const data = {
-      table: findTableID(tableNo)._id,
+      table: types[0]._id,
       customerName,
       date,
       startTime,
@@ -105,7 +118,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          table: findTableID(tableNo)._id,
+          table: types[0]._id,
           customerName,
           date,
           startTime,
@@ -122,12 +135,15 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
           //  })
           console.log(data);
           console.log("Table Reservation Added Successfully!");
+          //clearData();
           // Alert.alert("Table Reservation added");
           setOpen(false);
+          //console.log(findTableID(tableNo)._id);
         })
         .catch((err) => {
           console.log("Something went wrong");
           // Alert.alert("Something went wrong");
+          // console.log(findTableID(tableNo)._id);
         });
     } else {
       Alert.alert("Please fill all the details");
@@ -242,8 +258,12 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               mode="time"
               onConfirm={handleStartTimeConfirm}
               onCancel={hideStartTimePicker}
+              date={startTime}
+              is24Hour={true}
               // timePickerModeAndroid={date} ////////////////////
-              onDateChange={(time1) => setStartTime(time1)} ///////////////////////
+             onDateChange={(time1) => setStartTime(time1)} 
+             //onDateChange={(time1) => setStartTime(time1.getHours + ":" + time1.getMinutes)}
+            //   date.getHours()
             />
 
             <TouchableOpacity onPress={showEndTimePicker}>
@@ -259,7 +279,10 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               onConfirm={handleEndTimeConfirm}
               onCancel={hideEndTimePicker}
               // timePickerModeAndroid={date} ////////////////////
-              onDateChange={(time2) => setEndTime(time2)} ///////////////////////
+             onDateChange={(time2) => setEndTime(time2)}
+             is24Hour={true} 
+             //onDateChange={(time2) => setStartTime(time2.getHours + ":" + time2.getMinutes)}
+              date={endTime}
             />
             <TextInput
               style={globalStyles.input}
@@ -281,7 +304,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               onChangeText={(text) => setTableNo(text)}
               value={tableNo}
               keyboardType="numeric"
-              testID="ReservForm.phone"
+              testID="ReservForm.tableNo"
             />
             <TextInput
               style={globalStyles.input}
@@ -308,7 +331,9 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
             <Button
               testID="reservation.Button"
               title="SAVE"
-              onPress={submitReservation}
+            //   onPress={(findTableID(tableNo), submitReservation)}
+              onPress={(findTableID(tableNo), submitReservation)}
+
             />
           </View>
         )}
