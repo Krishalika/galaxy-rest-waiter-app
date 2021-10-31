@@ -55,7 +55,9 @@ const DetailsScreen = ({ navigation, route }) => {
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
 
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}> */}
+          <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+
             <AntDesign
               name="shoppingcart"
               size={30}

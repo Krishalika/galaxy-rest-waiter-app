@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 10,
     elevation: 15,
-    width: 160,
+    width: 170,
     backgroundColor: COLORS.white,
     marginVertical: 10,
     marginHorizontal: 20,

@@ -6,6 +6,7 @@ import {
   Text,
   LogBox,
   Alert,
+  Image,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -18,7 +19,8 @@ import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 //import DropDown from "react-native-paper-dropdown";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Provider} from 'react-native-paper';
+import { Provider } from "react-native-paper";
+import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 
 LogBox.ignoreAllLogs(true);
 const OrderDetails = ({ navigation, route, _id }) => {
@@ -90,14 +92,28 @@ const OrderDetails = ({ navigation, route, _id }) => {
 
   console.log("array", foodItems);
 
+  const foodDetails = [];
+  for (let i = 0; i < length; i++) {
+    const detailList = [];
+
+    detailList.push(getDetails("foodItems")[i].item.img);
+    detailList.push(getDetails("foodItems")[i].item.name);
+    detailList.push(getDetails("foodItems")[i].qty);
+    detailList.push(getDetails("foodItems")[i].item.price);
+    detailList.push(getDetails("foodItems")[i].item.code);
+
+    foodDetails.push(detailList);
+  }
+
   const calculateTotal = () => {
     let totalPrice = 0;
-    getDetails("foodItems").forEach((el) => {
-      totalPrice += el.soldPrice * el.qty;
+    foodItems.forEach((el) => {
+      totalPrice += el["soldPrice"] * el["qty"];
     });
     return totalPrice;
   };
 
+  console.log("Total price: ", calculateTotal());
   console.log(calculateTotal.length);
   //const getOrderDetails = () => {};
 
@@ -187,9 +203,78 @@ const OrderDetails = ({ navigation, route, _id }) => {
   //   PopulateOrder();
   // }, []);
 
+  const OrdersCard = ({ item }) => {
+    return (
+      <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
+        <View style={styles.OrdersCard}>
+          {/* <View style={styles.tableNumCon}> */}
+          {/* <Text
+              style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
+            >
+              {item[0]}
+            </Text> */}
+          <Image
+            source={{ uri: item[0] }}
+            style={{
+              height: 80,
+              width: 80,
+              resizeMode: "center",
+              justifyContent: "center",
+              borderRadius: 45,
+              paddingLeft: 15,
+            }}
+          />
+          {/* </View> */}
+          <View
+            style={{
+              height: 100,
+              marginLeft: 10,
+              paddingVertical: 10,
+              flex: 1,
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              {/* {item.cusName} */}
+              {item[1]}
+            </Text>
+
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item[2]}</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              Rs.{item[3]}
+            </Text>
+            {/* <Text
+              style={{ fontWeight: "bold", fontSize: 14, color: "#808080" }}
+            >
+              {item.customerEmail}
+            </Text>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 14, color: "#A9A9A9" }}
+            >
+              {item.customerContactNumber}
+            </Text> */}
+          </View>
+          <View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 16,
+                color: COLORS.primary,
+              }}
+            >
+              {item[4]}
+            </Text>
+          </View>
+          <View style={{ marginRight: 20, alignItems: "center" }}></View>
+        </View>
+      </TouchableHighlight>
+    );
+  };
+
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
+        {/* <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} /> */}
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Order Details</Text>
@@ -231,6 +316,20 @@ const OrderDetails = ({ navigation, route, _id }) => {
           <Text>Customer Name: {item.customerName}</Text>
         </View>
         <View style={styles.button}>
+          <Text>Total Price: {calculateTotal()}</Text>
+        </View>
+        <View style={styles.content}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 80 }}
+            // data={ReservationsList}
+            data={foodDetails}
+            renderItem={({ item }) => <OrdersCard item={item} />}
+            ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+          />
+        </View>
+
+        <View style={styles.button}>
           <PrimaryButton
             title={"SAVE"}
             onPress={() => updateDetails(item._id)}
@@ -251,28 +350,24 @@ const styles = StyleSheet.create({
   details: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 320,
+    // paddingBottom: -100,
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
   },
-  detailsText: {
-    marginTop: 10,
-    lineHeight: 22,
-    fontSize: 16,
-    color: COLORS.primary,
-  },
-  actionBtn: {
-    width: 80,
-    height: 30,
+  OrdersCard: {
+    height: 100,
+    borderRadius: 10,
+    elevation: 10,
+    width: 360,
     backgroundColor: COLORS.white,
-    borderRadius: 30,
-    paddingHorizontal: 5,
+    marginVertical: 10,
+    marginHorizontal: 20,
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    alignContent: "center",
   },
   tableNumCon: {
     height: 45,
@@ -289,6 +384,12 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingLeft: 45,
     justifyContent: "center",
+  },
+  content: {
+    backgroundColor: COLORS.light,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
   },
 });
 
