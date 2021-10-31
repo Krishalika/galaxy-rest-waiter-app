@@ -52,7 +52,7 @@ function MyDrawer() {
       style={styles.drawerItem}
     >
 
-      {/* <Drawer.Screen
+      <Drawer.Screen
 
         name="login"
         component={LoginScreen}
@@ -64,7 +64,7 @@ function MyDrawer() {
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
         }}
-      /> */}
+      />
       <Drawer.Screen
         name="Home"
         component={Home}
