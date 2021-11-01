@@ -29,6 +29,8 @@ const style = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
+    width: 300,
+    alignSelf:"center"
   },
   title: { color: COLORS.white, fontWeight: "bold", fontSize: 18 },
 });

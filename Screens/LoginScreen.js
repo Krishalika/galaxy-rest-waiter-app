@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import {
   StyleSheet,
   Image,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import { PrimaryButton } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 // async removeItemValue(key) {
 //     try {
@@ -28,9 +29,9 @@ const LoginScreen = (props) => {
 
   const styles = StyleSheet.create({
     headerLogo: {
-      marginTop: 30,
-      height: 100,
-      width: 100,
+      marginTop: 50,
+      height: 150,
+      width: 150,
       borderRadius: 55,
       position: "absolute",
     },
@@ -40,6 +41,28 @@ const LoginScreen = (props) => {
     },
     logo: {
       alignItems: "center",
+    },
+    commonCard: {
+      height: 250,
+      borderRadius: 10,
+      elevation: 10,
+      width: 360,
+      backgroundColor: "white",
+      // marginVertical: 10,
+      marginHorizontal: 25,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 250,
+      marginBottom: 100,
+    },
+    tInput: {
+      marginTop: 18,
+      alignSelf: "center",
+      height: 50,
+      width: 260,
+      backgroundColor: "white"
+      // fontFamily: "nunito-bold",
     },
   });
   const sendCred = async (props) => {
@@ -78,11 +101,17 @@ const LoginScreen = (props) => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
       console.log("success");
-      // props.navigation.replace("homeScreen");
-      // props.navigation.replace("Home");
       props.navigation.navigate("Home");
+      //props.navigation.replace("Home");
     } else {
       console.log("error");
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Email or password is incorrect!",
+      });
       //props.navigation.replace("LoginScreen");
     }
   };
@@ -95,7 +124,7 @@ const LoginScreen = (props) => {
         {/* <KeyboardAvoidingView behavior="position" backgroundColor='white'> */}
         <StatusBar backgroundColor="#03498f" barStyle="light-content" />
 
-        <Text
+        {/* <Text
           style={{
             fontSize: 25,
             textAlign: "center",
@@ -104,8 +133,8 @@ const LoginScreen = (props) => {
             // fontFamily: "nunito-bold",
           }}
         >
-          Welcome to
-        </Text>
+          Welcome
+        </Text> */}
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
@@ -114,41 +143,40 @@ const LoginScreen = (props) => {
         </View>
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <TextInput
-              label="Email"
-              mode="outlined"
-              value={email}
-              style={{
-                marginTop: 150,
-                alignSelf: "center",
-                height: 30,
-                width: "60%",
-                // fontFamily: "nunito-bold",
-              }}
-              theme={{ colors: { primary: "#08b8e1" } }}
-              onChangeText={(text) => setEmail(text)}
-            />
-            <TextInput
-              label="Password"
-              mode="outlined"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-              }}
-              style={{
-                marginTop: 18,
-                alignSelf: "center",
-                height: 30,
-                width: "60%",
-                // fontFamily: "nunito-bold",
-              }}
-              theme={{ colors: { primary: "#08b8e1" } }}
-            />
+          <View style={styles.commonCard}>
+            {/* <View > */}
+            <View>
+              <TextInput
+                label="Email"
+                // mode="outlined"
+                value={email}
+                style={styles.tInput}
+                theme={{ colors: { primary: "#08b8e1" } }}
+                onChangeText={(text) => setEmail(text)}
+              />
+              <TextInput
+                label="Password"
+                // mode="outlined"
+                secureTextEntry={true}
+                value={password}
+                onChangeText={(text) => {
+                  setPassword(text);
+                }}
+                style={styles.tInput}
+                theme={{ colors: { primary: "#08b8e1" } }}
+              />
+            </View>
           </View>
         </TouchableWithoutFeedback>
-        <Button
+        <PrimaryButton
+          title={"LOGIN"}
+          mode="contained"
+          onPress={() => sendCred(props)}
+
+          // onPress={sendCred(prop)}
+          // disabled={quantity > 0 ? false : true}
+        />
+        {/* <Button
           mode="contained"
           style={{
             marginTop: 38,
@@ -169,7 +197,7 @@ const LoginScreen = (props) => {
           >
             Login
           </Text>
-        </Button>
+        </Button> */}
       </View>
     </>
   );

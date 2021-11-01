@@ -242,7 +242,7 @@ export default function Home({ navigation }) {
           />
           <TextInput
             style={{ flex: 1, fontSize: 18 }}
-            placeholder="item code"
+            placeholder="Item Code"
             onChangeText={onChangeNumber}
             value={textNumber}
           />
@@ -257,7 +257,7 @@ export default function Home({ navigation }) {
           />
           <TextInput
             style={{ flex: 1, fontSize: 18 }}
-            placeholder="item name"
+            placeholder="Item Name"
             onChangeText={onChangeText}
             value={textName}
           />

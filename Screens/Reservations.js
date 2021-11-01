@@ -72,7 +72,7 @@ export default function Reservations({ navigation }) {
               size={24}
               style={{ ...styles.modalToggle, ...styles.modalClose }}
               onPress={() => setModalVisible(false)}
-            ></Icon>
+            />
             <ReservationsForm addReservation={addReservation} />
             {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
@@ -185,7 +185,14 @@ m.format('h:mma'); // '2:04pm' */}
         style={{
           justifyContent: "flex-end",
           alignItems: "flex-end",
+
+          //alignSelf: "flex-end",
+          // position: "absolute",
+          // bottom: 35,
+          // paddingRight: 35,
+          // width: 180,
         }}
+        //style={styles.addButton}
       >
         <Button title="ADD" onPress={() => setModalVisible(true)} />
       </View>
@@ -305,6 +312,16 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: 50,
     justifyContent: "flex-end",
+  },
+  addButton: {
+    alignSelf: "flex-end",
+    position: "absolute",
+    bottom: 35,
+    paddingRight: 35,
+    width: 180,
+    // height:45,
+    // width: 45,
+    // borderRadius: 30
   },
   buttonOpen: {
     backgroundColor: "#F194FF",

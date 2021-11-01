@@ -221,7 +221,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
               resizeMode: "center",
               justifyContent: "center",
               borderRadius: 45,
-              paddingLeft: 15,
+              marginLeft: 10,
             }}
           />
           {/* </View> */}
@@ -239,10 +239,11 @@ const OrderDetails = ({ navigation, route, _id }) => {
               {item[1]}
             </Text>
 
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item[2]}</Text>
+          
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item[3]}
             </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item[2]}</Text>
             {/* <Text
               style={{ fontWeight: "bold", fontSize: 14, color: "#808080" }}
             >
@@ -312,16 +313,17 @@ const OrderDetails = ({ navigation, route, _id }) => {
           />
           </Provider> */}
         </View>
-        <View style={styles.button}>
+        <View style={styles.commonCard}>
           <Text>Customer Name: {item.customerName}</Text>
         </View>
-        <View style={styles.button}>
-          <Text>Total Price: {calculateTotal()}</Text>
+        <View style={styles.commonCard}>
+          <Text>Total Price: Rs. {calculateTotal()}</Text>
         </View>
         <View style={styles.content}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 80 }}
+            // style={{backgroundColor:COLORS.light}}
+            // contentContainerStyle={{ paddingBottom: 80 }}
             // data={ReservationsList}
             data={foodDetails}
             renderItem={({ item }) => <OrdersCard item={item} />}
@@ -369,6 +371,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  commonCard: {
+    height: 50,
+    borderRadius: 10,
+    elevation: 10,
+    width: 360,
+    backgroundColor: COLORS.white,
+    marginVertical: 10,
+    marginHorizontal: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   tableNumCon: {
     height: 45,
     width: 45,
@@ -379,8 +393,8 @@ const styles = StyleSheet.create({
     marginLeft: 170,
   },
   button: {
-    marginTop: 40,
-    marginBottom: 40,
+    // marginTop: 40,
+    // marginBottom: 40,
     width: "90%",
     paddingLeft: 45,
     justifyContent: "center",
@@ -391,6 +405,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
+  
 });
 
 export default OrderDetails;
