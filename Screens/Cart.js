@@ -301,7 +301,7 @@ const Cart = ({ navigation }) => {
             style={styles.button}
             // style={styles.tInput}
             placeholder="Customer Name"
-            // mode="outlined"
+            mode="outlined"
             onChangeText={(text) => setcustomerName(text)}
             value={customerName}
             clearButtonMode="always"
@@ -314,6 +314,7 @@ const Cart = ({ navigation }) => {
             mode="outlined"
             onChangeText={(text) => setidNumber(text)}
             value={idNumber}
+            // clearButtonMode="always"
           />
           <TextInput
             height="55px"

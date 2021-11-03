@@ -78,36 +78,47 @@ const LoginScreen = (props) => {
     },
   });
   const sendCred = async (props) => {
-    fetch("https://galaxy-rest-be.herokuapp.com/waiters/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
+    if (email && password) {
+      fetch("https://galaxy-rest-be.herokuapp.com/waiters/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
 
-      .then(async (data) => {
-        try {
-          await AsyncStorage.setItem("token", data.token);
-          // props.navigation.replace("Home");
-          props.navigation.navigate("Home");
-          // props.navigation.replace("homeScreen");
-        } catch (e) {
-          //console.log("error hai", e);
-          // Alert(e);
-          Toast.show({
-            topOffset: 40,
-            visibilityTime: 1500,
-            position: "top",
-            type: "error",
-            text1: "Email or password is incorrect!",
-          });
-        }
+        .then(async (data) => {
+          try {
+            await AsyncStorage.setItem("token", data.token);
+            // props.navigation.replace("Home");
+            props.navigation.navigate("Home");
+            // props.navigation.replace("homeScreen");
+          } catch (e) {
+            // console.log("error");
+            //console.log("error hai", e);
+            // Alert(e);
+            Toast.show({
+              topOffset: 40,
+              visibilityTime: 1500,
+              position: "top",
+              type: "error",
+              text1: "Email or password is incorrect!",
+            });
+          }
+        });
+    } else {
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Email or password is incorrect!",
       });
+    }
   };
   const detectLogin = async () => {
     const token = await AsyncStorage.getItem("token");
@@ -116,7 +127,7 @@ const LoginScreen = (props) => {
       props.navigation.navigate("Home");
       //props.navigation.replace("Home");
     } else {
-      console.log("error");
+      // console.log("error");
       Toast.show({
         topOffset: 40,
         visibilityTime: 1500,
