@@ -187,19 +187,22 @@ export default function Home({ navigation }) {
             />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              {food.code}
+            </Text>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
               {food.name}
             </Text>
           </View>
           <View
             style={{
-              marginTop: 10,
+              marginTop: 2,
               marginHorizontal: 20,
               flexDirection: "row",
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 14, fontWeight: "bold", color: "#A9A9A9"  }}>
               Rs.{food.price}
             </Text>
             <View style={styles.addToCartBtn}>
