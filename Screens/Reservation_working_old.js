@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import { TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
 import { Formik } from "formik";
 //import FlatButton from '../shared/button';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { PrimaryButton } from "../components/Button";
+import { SecondaryButton, PrimaryButton } from "../components/Button";
+import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
-import Toast from "react-native-toast-message";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function ReservationsForm({ open, setOpen, room, navigation }) {
   const [table, setTable] = useState("");
@@ -28,9 +36,10 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
 
   const findTableID = async (tableNumber) =>
     await axios
-
+      // .get(`http://10.0.2.2:5000/food/by-name`, {
       .get(`https://galaxy-rest-be.herokuapp.com/table/by-tableNo`, {
         params: { tableNumber: tableNumber },
+        //params: { name: name },
       })
       .then(({ data }) => {
         setTypes(data);
@@ -50,6 +59,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
     setcustomerContactNumber("");
   };
 
+  //console.log("hello",findTableID("12")[0]._id);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -59,6 +69,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
   };
 
   const handleDateConfirm = (date) => {
+    // console.warn("A date has been picked: ", date);
     setDate(date);
     hideDatePicker();
   };
@@ -72,6 +83,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
   };
 
   const handleStartTimeConfirm = (startTime) => {
+    // console.warn("A date has been picked: ", date);
     setStartTime(startTime);
     hideStartTimePicker();
   };
@@ -85,6 +97,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
   };
 
   const handleEndTimeConfirm = (endTime) => {
+    // console.warn("A date has been picked: ", date);
     setEndTime(endTime);
     hideEndTimePicker();
   };
@@ -119,33 +132,28 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
       })
         .then((res) => res.json())
         .then((data) => {
+          // setFoodItems((prevFood)=>{
+          //   return [data, ...prevFood]
+          //  })
           console.log(data);
           console.log("Table Reservation Added Successfully!");
-          Toast.show({
-            topOffset: 40,
-            visibilityTime: 1500,
-            position: "top",
-            type: "success",
-            text1: "Table Reservation Added Successfully",
-          });
-          //setOpen(false);
-          props.navigation.replace("Reservations")
+          //clearData();
+          // Alert.alert("Table Reservation added");
+          setOpen(false);
+          //console.log(findTableID(tableNo)._id);
         })
         .catch((err) => {
           console.log("Something went wrong");
+          // Alert.alert("Something went wrong");
+          // console.log(findTableID(tableNo)._id);
         });
     } else {
-      Toast.show({
-        topOffset: 40,
-        visibilityTime: 1500,
-        position: "top",
-        type: "error",
-        text1: "Please fill all the details",
-      });
+      Alert.alert("Please fill all the details");
     }
   };
   return (
     <View style={globalStyles.container}>
+      {/* <Text style={globalStyles.blackText}>Room No - {room?.roomNo}</Text> */}
       <Formik
         initialValues={{
           tableNo: "",
@@ -160,46 +168,79 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
       >
         {(props) => (
           <View>
-            <View style={styles.inputContainer}>
-              <AntDesign name="user" size={24} color="black" />
-              <TextInput
-                style={styles.tInput}
-                label="Customer Name"
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setName(text)}
-                value={customerName}
-                clearButtonMode="always"
-              />
-            </View>
-
+          
             <View style={styles.inputContainer}>
               <AntDesign name="mail" size={24} color="black" />
               <TextInput
+                style={globalStyles.input}
                 style={styles.tInput}
-                label="Customer Email Address"
+                label="Customer Name"
                 theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setcustomerEmail(text)}
-                value={customerEmail}
-                testID="ReservForm.email"
-
+                // mode="outlined"
+                // theme={{
+                //   // fonts: {
+                //   //   regular: {
+                //   //     fontFamily: "nunito-bold",
+                //   //   },
+                //   // },
+                //   colors: {
+                //     primary: "#08b8e1",
+                //     accent: "#03498f",
+                //     placeholder: "#03498f",
+                //     text: "#08b8e1",
+                //   },
+                // }}
+                onChangeText={(text) => setName(text)}
+                value={customerName}
+                //   testID="ReservForm.name"
               />
             </View>
-
-            <View style={styles.inputContainer}>
-              <AntDesign name="phone" size={24} color="black" />
-              <TextInput
-                style={styles.tInput}
-                label="Customer Contact Number"
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setcustomerContactNumber(text)}
-                value={customerContactNumber}
-                keyboardType="numeric"
-                testID="ReservForm.phone"
-              />
-            </View>
-
+            <TextInput
+              style={globalStyles.input}
+              label="Customer Email Address"
+              mode="outlined"
+              theme={{
+                // fonts: {
+                //   regular: {
+                //     fontFamily: "nunito-bold",
+                //   },
+                // },
+                colors: {
+                  primary: "#08b8e1",
+                  accent: "#03498f",
+                  placeholder: "#03498f",
+                  text: "#08b8e1",
+                },
+              }}
+              onChangeText={(text) => setcustomerEmail(text)}
+              value={customerEmail}
+              testID="ReservForm.email"
+            />
+            <TextInput
+              style={globalStyles.input}
+              label="Customer Contact Number"
+              mode="outlined"
+              theme={{
+                // fonts: {
+                //   regular: {
+                //     fontFamily: "nunito-bold",
+                //   },
+                // },
+                colors: {
+                  primary: "#08b8e1",
+                  accent: "#03498f",
+                  placeholder: "#03498f",
+                  text: "#08b8e1",
+                },
+              }}
+              onChangeText={(text) => setcustomerContactNumber(text)}
+              value={customerContactNumber}
+              keyboardType="numeric"
+              testID="ReservForm.phone"
+            />
+            {/* <Button title="Show Start Date Picker" onPress={showDatePicker} /> */}
             <TouchableOpacity onPress={showDatePicker}>
-              <View style={styles.commonCard}>
+              <View style={styles.button}>
                 <Text style={styles.buttonText}>Select Reservation Date</Text>
               </View>
             </TouchableOpacity>
@@ -214,7 +255,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
             />
 
             <TouchableOpacity onPress={showStartTimePicker}>
-              <View style={styles.commonCard}>
+              <View style={styles.button}>
                 <Text style={styles.buttonText}>
                   Select Reservation Starting Time
                 </Text>
@@ -227,11 +268,14 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               onCancel={hideStartTimePicker}
               date={startTime}
               is24Hour={true}
+              // timePickerModeAndroid={date} ////////////////////
               onDateChange={(time1) => setStartTime(time1)}
+              //onDateChange={(time1) => setStartTime(time1.getHours + ":" + time1.getMinutes)}
+              //   date.getHours()
             />
 
             <TouchableOpacity onPress={showEndTimePicker}>
-              <View style={styles.commonCard}>
+              <View style={styles.button}>
                 <Text style={styles.buttonText}>
                   Select Reservation Ending Time
                 </Text>
@@ -242,46 +286,74 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               mode="time"
               onConfirm={handleEndTimeConfirm}
               onCancel={hideEndTimePicker}
+              // timePickerModeAndroid={date} ////////////////////
               onDateChange={(time2) => setEndTime(time2)}
               is24Hour={true}
+              //onDateChange={(time2) => setStartTime(time2.getHours + ":" + time2.getMinutes)}
               date={endTime}
             />
-
-            <View style={styles.inputContainer}>
-              <Ionicons name="list-outline" size={24} color="black" />
-              <TextInput
-                style={styles.tInput}
-                label="Table Number"
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setTableNo(text)}
-                value={tableNo}
-                // value = {findTableID(tableNo)}
-                keyboardType="numeric"
-                testID="ReservForm.tableNo"
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Ionicons name="pricetag-outline" size={24} color="black" />
-              <TextInput
-                style={styles.tInput}
-                label="Price"
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setPrice(text)}
-                value={price}
-                keyboardType="numeric"
-                testID="ReservForm.phone"
-              />
-            </View>
-
+            <TextInput
+              style={globalStyles.input}
+              label="Table Number"
+              mode="outlined"
+              theme={{
+                // fonts: {
+                //   regular: {
+                //     fontFamily: "nunito-bold",
+                //   },
+                // },
+                colors: {
+                  primary: "#08b8e1",
+                  accent: "#03498f",
+                  placeholder: "#03498f",
+                  text: "#08b8e1",
+                },
+              }}
+              onChangeText={(text) => setTableNo(text)}
+              value={tableNo}
+              keyboardType="numeric"
+              testID="ReservForm.tableNo"
+            />
+            <TextInput
+              style={globalStyles.input}
+              label="Price"
+              mode="outlined"
+              theme={{
+                // fonts: {
+                //   regular: {
+                //     fontFamily: "nunito-bold",
+                //   },
+                // },
+                colors: {
+                  primary: "#08b8e1",
+                  accent: "#03498f",
+                  placeholder: "#03498f",
+                  text: "#08b8e1",
+                },
+              }}
+              onChangeText={(text) => setPrice(text)}
+              value={price}
+              keyboardType="numeric"
+              testID="ReservForm.phone"
+            />
+            {/* <Button
+              testID="reservation.Button"
+              title="SAVE"
+              onPress={(findTableID(tableNo), submitReservation)}
+            /> */}
             <PrimaryButton
               testID="reservation.Button"
               title={"SAVE"}
               onPress={(findTableID(tableNo), submitReservation)}
-              // onPress={submitReservation, clearData}
-
-              marginTop="50"
             />
+            {/* <PrimaryButton
+          title={"LOGIN"}
+          mode="contained"
+          onPress={() => sendCred(props)}
+
+          // onPress={sendCred(prop)}
+          // disabled={quantity > 0 ? false : true}
+        /> */}
           </View>
         )}
       </Formik>
@@ -302,32 +374,27 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#03498f",
-
+    // fontFamily: "nunito-bold",
+    // textTransform:'uppercase',
     fontSize: 15,
     textAlign: "center",
   },
   tInput: {
+    // marginTop: 18,
     alignSelf: "center",
-    fontSize: 14,
     height: 50,
-    width: 330,
+    width: 260,
     backgroundColor: "white",
+    // fontFamily: "nunito-bold",
   },
   inputContainer: {
+    // flex: 1,
+    // height: 10,
+    // borderRadius: 10,
     flexDirection: "row",
-    marginTop: 17,
+    marginTop: 18,
+    // backgroundColor: "#E5E5E5",
     alignItems: "center",
-    // marginRight: 5
-  },
-  commonCard: {
-    height: 50,
-    borderRadius: 10,
-    elevation: 10,
-    width: 360,
-    backgroundColor: "white",
-    marginVertical: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    // paddingHorizontal: 20,
   },
 });

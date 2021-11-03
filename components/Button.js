@@ -30,7 +30,8 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: 300,
-    alignSelf:"center"
+    alignSelf:"center",
+    marginTop:40
   },
   title: { color: COLORS.white, fontWeight: "bold", fontSize: 18 },
 });

@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     width: 170,
     backgroundColor: COLORS.white,
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

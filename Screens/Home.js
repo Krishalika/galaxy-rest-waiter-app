@@ -35,7 +35,6 @@ export default function Home({ navigation }) {
 
     // fetch("http://10.0.2.2:5000/category")
     fetch("https://galaxy-rest-be.herokuapp.com/category")
-
       .then((res) => res.json())
       .then((results) => {
         setcategoryItems(results);
@@ -56,8 +55,9 @@ export default function Home({ navigation }) {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
     // fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
-    fetch("https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}")
-
+    fetch(
+      "https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}"
+    )
       .then((res) => res.json())
       .then((results) => {
         setsortedItems(results);
@@ -73,8 +73,7 @@ export default function Home({ navigation }) {
   const res = async (category) =>
     await axios
       // .get(`http://10.0.2.2:5000/food/by-category`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
         params: { category: category },
       })
       .then(({ data }) => {
@@ -91,8 +90,7 @@ export default function Home({ navigation }) {
   const resNames = async (name) =>
     await axios
       // .get(`http://10.0.2.2:5000/food/by-name`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
         params: { name: name },
       })
       .then(({ data }) => {
@@ -105,8 +103,7 @@ export default function Home({ navigation }) {
   const resCodes = async (code) =>
     await axios
       // .get(`http://10.0.2.2:5000/food/by-code`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
         params: { code: code },
       })
       .then(({ data }) => {
@@ -182,9 +179,10 @@ export default function Home({ navigation }) {
               source={{ uri: food.img }}
               style={{
                 height: 130,
-                width: 120,
+                width: 130,
                 borderRadius: 30,
                 paddingTop: 10,
+                marginTop:10
               }}
             />
           </View>
@@ -229,37 +227,37 @@ export default function Home({ navigation }) {
         style={{ marginLeft: 360 }}
       />
       <View
-        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
+        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal:10, alignSelf:"center" }}
       >
         <View style={styles.inputContainer}>
+          <TextInput
+            style={{ flex: 1, fontSize: 16 }}
+            placeholder="Item code"
+            onChangeText={onChangeNumber}
+            value={textNumber}
+          />
           <Icon
             name="search"
-            size={28}
+            size={24}
             onPress={() => {
               if (textNumber != "")
                 resCodes(textNumber), console.log(codes.length);
             }}
           />
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="Item Code"
-            onChangeText={onChangeNumber}
-            value={textNumber}
-          />
         </View>
         <View style={styles.inputContainer}>
+          <TextInput
+            style={{ flex: 1, fontSize: 16 }}
+            placeholder="Item name"
+            onChangeText={onChangeText}
+            value={textName}
+          />
           <Icon
             name="search"
-            size={28}
+            size={24}
             onPress={() => {
               if (textName != "") resNames(textName), console.log(names.length);
             }}
-          />
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="Item Name"
-            onChangeText={onChangeText}
-            value={textName}
           />
         </View>
       </View>
@@ -289,9 +287,10 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     flexDirection: "row",
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.white,
     alignItems: "center",
     paddingHorizontal: 20,
+    marginEnd:7,
   },
   sortBtn: {
     width: 50,

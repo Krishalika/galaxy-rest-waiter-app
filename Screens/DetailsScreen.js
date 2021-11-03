@@ -56,7 +56,7 @@ const DetailsScreen = ({ navigation, route }) => {
 
         <View style={{ flexDirection: "row" }}>
           {/* <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}> */}
-          <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
 
             <AntDesign
               name="shoppingcart"
@@ -64,7 +64,7 @@ const DetailsScreen = ({ navigation, route }) => {
               color="black"
               style={{ paddingHorizontal: 160 }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -77,7 +77,7 @@ const DetailsScreen = ({ navigation, route }) => {
         >
           <Image
             source={{ uri: item.img }}
-            style={{ height: 220, width: 220 }}
+            style={{ height: 220, width: 220 , borderRadius:20}}
           />
         </View>
         <View style={styles.details}>

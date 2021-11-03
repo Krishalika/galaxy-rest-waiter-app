@@ -20,6 +20,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import COLORS from "../src/consts/colors";
 import { SecondaryButton } from "../components/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { AntDesign, Feather } from "@expo/vector-icons";
 
 import Header from "../Header/Header";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,7 +109,7 @@ const Cart = ({ navigation }) => {
     setcustomerName("");
     setidNumber("");
     settableNumber("");
-  }
+  };
   const placeOrder = () => {
     const data = {
       customerName,
@@ -272,7 +273,6 @@ const Cart = ({ navigation }) => {
                     onChangeText={(text) => settableNumber(text)}
                     value={tableNumber}
                     color={COLORS.white}
-              
                   />
                   <TextInput
                     style={globalStyles.input}
@@ -294,15 +294,19 @@ const Cart = ({ navigation }) => {
           </ScrollView>
         </Provider>
         <View style={{ alignItems: "center" }}>
+          {/* <View style={styles.inputContainer}>
+            <AntDesign name="lock" size={28} color="black" /> */}
           <TextInput
             height="55px"
             style={styles.button}
+            // style={styles.tInput}
             placeholder="Customer Name"
-            mode="outlined"
+            // mode="outlined"
             onChangeText={(text) => setcustomerName(text)}
             value={customerName}
-            clearButtonMode='always'
+            clearButtonMode="always"
           />
+          {/* </View> */}
           <TextInput
             height="55px"
             style={styles.button}
@@ -396,6 +400,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderRadius: 8,
     color: COLORS.primary,
+  },
+  tInput: {
+    // marginTop: 18,
+    alignSelf: "center",
+    height: 50,
+    width: 260,
+    backgroundColor: "white",
+    // fontFamily: "nunito-bold",
+  },
+  inputContainer: {
+    // flex: 1,
+    // height: 10,
+    // borderRadius: 10,
+    flexDirection: "row",
+    marginTop: 18,
+    // backgroundColor: "#E5E5E5",
+    alignItems: "center",
+    // paddingHorizontal: 20,
   },
 });
 

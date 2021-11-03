@@ -13,6 +13,8 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { PrimaryButton } from "../components/Button";
+import { AntDesign, Feather } from "@expo/vector-icons";
+
 import { useNavigation } from "@react-navigation/native";
 // async removeItemValue(key) {
 //     try {
@@ -49,7 +51,7 @@ const LoginScreen = (props) => {
       width: 360,
       backgroundColor: "white",
       // marginVertical: 10,
-      marginHorizontal: 25,
+      marginHorizontal: 15,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
@@ -57,12 +59,22 @@ const LoginScreen = (props) => {
       marginBottom: 100,
     },
     tInput: {
-      marginTop: 18,
+      // marginTop: 18,
       alignSelf: "center",
       height: 50,
       width: 260,
-      backgroundColor: "white"
+      backgroundColor: "white",
       // fontFamily: "nunito-bold",
+    },
+    inputContainer: {
+      // flex: 1,
+      // height: 10,
+      // borderRadius: 10,
+      flexDirection: "row",
+      marginTop: 18,
+      // backgroundColor: "#E5E5E5",
+      alignItems: "center",
+      // paddingHorizontal: 20,
     },
   });
   const sendCred = async (props) => {
@@ -146,25 +158,33 @@ const LoginScreen = (props) => {
           <View style={styles.commonCard}>
             {/* <View > */}
             <View>
-              <TextInput
-                label="Email"
-                // mode="outlined"
-                value={email}
-                style={styles.tInput}
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setEmail(text)}
-              />
-              <TextInput
-                label="Password"
-                // mode="outlined"
-                secureTextEntry={true}
-                value={password}
-                onChangeText={(text) => {
-                  setPassword(text);
-                }}
-                style={styles.tInput}
-                theme={{ colors: { primary: "#08b8e1" } }}
-              />
+              <View style={styles.inputContainer}>
+                <AntDesign name="mail" size={24} color="black" />
+
+                {/* <View> */}
+                <TextInput
+                  label="Email"
+                  // mode="outlined"
+                  value={email}
+                  style={styles.tInput}
+                  theme={{ colors: { primary: "#08b8e1" } }}
+                  onChangeText={(text) => setEmail(text)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <AntDesign name="lock" size={28} color="black" />
+                <TextInput
+                  label="Password"
+                  // mode="outlined"
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={(text) => {
+                    setPassword(text);
+                  }}
+                  style={styles.tInput}
+                  theme={{ colors: { primary: "#08b8e1" } }}
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>

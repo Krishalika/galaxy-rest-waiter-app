@@ -239,7 +239,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
               {item[1]}
             </Text>
 
-          
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item[3]}
             </Text>
@@ -278,7 +277,9 @@ const OrderDetails = ({ navigation, route, _id }) => {
         {/* <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} /> */}
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Order Details</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          Update Order Status
+        </Text>
         <View style={styles.tableNumCon}>
           <Text
             style={{ fontSize: 25, color: COLORS.white, fontWeight: "bold" }}
@@ -313,15 +314,26 @@ const OrderDetails = ({ navigation, route, _id }) => {
           />
           </Provider> */}
         </View>
-        <View style={styles.commonCard}>
-          <Text>Customer Name: {item.customerName}</Text>
+        <View style={{ paddingLeft: 45 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Order Details
+          </Text>
         </View>
         <View style={styles.commonCard}>
-          <Text>Total Price: Rs. {calculateTotal()}</Text>
+          <Text style={{ fontSize: 16 }}>
+            Total Price: Rs. {calculateTotal()}
+          </Text>
         </View>
+        <View style={styles.commonCard}>
+          <Text style={{ fontSize: 16 }}>
+            Customer Name: {item.customerName}
+          </Text>
+        </View>
+
         <View style={styles.content}>
           <FlatList
             showsVerticalScrollIndicator={false}
+            backgroundColor="white"
             // style={{backgroundColor:COLORS.light}}
             // contentContainerStyle={{ paddingBottom: 80 }}
             // data={ReservationsList}
@@ -362,11 +374,11 @@ const styles = StyleSheet.create({
   OrdersCard: {
     height: 100,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 4,
     width: 360,
     backgroundColor: COLORS.white,
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -374,7 +386,7 @@ const styles = StyleSheet.create({
   commonCard: {
     height: 50,
     borderRadius: 10,
-    elevation: 10,
+    elevation: 4,
     width: 360,
     backgroundColor: COLORS.white,
     marginVertical: 10,
@@ -390,7 +402,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 170,
+    marginLeft: 100,
   },
   button: {
     // marginTop: 40,
@@ -398,14 +410,14 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingLeft: 45,
     justifyContent: "center",
+    paddingBottom: 30,
   },
   content: {
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
-  
 });
 
 export default OrderDetails;

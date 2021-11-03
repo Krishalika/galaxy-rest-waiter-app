@@ -183,8 +183,14 @@ m.format('h:mma'); // '2:04pm' */}
 
       <View
         style={{
-          justifyContent: "flex-end",
-          alignItems: "flex-end",
+          // justifyContent: "flex-end",
+          // alignItems: "flex-end",
+          alignSelf:"center",
+          width:200,
+          marginTop:10,
+          marginBottom:10,
+          // backgroundColor:COLORS.white
+          borderRadius:10,
 
           //alignSelf: "flex-end",
           // position: "absolute",
@@ -199,12 +205,14 @@ m.format('h:mma'); // '2:04pm' */}
 
       <View style={styles.content}>
         <FlatList
+        backgroundColor="white"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
           // data={ReservationsList}
           data={reservationItem}
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+          keyExtractor={(item, _id) => _id.toString()}
         />
       </View>
     </View>
@@ -255,7 +263,7 @@ const styles = StyleSheet.create({
   ReservationsCard: {
     height: 150,
     borderRadius: 10,
-    elevation: 15,
+    elevation: 10,
     width: 360,
     backgroundColor: COLORS.white,
     marginVertical: 10,
