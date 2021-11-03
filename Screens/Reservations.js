@@ -66,7 +66,8 @@ export default function Reservations({ navigation }) {
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
         <View style={styles.ReservationsCard}>
-          <Modal visible={modalVisible} animationType="fade">
+          {/* <Modal visible={modalVisible} animationType="fade"> */}
+          <Modal visible={modalVisible} animationType="none">
             <Icon
               name="close"
               size={24}
@@ -213,6 +214,8 @@ m.format('h:mma'); // '2:04pm' */}
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
+          onRefresh={()=> ListofReservations()}
+          refreshing={loading}
         />
       </View>
     </View>

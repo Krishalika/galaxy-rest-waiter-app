@@ -97,6 +97,8 @@ export default function Orders({ navigation }) {
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
+          onRefresh={()=> ListofOrders()}
+          refreshing={loading}
         />
       </View>
     </View>
