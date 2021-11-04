@@ -22,7 +22,7 @@ export default function Reservations({ navigation }) {
 
   const addReservation = (reservation) => {
     reservation.key = Math.random().toString();
-    setReservation((currentReservation) => {
+    setreservationItem((currentReservation) => {
       return [reservation, ...currentReservation];
     });
     setModalVisible(false);
@@ -181,15 +181,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
   },
-  reservedContent: {
-    flex: 1,
-    height: 45,
-    width: 45,
-    backgroundColor: COLORS.primary,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   tableContent: {
     flex: 5,
     height: 45,
@@ -216,34 +207,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  dropdown: {
-    flex: 1,
-    alignItems: "center",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    width: 500,
-    height: 500,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   button: {
     marginLeft: "auto",
     borderRadius: 20,
@@ -252,28 +215,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     width: 50,
     justifyContent: "flex-end",
-  },
-  addButton: {
-    alignSelf: "flex-end",
-    position: "absolute",
-    bottom: 35,
-    paddingRight: 35,
-    width: 180,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
   },
   modalToggle: {
     marginBottom: 10,

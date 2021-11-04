@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, Modal, Dimensions } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Orders({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
   const [orderItems, setorderItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,16 +34,6 @@ export default function Orders({ navigation }) {
         onPress={() => navigation.navigate("OrderDetails", item)}
       >
         <View style={styles.orderCard}>
-          <Modal visible={modalVisible} animationType="fade">
-            <View style={styles.modalContent}></View>
-            <Icon
-              name="close"
-              size={24}
-              style={{ ...styles.modalToggle, ...styles.modalClose }}
-              onPress={() => setModalVisible(false)}
-            ></Icon>
-            <OrderForm />
-          </Modal>
           <View style={styles.tableNumCon}>
             <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
@@ -133,64 +120,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  dropdown: {
-    flex: 1,
-    alignItems: "center",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    width: 500,
-    height: 500,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   button: {
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-  modalToggle: {
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#f2f2f2",
-    padding: 10,
-    borderRadius: 10,
-    alignSelf: "center",
-  },
-  modalClose: {
-    marginTop: 20,
-    marginBottom: 0,
   },
   tableNumCon: {
     height: 45,

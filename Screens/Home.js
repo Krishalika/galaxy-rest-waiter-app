@@ -295,15 +295,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginEnd: 7,
   },
-  sortBtn: {
-    width: 50,
-    height: 50,
-    marginLeft: 10,
-    backgroundColor: COLORS.primary,
-    borderRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   categoriesListContainer: {
     paddingVertical: 20,
     alignItems: "center",
@@ -317,14 +308,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 5,
     flexDirection: "row",
-  },
-  categoryBtnImgCon: {
-    height: 45,
-    width: 45,
-    backgroundColor: COLORS.white,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
   },
   card: {
     height: 220,
