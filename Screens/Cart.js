@@ -204,6 +204,8 @@ const Cart = ({ navigation }) => {
                 <View style={{ alignItems: "center" }}>
                   <TextInput
                     style={globalStyles.input}
+                    accessibilityLabel="number"
+                    testID="Cart.tableNumber"
                     label="Table Number"
                     mode="outlined"
                     keyboardType="numeric"
@@ -214,6 +216,8 @@ const Cart = ({ navigation }) => {
                   <TextInput
                     style={globalStyles.input}
                     label="Customer Name"
+                    accessibilityLabel="name"
+                    testID="Cart.customerName"
                     mode="outlined"
                     onChangeText={(text) => setcustomerName(text)}
                     value={customerName}
@@ -221,6 +225,8 @@ const Cart = ({ navigation }) => {
                   <TextInput
                     style={globalStyles.input}
                     label="Customer NIC"
+                    accessibilityLabel="nic"
+                    testID="Cart.customerNIC"
                     mode="outlined"
                     onChangeText={(text) => setidNumber(text)}
                     value={idNumber}

@@ -19,6 +19,7 @@ const Header = ({ navigation, title }) => {
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
+            testID="logo"
             source={require("../assets/logo.png")}
           />
         </View>

@@ -134,6 +134,7 @@ export default function Home({ navigation }) {
               <View>
                 <Image
                   source={{ uri: category.img }}
+                  testID="food"
                   style={{
                     height: 45,
                     width: 45,

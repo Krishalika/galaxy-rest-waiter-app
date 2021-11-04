@@ -54,6 +54,7 @@ const DetailsScreen = ({ navigation, route }) => {
         >
           <Image
             source={{ uri: item.img }}
+            testID="food"
             style={{ height: 220, width: 220, borderRadius: 20 }}
           />
         </View>

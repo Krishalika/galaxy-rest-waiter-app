@@ -162,6 +162,8 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               <TextInput
                 style={styles.tInput}
                 label="Customer Name"
+                accessibilityLabel="CustomerName"
+                testID="ReservationsForm.name"
                 theme={{ colors: { primary: "#08b8e1" } }}
                 onChangeText={(text) => setName(text)}
                 value={customerName}
@@ -174,10 +176,11 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               <TextInput
                 style={styles.tInput}
                 label="Customer Email Address"
+                accessibilityLabel="CustomerEmail"
+                testID="ReservationsForm.email"
                 theme={{ colors: { primary: "#08b8e1" } }}
                 onChangeText={(text) => setcustomerEmail(text)}
                 value={customerEmail}
-                testID="ReservForm.email"
               />
             </View>
 
@@ -186,11 +189,12 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               <TextInput
                 style={styles.tInput}
                 label="Customer Contact Number"
+                accessibilityLabel="CustomerTel"
+                testID="ReservationsForm.tel"
                 theme={{ colors: { primary: "#08b8e1" } }}
                 onChangeText={(text) => setcustomerContactNumber(text)}
                 value={customerContactNumber}
                 keyboardType="numeric"
-                testID="ReservForm.phone"
               />
             </View>
 
@@ -252,7 +256,8 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
                 onChangeText={(text) => setTableNo(text)}
                 value={tableNo}
                 keyboardType="numeric"
-                testID="ReservForm.tableNo"
+                accessibilityLabel="CustomerTable"
+                testID="ReservationsForm.table"
               />
             </View>
 
@@ -261,11 +266,12 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               <TextInput
                 style={styles.tInput}
                 label="Price"
+                accessibilityLabel="Price"
+                testID="ReservationsForm.price"
                 theme={{ colors: { primary: "#08b8e1" } }}
                 onChangeText={(text) => setPrice(text)}
                 value={price}
                 keyboardType="numeric"
-                testID="ReservForm.phone"
               />
             </View>
 
