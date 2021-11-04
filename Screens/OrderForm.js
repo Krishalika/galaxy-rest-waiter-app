@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, TextInput, View, LogBox } from "react-native";
 import { Formik } from "formik";
 import { globalStyles } from "../styles/global";
-import COLORS from "../src/consts/colors";
+import COLORS from "../styles/colors";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 
 export default function OrderForm() {
@@ -30,7 +30,7 @@ export default function OrderForm() {
               required
               keyboardType={"numeric"}
               style={globalStyles.input}
-              placeholder="Table Number" //on the values it updates table prop
+              placeholder="Table Number" 
               onChangeText={props.handleChange("Table")}
               value={props.values.Table}
             ></TextInput>

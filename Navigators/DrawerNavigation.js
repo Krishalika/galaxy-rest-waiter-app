@@ -10,7 +10,7 @@ import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
 import Reservations from "../Screens/Reservations";
 import Cart from "../Screens/Cart";
-import COLORS from "../src/consts/colors";
+import COLORS from "../styles/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";

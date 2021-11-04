@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Header from "../Header/Header";
-import COLORS from "../src/consts/colors";
+import Header from "../shared/Header";
+import COLORS from "../styles/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Dimensions, Image, StyleSheet, Text, View, Alert } from "react-native";
 import {
@@ -15,9 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
-// window.location.reload(false);
 
-//send props for navigation that it can navigate between screen
 export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
   const [categoryItems, setcategoryItems] = useState([]);
@@ -33,7 +31,6 @@ export default function Home({ navigation }) {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
 
-    // fetch("http://10.0.2.2:5000/category")
     fetch("https://galaxy-rest-be.herokuapp.com/category")
       .then((res) => res.json())
       .then((results) => {
@@ -54,7 +51,6 @@ export default function Home({ navigation }) {
   const ListofCategoryItems = async (category) => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-    // fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
     fetch(
       "https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}"
     )
@@ -72,7 +68,6 @@ export default function Home({ navigation }) {
 
   const res = async (category) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-category`, {
       .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
         params: { category: category },
       })
@@ -89,7 +84,6 @@ export default function Home({ navigation }) {
 
   const resNames = async (name) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-name`, {
       .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
         params: { name: name },
       })
@@ -102,7 +96,6 @@ export default function Home({ navigation }) {
 
   const resCodes = async (code) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-code`, {
       .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
         params: { code: code },
       })
@@ -182,12 +175,12 @@ export default function Home({ navigation }) {
                 width: 130,
                 borderRadius: 30,
                 paddingTop: 10,
-                marginTop:10
+                marginTop: 10,
               }}
             />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
               {food.code}
             </Text>
             <Text style={{ fontSize: 14, fontWeight: "bold" }}>
@@ -202,7 +195,9 @@ export default function Home({ navigation }) {
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontSize: 14, fontWeight: "bold", color: "#A9A9A9"  }}>
+            <Text
+              style={{ fontSize: 14, fontWeight: "bold", color: "#A9A9A9" }}
+            >
               Rs.{food.price}
             </Text>
             <View style={styles.addToCartBtn}>
@@ -230,7 +225,12 @@ export default function Home({ navigation }) {
         style={{ marginLeft: 360 }}
       />
       <View
-        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal:10, alignSelf:"center" }}
+        style={{
+          marginTop: 20,
+          flexDirection: "row",
+          paddingHorizontal: 10,
+          alignSelf: "center",
+        }}
       >
         <View style={styles.inputContainer}>
           <TextInput
@@ -270,7 +270,7 @@ export default function Home({ navigation }) {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={types} //import foods
+        data={types}
         renderItem={({ item }) => <Card food={item} />}
         keyExtractor={(item, _id) => _id.toString()}
       />
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: "center",
     paddingHorizontal: 20,
-    marginEnd:7,
+    marginEnd: 7,
   },
   sortBtn: {
     width: 50,

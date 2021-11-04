@@ -5,30 +5,21 @@ import {
   Text,
   Modal,
   Button,
-  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import Header from "../Header/Header";
-import COLORS from "../src/consts/colors";
-//import ReservationsList from "../src/consts/ReservationsList";
+import Header from "../shared/Header";
+import COLORS from "../styles/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-// import ReservationsForm1 from "./ReservationsForm1";
 import ReservationsForm from "./ReservationsForm";
-
-import CustomForm from "./CustomForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-// import moment from "moment";
-import Moment from "react-moment";
 import moment from "moment";
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [reservationItem, setreservationItem] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  //////find on add reservations
   const addReservation = (reservation) => {
     reservation.key = Math.random().toString();
     setReservation((currentReservation) => {
@@ -37,13 +28,9 @@ export default function Reservations({ navigation }) {
     setModalVisible(false);
   };
 
-  // var now = new Date();
-  // console.log(now);
   const ListofReservations = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-
-    // fetch(`http://10.0.2.2:5000/tableres`)
 
     fetch(`https://galaxy-rest-be.herokuapp.com/tableres`)
       .then((res) => res.json())
@@ -66,7 +53,6 @@ export default function Reservations({ navigation }) {
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
         <View style={styles.ReservationsCard}>
-          {/* <Modal visible={modalVisible} animationType="fade"> */}
           <Modal visible={modalVisible} animationType="none">
             <Icon
               name="close"
@@ -75,7 +61,6 @@ export default function Reservations({ navigation }) {
               onPress={() => setModalVisible(false)}
             />
             <ReservationsForm addReservation={addReservation} />
-            {/* <CustomForm addReservation={addReservation} /> */}
           </Modal>
           <View style={styles.tableNumCon}>
             <Text
@@ -94,22 +79,12 @@ export default function Reservations({ navigation }) {
             }}
           >
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {/* {item.cusName} */}
               {item.customerName}
             </Text>
 
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {/* {item.time} */}
-              {/* {item.date.substr(0, 10)} */}
-              {/* {new Date(item.startTime).toLocaleTimeString() - new Date(item.endTime).toLocaleTimeString()} */}
-              {/* {(new Date((item.startTime).getTime() - (item.startTime).getTimezoneOffset()*60*1000)) - (new Date((item.endTime).getTime() - (item.endTime).getTimezoneOffset()*60*1000))} */}
-              {/* new Date(utcDate) */}
-              {/* const m = moment(new Date('2019/06/01 14:04:03'));
-
-m.format('h:mma'); // '2:04pm' */}
               {moment(new Date(item.startTime)).format("h:mma")} -{" "}
               {moment(new Date(item.endTime)).format("h:mma")}
-              {/* {item.startTime.substr(11,12)} - {item.endTime.substr(11,16)} */}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item.price}
@@ -142,28 +117,6 @@ m.format('h:mma'); // '2:04pm' */}
     );
   };
 
-  const TableCard = ({ item }) => {
-    return (
-      <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
-        <View style={styles.TableCard}>
-          <View>
-            <Text
-              style={{
-                fontWeight: "bold",
-                fontSize: 16,
-                justifyContent: "center",
-              }}
-            >
-              {item.table}
-            </Text>
-
-            <View style={{ marginRight: 20, alignItems: "center" }}></View>
-          </View>
-        </View>
-      </TouchableHighlight>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <Header
@@ -178,43 +131,31 @@ m.format('h:mma'); // '2:04pm' */}
           style={styles.modalToggle}
         >
           <ReservationsForm />
-          {/* <CustomForm/> */}
         </Modal>
       </TouchableWithoutFeedback>
 
       <View
         style={{
-          // justifyContent: "flex-end",
-          // alignItems: "flex-end",
-          alignSelf:"center",
-          width:200,
-          marginTop:10,
-          marginBottom:10,
-          // backgroundColor:COLORS.white
-          borderRadius:10,
-
-          //alignSelf: "flex-end",
-          // position: "absolute",
-          // bottom: 35,
-          // paddingRight: 35,
-          // width: 180,
+          alignSelf: "center",
+          width: 200,
+          marginTop: 10,
+          marginBottom: 10,
+          borderRadius: 10,
         }}
-        //style={styles.addButton}
       >
         <Button title="ADD" onPress={() => setModalVisible(true)} />
       </View>
 
       <View style={styles.content}>
         <FlatList
-        backgroundColor="white"
+          backgroundColor="white"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          // data={ReservationsList}
           data={reservationItem}
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
-          onRefresh={()=> ListofReservations()}
+          onRefresh={() => ListofReservations()}
           refreshing={loading}
         />
       </View>
@@ -232,7 +173,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   container: {
-    flex: 1, //to center the content
+    flex: 1,
   },
   content: {
     backgroundColor: COLORS.light,
@@ -275,21 +216,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  TableCard: {
-    height: 40,
-    borderRadius: 10,
-    elevation: 15,
-    width: 40,
-    backgroundColor: COLORS.white,
-    marginVertical: 5,
-    marginHorizontal: 5,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   dropdown: {
     flex: 1,
-    // paddingBottom: 0,
     alignItems: "center",
   },
   centeredView: {
@@ -330,9 +259,6 @@ const styles = StyleSheet.create({
     bottom: 35,
     paddingRight: 35,
     width: 180,
-    // height:45,
-    // width: 45,
-    // borderRadius: 30
   },
   buttonOpen: {
     backgroundColor: "#F194FF",
@@ -370,7 +296,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginLeft: 5,
   },
-  // modalContent: {
-  //   flex: 1,
-  // },
 });

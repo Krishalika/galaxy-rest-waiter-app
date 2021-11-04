@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Alert, Modal, Dimensions } from "react-native";
-import Header from "../Header/Header";
-import COLORS from "../src/consts/colors";
+import Header from "../shared/Header";
+import COLORS from "../styles/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import OrderForm from "./OrderForm";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const { width } = Dimensions.get("screen");
-const cardWidth = width / 2 - 20;
 
 export default function Orders({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -18,9 +15,7 @@ export default function Orders({ navigation }) {
   const ListofOrders = async () => {
     const token = await AsyncStorage.getItem("token");
     console.log(token);
-   //fetch("http://10.0.2.2:5000/order")
     fetch(`https://galaxy-rest-be.herokuapp.com/order`)
-
       .then((res) => res.json())
       .then((results) => {
         setorderItems(results);
@@ -56,7 +51,6 @@ export default function Orders({ navigation }) {
             <Text
               style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
             >
-              {/* {item.table} */}
               {item.tableNumber}
             </Text>
           </View>
@@ -91,13 +85,12 @@ export default function Orders({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          // data={OrdersList}
           numColumns={2}
           data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
-          onRefresh={()=> ListofOrders()}
+          onRefresh={() => ListofOrders()}
           refreshing={loading}
         />
       </View>
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   container: {
-    flex: 1, //to center the content
+    flex: 1,
   },
   content: {
     backgroundColor: COLORS.light,
@@ -142,7 +135,6 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     flex: 1,
-    // paddingBottom: 0,
     alignItems: "center",
   },
   centeredView: {

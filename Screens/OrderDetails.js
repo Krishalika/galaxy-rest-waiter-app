@@ -5,24 +5,18 @@ import {
   View,
   Text,
   LogBox,
-  Alert,
   Image,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { PrimaryButton } from "../components/Button";
-import COLORS from "../src/consts/colors";
+import { PrimaryButton } from "../shared/Button";
+import COLORS from "../styles/colors";
 import Toast from "react-native-toast-message";
-
-//import { Dropdown } from "react-native-material-dropdown";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
-//import DropDown from "react-native-paper-dropdown";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Provider } from "react-native-paper";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
-
 LogBox.ignoreAllLogs(true);
+
 const OrderDetails = ({ navigation, route, _id }) => {
   useEffect(() => {
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
@@ -59,25 +53,9 @@ const OrderDetails = ({ navigation, route, _id }) => {
 
   const customerName = item.customerName;
   const idNumber = item.idNumber;
-  /////////////
-  // const foodItems = item.foodItems;
   const tableNumber = item.tableNumber;
   const [state, setstate] = useState(item.state);
   const [showDropDown, setShowDropDown] = useState(false);
-
-  //const state = "Processing";
-  //   const foodItems = [
-  //     {
-  //         "item": "6155d44dc479c10016c63fa2",
-  //         "qty": 1,
-  //         "soldPrice": 200
-  //     },
-  //     {
-  //       "item": "614b6ce16851a34a7c29c95d",
-  //       "qty": 1,
-  //       "soldPrice": 1000
-  //     }
-  // ]
 
   const foodItems = [];
   const length = item.foodItems.length;
@@ -115,16 +93,13 @@ const OrderDetails = ({ navigation, route, _id }) => {
 
   console.log("Total price: ", calculateTotal());
   console.log(calculateTotal.length);
-  //const getOrderDetails = () => {};
 
   const updateDetails = async (_id) => {
     const token = await AsyncStorage.getItem("token");
-    // console.log(token);
     fetch("https://galaxy-rest-be.herokuapp.com/order/update/" + _id, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
-        // Authorization: "Bearer " + token,
       }),
       body: JSON.stringify({
         customerName,
@@ -144,7 +119,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
           text1: "Order status updated successfully!",
         });
         console.log("Order status updated");
-        //Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
       })
       .catch((err) => {
         console.log("Error");
@@ -155,64 +129,13 @@ const OrderDetails = ({ navigation, route, _id }) => {
           type: "error",
           text1: "Something went wrong!",
         });
-        //Alert.alert(err);
       });
   };
-
-  // const updateDetails = () => {
-  //   //fetch("https://galaxy-rest-be.herokuapp.com/order/update/{$item._id}" , {
-
-  //   fetch("https://galaxy-rest-be.herokuapp.com/order/update" + item._id, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       customerName: getDetails("customerName"),
-  //       idNumber: getDetails("idNumber"),
-  //       foodItems: getDetails("foodItems"),
-  //       state: "Processing",
-  //       tableNumber: getDetails("tableNumber"),
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       Alert.alert(`order details are updated, REFRESH ORDERS PAGE`);
-  //     })
-  //     .catch((err) => {
-  //       Alert.alert(err);
-  //     });
-  // };
-
-  // const PopulateOrder = async () => {
-  //   const token = await AsyncStorage.getItem("token");
-  //   console.log(token);
-  //   // fetch("http://10.0.2.2:5000/order")
-  //   fetch(`https://galaxy-rest-be.herokuapp.com/order/${item._id}`)
-  //     .then((res) => res.json())
-  //     .then((populate) => {
-  //       // setorderItems(results);
-  //       console.log(populate);
-  //       setLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       Alert.alert(err);
-  //     });
-  // };
-  // useEffect(() => {
-  //   PopulateOrder();
-  // }, []);
 
   const OrdersCard = ({ item }) => {
     return (
       <TouchableHighlight underlayColor={COLORS.white} activeOpacity={0.9}>
         <View style={styles.OrdersCard}>
-          {/* <View style={styles.tableNumCon}> */}
-          {/* <Text
-              style={{ fontWeight: "bold", fontSize: 20, color: COLORS.white }}
-            >
-              {item[0]}
-            </Text> */}
           <Image
             source={{ uri: item[0] }}
             style={{
@@ -224,7 +147,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
               marginLeft: 10,
             }}
           />
-          {/* </View> */}
           <View
             style={{
               height: 100,
@@ -234,25 +156,12 @@ const OrderDetails = ({ navigation, route, _id }) => {
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {/* {item.cusName} */}
-              {item[1]}
-            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item[1]}</Text>
 
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Rs.{item[3]}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item[2]}</Text>
-            {/* <Text
-              style={{ fontWeight: "bold", fontSize: 14, color: "#808080" }}
-            >
-              {item.customerEmail}
-            </Text>
-            <Text
-              style={{ fontWeight: "bold", fontSize: 14, color: "#A9A9A9" }}
-            >
-              {item.customerContactNumber}
-            </Text> */}
           </View>
           <View>
             <Text
@@ -274,7 +183,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
   return (
     <SafeAreaView style={{ backgroundColor: COLORS.white }}>
       <View style={styles.header}>
-        {/* <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} /> */}
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
@@ -296,23 +204,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
             onChangeText={(text) => setstate(text)}
             value={state}
           />
-          {/* <Provider>
-          <DropDown
-            label={"Order Status"}
-            mode={"outlined"}
-            // visible={showDropDown2}
-            visible={showDropDown}
-            // showDropDown={() =>  setShowDropDown2(true)}
-            showDropDown={() => setShowDropDown(true)}
-            onDismiss={() => setShowDropDown(false)}
-            // onDismiss={() =>  setShowDropDown2(false)}
-            value={state}
-            activeColor={"#08b8e1"}
-            // dropDownItemTextStyle={{fontFamily:'nunito-bold',color:'blue'}}
-            setValue={setstate}
-            list={statusData}
-          />
-          </Provider> */}
         </View>
         <View style={{ paddingLeft: 45 }}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>
@@ -334,9 +225,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             backgroundColor="white"
-            // style={{backgroundColor:COLORS.light}}
-            // contentContainerStyle={{ paddingBottom: 80 }}
-            // data={ReservationsList}
             data={foodDetails}
             renderItem={({ item }) => <OrdersCard item={item} />}
             ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
@@ -364,7 +252,6 @@ const styles = StyleSheet.create({
   details: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    // paddingBottom: -100,
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
@@ -390,7 +277,6 @@ const styles = StyleSheet.create({
     width: 360,
     backgroundColor: COLORS.white,
     marginVertical: 10,
-    // marginHorizontal: 25,
     marginHorizontal: 17,
     flexDirection: "row",
     alignItems: "center",
@@ -406,8 +292,6 @@ const styles = StyleSheet.create({
     marginLeft: 100,
   },
   button: {
-    // marginTop: 40,
-    // marginBottom: 40,
     width: "90%",
     paddingLeft: 45,
     justifyContent: "center",

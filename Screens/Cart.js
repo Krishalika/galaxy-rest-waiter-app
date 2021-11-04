@@ -4,8 +4,6 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  // TextInput,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
@@ -15,14 +13,9 @@ import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
 import { Provider, TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
-
-import Icon from "react-native-vector-icons/MaterialIcons";
-import COLORS from "../src/consts/colors";
-import { SecondaryButton } from "../components/Button";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { AntDesign, Feather } from "@expo/vector-icons";
-
-import Header from "../Header/Header";
+import COLORS from "../styles/colors";
+import { Formik } from "formik";
+import Header from "../shared/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
@@ -46,64 +39,9 @@ const Cart = ({ navigation }) => {
     return totalQty;
   };
 
-  // const CartCard = ({ item }) => {
-  //   return (
-  //     <View style={styles.cartCard}>
-  //       <Image source={item.image} style={{ height: 80, width: 80 }} />
-  //       <View
-  //         style={{ height: 100, marginLeft: 10, paddingVertical: 10, flex: 1 }}
-  //       >
-  //         <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.name}</Text>
-  //         <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item.price}</Text>
-  //       </View>
-  //       <View style={{ marginRight: 20, alignItems: "center" }}>
-  //         <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
-  //         <View style={styles.actionBtn}>
-  //           <Icon
-  //             name="remove"
-  //             size={25}
-  //             color={COLORS.white}
-  //             onPress={decQuantity}
-  //           ></Icon>
-  //           <Icon
-  //             name="add"
-  //             size={25}
-  //             color={COLORS.white}
-  //             onPress={incQuantity}
-  //           ></Icon>
-  //         </View>
-  //       </View>
-  //     </View>
-  //   );
-  // };
-
-  // const cartIteam = [
-  //   {
-  //     id: "2",
-  //     name: "Cheese Pizza",
-  //     price: "2100.00",
-  //     image: require("../assets/cheesePizza.jpg"),
-  //   },
-  // ];
-  //const [tableNumber, settableNumber] = React.useState();
-
-  const [quantity, setQuantity] = React.useState(1);
-
-  // const incQuantity = () => {
-  //   setQuantity(quantity + 1);
-  // };
-
-  // const decQuantity = () => {
-  //   if (quantity > 1) {
-  //     setQuantity(quantity - 1);
-  //   }
-  // };
   const [customerName, setcustomerName] = React.useState("");
   const [idNumber, setidNumber] = React.useState("");
   const [tableNumber, settableNumber] = React.useState("");
-  // const customerName = "R.M. Rathnayake";
-  // const idNumber = "982036705v";
-  // const tableNumber = "7";
 
   const clearData = () => {
     setcustomerName("");
@@ -128,7 +66,6 @@ const Cart = ({ navigation }) => {
       .then(({ data }) => {
         dispatch(resetCart());
         clearData();
-        //add a logic with clearing values in the text fields -----------------
         Toast.show({
           topOffset: 40,
           visibilityTime: 1500,
@@ -294,19 +231,15 @@ const Cart = ({ navigation }) => {
           </ScrollView>
         </Provider>
         <View style={{ alignItems: "center" }}>
-          {/* <View style={styles.inputContainer}>
-            <AntDesign name="lock" size={28} color="black" /> */}
           <TextInput
             height="55px"
             style={styles.button}
-            // style={styles.tInput}
             placeholder="Customer Name"
             mode="outlined"
             onChangeText={(text) => setcustomerName(text)}
             value={customerName}
             clearButtonMode="always"
           />
-          {/* </View> */}
           <TextInput
             height="55px"
             style={styles.button}
@@ -314,7 +247,6 @@ const Cart = ({ navigation }) => {
             mode="outlined"
             onChangeText={(text) => setidNumber(text)}
             value={idNumber}
-            // clearButtonMode="always"
           />
           <TextInput
             height="55px"
@@ -327,8 +259,6 @@ const Cart = ({ navigation }) => {
           />
           <Button
             onPress={placeOrder}
-            // onPress={items.length > 0 ? placeOrder : ()=>navigation.navigate('Home')}
-
             disabled={items.length > 0 ? false : true}
             buttonStyle={{ height: 55 }}
             containerStyle={styles.button}
@@ -353,8 +283,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
-    // borderBottomLeftRadius: 40,
-    // borderBottomRightRadius: 40,
   },
   detailsText: {
     marginTop: 10,
@@ -403,22 +331,15 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
   },
   tInput: {
-    // marginTop: 18,
     alignSelf: "center",
     height: 50,
     width: 260,
     backgroundColor: "white",
-    // fontFamily: "nunito-bold",
   },
   inputContainer: {
-    // flex: 1,
-    // height: 10,
-    // borderRadius: 10,
     flexDirection: "row",
     marginTop: 18,
-    // backgroundColor: "#E5E5E5",
     alignItems: "center",
-    // paddingHorizontal: 20,
   },
 });
 

@@ -1,24 +1,12 @@
 import React from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { SafeAreaView, StyleSheet, View, Text, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { SecondaryButton } from "../components/Button";
-import COLORS from "../src/consts/colors";
-//import foods from "../src/consts/Foods";
+import { SecondaryButton } from "../shared/Button";
+import COLORS from "../styles/colors";
 import Toast from "react-native-toast-message";
 import { addToCart } from "../redux";
 import { useDispatch } from "react-redux";
-
-//navigation-> allows to navigate between screen
-//To hold food details passed by the home screen
 
 const DetailsScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
@@ -54,18 +42,7 @@ const DetailsScreen = ({ navigation, route }) => {
 
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
 
-        <View style={{ flexDirection: "row" }}>
-          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}> */}
-          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
-
-            <AntDesign
-              name="shoppingcart"
-              size={30}
-              color="black"
-              style={{ paddingHorizontal: 160 }}
-            />
-          </TouchableOpacity> */}
-        </View>
+        <View style={{ flexDirection: "row" }}></View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View
@@ -77,7 +54,7 @@ const DetailsScreen = ({ navigation, route }) => {
         >
           <Image
             source={{ uri: item.img }}
-            style={{ height: 220, width: 220 , borderRadius:20}}
+            style={{ height: 220, width: 220, borderRadius: 20 }}
           />
         </View>
         <View style={styles.details}>

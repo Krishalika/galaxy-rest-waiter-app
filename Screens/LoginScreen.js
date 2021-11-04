@@ -4,27 +4,15 @@ import {
   StyleSheet,
   Image,
   View,
-  Text,
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
-import { PrimaryButton } from "../components/Button";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { PrimaryButton } from "../shared/Button";
+import { AntDesign } from "@expo/vector-icons";
 
-import { useNavigation } from "@react-navigation/native";
-// async removeItemValue(key) {
-//     try {
-//         await AsyncStorage.removeItem(key);
-//         return true;
-//     }
-//     catch(exception) {
-//         return false;
-//     }
-// }
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,7 +38,6 @@ const LoginScreen = (props) => {
       elevation: 10,
       width: 360,
       backgroundColor: "white",
-      // marginVertical: 10,
       marginHorizontal: 15,
       flexDirection: "row",
       alignItems: "center",
@@ -59,22 +46,15 @@ const LoginScreen = (props) => {
       marginBottom: 100,
     },
     tInput: {
-      // marginTop: 18,
       alignSelf: "center",
       height: 50,
       width: 260,
       backgroundColor: "white",
-      // fontFamily: "nunito-bold",
     },
     inputContainer: {
-      // flex: 1,
-      // height: 10,
-      // borderRadius: 10,
       flexDirection: "row",
       marginTop: 18,
-      // backgroundColor: "#E5E5E5",
       alignItems: "center",
-      // paddingHorizontal: 20,
     },
   });
   const sendCred = async (props) => {
@@ -94,13 +74,8 @@ const LoginScreen = (props) => {
         .then(async (data) => {
           try {
             await AsyncStorage.setItem("token", data.token);
-            // props.navigation.replace("Home");
             props.navigation.navigate("Home");
-            // props.navigation.replace("homeScreen");
           } catch (e) {
-            // console.log("error");
-            //console.log("error hai", e);
-            // Alert(e);
             Toast.show({
               topOffset: 40,
               visibilityTime: 1500,
@@ -125,9 +100,7 @@ const LoginScreen = (props) => {
     if (token) {
       console.log("success");
       props.navigation.navigate("Home");
-      //props.navigation.replace("Home");
     } else {
-      // console.log("error");
       Toast.show({
         topOffset: 40,
         visibilityTime: 1500,
@@ -135,7 +108,6 @@ const LoginScreen = (props) => {
         type: "error",
         text1: "Email or password is incorrect!",
       });
-      //props.navigation.replace("LoginScreen");
     }
   };
   useEffect(() => {
@@ -144,20 +116,8 @@ const LoginScreen = (props) => {
   return (
     <>
       <View style={styles.container}>
-        {/* <KeyboardAvoidingView behavior="position" backgroundColor='white'> */}
         <StatusBar backgroundColor="#03498f" barStyle="light-content" />
 
-        {/* <Text
-          style={{
-            fontSize: 25,
-            textAlign: "center",
-            marginTop: 30,
-            color: "#08b8e1",
-            // fontFamily: "nunito-bold",
-          }}
-        >
-          Welcome
-        </Text> */}
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
@@ -167,15 +127,11 @@ const LoginScreen = (props) => {
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.commonCard}>
-            {/* <View > */}
             <View>
               <View style={styles.inputContainer}>
                 <AntDesign name="mail" size={24} color="black" />
-
-                {/* <View> */}
                 <TextInput
                   label="Email"
-                  // mode="outlined"
                   value={email}
                   style={styles.tInput}
                   theme={{ colors: { primary: "#08b8e1" } }}
@@ -186,7 +142,6 @@ const LoginScreen = (props) => {
                 <AntDesign name="lock" size={28} color="black" />
                 <TextInput
                   label="Password"
-                  // mode="outlined"
                   secureTextEntry={true}
                   value={password}
                   onChangeText={(text) => {
@@ -203,32 +158,7 @@ const LoginScreen = (props) => {
           title={"LOGIN"}
           mode="contained"
           onPress={() => sendCred(props)}
-
-          // onPress={sendCred(prop)}
-          // disabled={quantity > 0 ? false : true}
         />
-        {/* <Button
-          mode="contained"
-          style={{
-            marginTop: 38,
-            alignSelf: "center",
-            height: 30,
-            width: "60%",
-            backgroundColor: "#08b8e1",
-          }}
-          onPress={() => sendCred(props)}
-          // onPress={() => props.navigation.navigate("Home")}
-        >
-          <Text
-            style={{
-              fontSize: 13,
-              // fontFamily: "nunito-bold",
-              color: "#03498f",
-            }}
-          >
-            Login
-          </Text>
-        </Button> */}
       </View>
     </>
   );

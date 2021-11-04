@@ -3,15 +3,13 @@ import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
 import { Formik } from "formik";
-//import FlatButton from '../shared/button';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { PrimaryButton } from "../components/Button";
+import { PrimaryButton } from "../shared/Button";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 export default function ReservationsForm({ open, setOpen, room, navigation }) {
-  const [table, setTable] = useState("");
   const [tableNo, setTableNo] = useState("");
   const [customerName, setName] = useState("");
   const [date, setDate] = useState(new Date());
@@ -128,8 +126,7 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
             type: "success",
             text1: "Table Reservation Added Successfully",
           });
-          //setOpen(false);
-          props.navigation.replace("Reservations")
+          props.navigation.replace("Reservations");
         })
         .catch((err) => {
           console.log("Something went wrong");
@@ -181,7 +178,6 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
                 onChangeText={(text) => setcustomerEmail(text)}
                 value={customerEmail}
                 testID="ReservForm.email"
-
               />
             </View>
 
@@ -255,7 +251,6 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
                 theme={{ colors: { primary: "#08b8e1" } }}
                 onChangeText={(text) => setTableNo(text)}
                 value={tableNo}
-                // value = {findTableID(tableNo)}
                 keyboardType="numeric"
                 testID="ReservForm.tableNo"
               />
@@ -278,8 +273,6 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
               testID="reservation.Button"
               title={"SAVE"}
               onPress={(findTableID(tableNo), submitReservation)}
-              // onPress={submitReservation, clearData}
-
               marginTop="50"
             />
           </View>
@@ -317,7 +310,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 17,
     alignItems: "center",
-    // marginRight: 5
   },
   commonCard: {
     height: 50,
