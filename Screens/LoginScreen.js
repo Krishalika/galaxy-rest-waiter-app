@@ -121,6 +121,7 @@ const LoginScreen = (props) => {
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
+            testID="logo"
             source={require("../assets/logo.png")}
           />
         </View>
@@ -132,6 +133,8 @@ const LoginScreen = (props) => {
                 <AntDesign name="mail" size={24} color="black" />
                 <TextInput
                   label="Email"
+                  accessibilityLabel="Email"
+                  testID="LoginScreen.emailInput"
                   value={email}
                   style={styles.tInput}
                   theme={{ colors: { primary: "#08b8e1" } }}
@@ -142,6 +145,8 @@ const LoginScreen = (props) => {
                 <AntDesign name="lock" size={28} color="black" />
                 <TextInput
                   label="Password"
+                  accessibilityLabel="Password"
+                  testID="LoginScreen.pwInput"
                   secureTextEntry={true}
                   value={password}
                   onChangeText={(text) => {
@@ -157,6 +162,7 @@ const LoginScreen = (props) => {
         <PrimaryButton
           title={"LOGIN"}
           mode="contained"
+          testID="LoginScreen.Button"
           onPress={() => sendCred(props)}
         />
       </View>
