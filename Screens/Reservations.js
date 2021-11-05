@@ -7,6 +7,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  RefreshControl,
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
@@ -15,10 +16,12 @@ import ReservationsForm from "./ReservationsForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import moment from "moment";
+
 export default function Reservations({ navigation }) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [reservationItem, setreservationItem] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [reservationItem, setreservationItem] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(true);
 
   const addReservation = (reservation) => {
     reservation.key = Math.random().toString();
@@ -29,6 +32,7 @@ export default function Reservations({ navigation }) {
   };
 
   const ListofReservations = async () => {
+    setLoading(true);
     const token = await AsyncStorage.getItem("token");
     console.log(token);
 
@@ -41,6 +45,7 @@ export default function Reservations({ navigation }) {
       })
       .catch((err) => {
         Alert.alert(err);
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -155,8 +160,14 @@ export default function Reservations({ navigation }) {
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
-          onRefresh={() => ListofReservations()}
-          refreshing={loading}
+          // onRefresh={() => ListofReservations()}
+          // refreshing={loading}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={ListofReservations}
+            />
+          }
         />
       </View>
     </View>

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, RefreshControl } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Orders({ navigation }) {
-  const [orderItems, setorderItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [orderItems, setorderItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
 
   const ListofOrders = async () => {
+    setLoading(true);
     const token = await AsyncStorage.getItem("token");
     console.log(token);
     fetch(`https://galaxy-rest-be.herokuapp.com/order`)
@@ -23,6 +24,7 @@ export default function Orders({ navigation }) {
         Alert.alert(err);
       });
   };
+
   useEffect(() => {
     ListofOrders();
   }, []);
@@ -77,8 +79,14 @@ export default function Orders({ navigation }) {
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
-          onRefresh={() => ListofOrders()}
-          refreshing={loading}
+          // onRefresh={() => ListofOrders()}
+          // refreshing={loading}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={() => ListofOrders()}
+            />
+          }
         />
       </View>
     </View>
