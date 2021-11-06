@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Text,
-  LogBox,
-  Image,
-} from "react-native";
+import { StyleSheet, View, Text, LogBox, Image } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../shared/Button";
@@ -181,7 +174,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white }}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
@@ -211,13 +204,23 @@ const OrderDetails = ({ navigation, route, _id }) => {
           </Text>
         </View>
         <View style={styles.commonCard}>
-          <Text style={{ fontSize: 16 }}>
-            Total Price: Rs. {calculateTotal()}
+          <Text
+            style={{ fontSize: 18, color: COLORS.primary, fontWeight: "bold" }}
+          >
+            Total Price -
+          </Text>
+          <Text style={{ fontSize: 18, color: "black" }}>
+            - Rs. {calculateTotal()}
           </Text>
         </View>
         <View style={styles.commonCard}>
-          <Text style={{ fontSize: 16 }}>
-            Customer Name: {item.customerName}
+          <Text
+            style={{ fontSize: 18, color: COLORS.primary, fontWeight: "bold" }}
+          >
+            Customer Name -
+          </Text>
+          <Text style={{ fontSize: 18, color: "black" }}>
+            - {item.customerName}
           </Text>
         </View>
 
@@ -230,15 +233,11 @@ const OrderDetails = ({ navigation, route, _id }) => {
             ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           />
         </View>
-
-        <View style={styles.button}>
-          <PrimaryButton
-            title={"SAVE"}
-            onPress={() => updateDetails(item._id)}
-          />
-        </View>
       </ScrollView>
-    </SafeAreaView>
+      <View style={styles.button}>
+        <PrimaryButton title={"SAVE"} onPress={() => updateDetails(item._id)} />
+      </View>
+    </View>
   );
 };
 
@@ -302,6 +301,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
   },
 });
 

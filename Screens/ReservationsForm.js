@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Alert, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
 import { Formik } from "formik";
@@ -9,7 +9,7 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
-export default function ReservationsForm({ open, setOpen, room, navigation }) {
+export default function ReservationsForm({ open, setOpen, navigation }) {
   const [tableNo, setTableNo] = useState("");
   const [customerName, setName] = useState("");
   const [date, setDate] = useState(new Date());
@@ -36,17 +36,6 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
       .catch((e) => {
         console.log(e);
       });
-
-  const clearData = () => {
-    setTableNo("");
-    setName("");
-    setDate("");
-    setStartTime("");
-    setEndTime("");
-    setcustomerEmail("");
-    setPrice("");
-    setcustomerContactNumber("");
-  };
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -98,7 +87,16 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
       customerContactNumber,
       customerEmail,
     };
-    if (data.customerEmail && data.customerContactNumber && data.customerName) {
+    if (
+      data.table &&
+      data.customerEmail &&
+      data.customerContactNumber &&
+      data.customerName &&
+      data.date &&
+      data.startTime &&
+      data.endTime &&
+      data.price
+    ) {
       fetch("https://galaxy-rest-be.herokuapp.com/tableres/add/", {
         method: "POST",
         headers: {
@@ -117,8 +115,9 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
       })
         .then((res) => res.json())
         .then((data) => {
+          setOpen(false);
           console.log(data);
-          console.log("Table Reservation Added Successfully!");
+          // Alert.alert("success");
           Toast.show({
             topOffset: 40,
             visibilityTime: 1500,
@@ -126,12 +125,20 @@ export default function ReservationsForm({ open, setOpen, room, navigation }) {
             type: "success",
             text1: "Table Reservation Added Successfully",
           });
-          props.navigation.replace("Reservations");
         })
         .catch((err) => {
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: err,
+          });
           console.log("Something went wrong");
+          setOpen(false);
         });
     } else {
+      setOpen(false);
       Toast.show({
         topOffset: 40,
         visibilityTime: 1500,

@@ -21,15 +21,6 @@ export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [reservationItem, setreservationItem] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  // const [loading, setLoading] = React.useState(true);
-
-  const addReservation = (reservation) => {
-    reservation.key = Math.random().toString();
-    setreservationItem((currentReservation) => {
-      return [reservation, ...currentReservation];
-    });
-    setModalVisible(false);
-  };
 
   const ListofReservations = async () => {
     setLoading(true);
@@ -45,14 +36,11 @@ export default function Reservations({ navigation }) {
       })
       .catch((err) => {
         Alert.alert(err);
-        setLoading(false);
       });
   };
   useEffect(() => {
     ListofReservations();
   }, []);
-
-  console.log(reservationItem);
 
   const ReservationsCard = ({ item }) => {
     return (
@@ -65,7 +53,11 @@ export default function Reservations({ navigation }) {
               style={{ ...styles.modalToggle, ...styles.modalClose }}
               onPress={() => setModalVisible(false)}
             />
-            <ReservationsForm addReservation={addReservation} />
+            <ReservationsForm
+              navigation={navigation}
+              open={modalVisible}
+              setOpen={setModalVisible}
+            />
           </Modal>
           <View style={styles.tableNumCon}>
             <Text
@@ -148,24 +140,25 @@ export default function Reservations({ navigation }) {
           borderRadius: 10,
         }}
       >
-        <Button title="ADD" onPress={() => setModalVisible(true)} />
+        <Button
+          title="ADD"
+          style={{ fontWeight: "bold" }}
+          onPress={() => setModalVisible(true)}
+        />
       </View>
 
       <View style={styles.content}>
         <FlatList
-          backgroundColor="white"
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
           data={reservationItem}
           renderItem={({ item }) => <ReservationsCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
           keyExtractor={(item, _id) => _id.toString()}
-          // onRefresh={() => ListofReservations()}
-          // refreshing={loading}
           refreshControl={
             <RefreshControl
               refreshing={loading}
-              onRefresh={ListofReservations}
+              onRefresh={() => ListofReservations()}
             />
           }
         />
@@ -185,9 +178,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    // backgroundColor: COLORS.light,
   },
   content: {
-    backgroundColor: COLORS.light,
+    // backgroundColor: COLORS.light,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -213,7 +207,7 @@ const styles = StyleSheet.create({
     width: 360,
     backgroundColor: COLORS.white,
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

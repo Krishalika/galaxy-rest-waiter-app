@@ -104,9 +104,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    // backgroundColor: COLORS.white,
   },
   content: {
-    backgroundColor: COLORS.light,
+    // backgroundColor: COLORS.light,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,

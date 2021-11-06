@@ -27,44 +27,51 @@ export default function Home({ navigation }) {
   const [textName, onChangeText] = React.useState("");
   const [textNumber, onChangeNumber] = React.useState("");
 
-  const ListofCategories = async () => {
-    const token = await AsyncStorage.getItem("token");
-    console.log(token);
+  // const ListofCategories = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   console.log(token);
 
-    fetch("https://galaxy-rest-be.herokuapp.com/category")
-      .then((res) => res.json())
-      .then((results) => {
-        setcategoryItems(results);
+  //   fetch("https://galaxy-rest-be.herokuapp.com/category")
+  //     .then((res) => res.json())
+  //     .then((results) => {
+  //       setcategoryItems(results);
 
-        console.log(results);
-        setLoading(false);
+  //       console.log(results);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       Alert.alert(err);
+  //     });
+  // };
+
+  ////////correct
+  React.useEffect(() => {
+    axios
+      .get(`https://galaxy-rest-be.herokuapp.com/category`)
+      .then(({ data }) => {
+        setcategoryItems(data);
+        res("Pizza");
       })
-      .catch((err) => {
-        Alert.alert(err);
+      .catch((e) => {
+        console.log(e);
       });
-  };
-
-  useEffect(() => {
-    ListofCategories();
   }, []);
 
-  const ListofCategoryItems = async (category) => {
-    const token = await AsyncStorage.getItem("token");
-    console.log(token);
-    fetch(
-      "https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}"
-    )
-      .then((res) => res.json())
-      .then((results) => {
-        setsortedItems(results);
-
-        console.log(results);
-        setLoading(false);
-      })
-      .catch((err) => {
-        Alert.alert(err);
-      });
-  };
+  // React.useEffect(() => {
+  //   (async () => {
+  //     axios
+  //       .get(`https://galaxy-rest-be.herokuapp.com/category`)
+  //       .then(({ data }) => {
+  //         setcategoryItems(data);
+  //       })
+  //       .catch((e) => {
+  //         console.log(e);
+  //       });
+  //   })();
+  //   return () => {
+  //     res(categoryItems[0].name);
+  //   };
+  // }, []);
 
   const res = async (category) =>
     await axios
@@ -78,9 +85,58 @@ export default function Home({ navigation }) {
         console.log(e);
       });
 
-  useEffect(() => {
-    res("Pizza");
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   if (categoryItems.length < 1) {
+  //     setTimeout(1000);
+  //     // res(categoryItems[0].name);
+  //   }
+  //   // else{
+  //   //   res(categoryItems[0].name);
+  //   // }
+
+  //   // console.log("magula",res(categoryItems[0].name));
+  //   // res(categoryItems[0].name);
+  // }, []);
+  // const ListofCategories = async () =>
+  //   await axios
+  //     .get(`https://galaxy-rest-be.herokuapp.com/category`, {})
+  //     .then(({ data }) => {
+  //       setcategoryItems(data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+
+  //  useEffect(() => {
+  //    ListofCategories();
+  //   res(categoryItems[0].name);
+  //   // console.log("magula",res(categoryItems[0].name));
+  //   // res(categoryItems[0].name);
+  // }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     ListofCategories();
+  //     setLoading(true)
+  //     // res(categoryItems[0].name);
+  //   })();
+  //   return () => {
+  //     res(categoryItems[0].name);
+  //   };
+
+  // console.log(res(categoryItems[0].name));
+  // res(categoryItems[0].name);
+  // }, []);
+
+  // useEffect(() => {
+  //   // res("Pizza");
+  //   // if (categoryItems.length > 0) {
+  //     console.log("magula", categoryItems[0].name);
+  //     res(categoryItems[0].name);
+  //   // }
+  // }, []);
 
   const resNames = async (name) =>
     await axios
