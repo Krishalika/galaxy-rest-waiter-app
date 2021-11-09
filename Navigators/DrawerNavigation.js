@@ -17,7 +17,6 @@ import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Icon from "react-native-vector-icons/MaterialIcons";
 
 function CustomDrawerContent(props) {
   const logout = () => {
@@ -105,7 +104,7 @@ function MyDrawer() {
         options={{
           title: "Table Reservations",
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24},
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
           drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
         }}
@@ -142,6 +141,18 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
+
+      {/* <Drawer.Screen
+        name="Logout"
+        component={Logout}
+        options={{
+          title: "Logout",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24},
+          headerTintColor: "#03498f",
+          drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
+        }}
+      /> */}
       {/* <DrawerContentScrollView>
         <DrawerItem
           label="Logout"
@@ -203,7 +214,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
-    left:20
+    left: 20,
   },
   headerLogo: {
     height: 50,

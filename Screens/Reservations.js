@@ -9,13 +9,19 @@ import {
   Keyboard,
   RefreshControl,
   Dimensions,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
-import { SecondaryButton,PrimaryButton,ReservationButton } from "../shared/Button";
+import {
+  SecondaryButton,
+  PrimaryButton,
+  ReservationButton,
+} from "../shared/Button";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReservationsForm from "./ReservationsForm";
-import ReservationsForm1 from "./ReservationsForm1";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
@@ -26,6 +32,7 @@ const cardWidth = width - 40;
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [reservationItem, setreservationItem] = React.useState([]);
+  const [tableItem, setTableItem] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
   const ListofReservations = async () => {
@@ -47,6 +54,89 @@ export default function Reservations({ navigation }) {
   useEffect(() => {
     ListofReservations();
   }, []);
+
+  const ListofTables = async () => {
+    const token = await AsyncStorage.getItem("token");
+    console.log(token);
+
+    fetch(`https://galaxy-rest-be.herokuapp.com/table`)
+      .then((res) => res.json())
+      .then((results) => {
+        setTableItem(results);
+        console.log(results);
+      })
+      .catch((err) => {
+        Alert.alert(err);
+      });
+  };
+  useEffect(() => {
+    ListofTables();
+  }, []);
+
+  const ListTables = () => {
+    return (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categoriesListContainer}
+      >
+        {tableItem.map((category, index) => (
+          <TouchableOpacity
+            key={index}
+            activeOpacity={0.8}
+            // onPress={() => {
+            //   setselectedCategoryIndex(index);
+            //   res(tableItem[selectedCategoryIndex].name);
+            // }}
+          >
+            <View
+              style={{
+                backgroundColor: COLORS.secondary,
+                ...styles.categoryBtn,
+              }}
+            >
+              <View>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    resizeMode: "center",
+                    justifyContent: "center",
+                    borderRadius: 45,
+                    backgroundColor:COLORS.primary,
+                    alignItems:"center",
+                    alignContent:"center"
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      color: COLORS.white,
+                      textAlign:"center",
+                      alignItems:"center"
+                    }}
+                  >
+                    {category.tableNumber}
+                  </Text>
+                </View>
+              </View>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  color: COLORS.white,
+                }}
+              >
+                seats: {category.seatCount}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    );
+  };
 
   const ReservationsCard = ({ item }) => {
     return (
@@ -138,20 +228,26 @@ export default function Reservations({ navigation }) {
       </TouchableWithoutFeedback>
 
       <View
-        // style={{
-        //   alignSelf: "center",
-        //   width: 200,
-        //   marginTop: 10,
-        //   marginBottom: 10,
-        //   borderRadius: 10,
-        // }}
+      // style={{
+      //   alignSelf: "center",
+      //   width: 200,
+      //   marginTop: 10,
+      //   marginBottom: 10,
+      //   borderRadius: 10,
+      // }}
       >
         {/* <Button
           title="ADD"
           style={{ fontWeight: "bold",backgroundColor:"black" }}
           onPress={() => setModalVisible(true)}
         /> */}
-        <ReservationButton title={"ADD"} onPress={() => setModalVisible(true)} />
+        <ReservationButton
+          title={"ADD"}
+          onPress={() => setModalVisible(true)}
+        />
+      </View>
+      <View>
+        <ListTables />
       </View>
 
       <View style={styles.content}>
@@ -249,5 +345,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 5,
+  },
+  categoriesListContainer: {
+    paddingVertical: 20,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  categoryBtn: {
+    height: 55,
+    width: 150,
+    marginRight: 7,
+    borderRadius: 30,
+    alignItems: "center",
+    paddingHorizontal: 5,
+    flexDirection: "row",
   },
 });

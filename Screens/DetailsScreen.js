@@ -50,6 +50,7 @@ const DetailsScreen = ({ navigation, route }) => {
             justifyContent: "center",
             alignItems: "center",
             height: 280,
+          //  backgroundColor:"#F5EBEB"
           }}
         >
           <Image
@@ -134,7 +135,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 220,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: "#356da5",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },

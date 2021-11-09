@@ -12,6 +12,7 @@ import {
 } from "react-native-gesture-handler";
 import axios from "axios";
 import { Tooltip } from "react-native-elements";
+import AwesomeAlert from "react-native-awesome-alerts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
@@ -19,15 +20,23 @@ const cardWidth = width / 2 - 20;
 
 export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
-  const [categoryItems, setcategoryItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [sortedItems, setsortedItems] = useState([]);
+  const [categoryItems, setcategoryItems] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [sortedItems, setsortedItems] = React.useState([]);
   const [types, setTypes] = React.useState([]);
   const [names, setNames] = React.useState([]);
   const [codes, setCodes] = React.useState([]);
   const [textName, onChangeText] = React.useState("");
   const [textNumber, onChangeNumber] = React.useState("");
+  const [showAlert, setshowAlert] = React.useState(false);
 
+  const showAlerts = () => {
+    setshowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setshowAlert(false);
+  };
   // const ListofCategories = async () => {
   //   const token = await AsyncStorage.getItem("token");
   //   console.log(token);
@@ -183,7 +192,7 @@ export default function Home({ navigation }) {
               style={{
                 backgroundColor:
                   selectedCategoryIndex == index
-                    ? COLORS.primary
+                    ? "#356da5"
                     : COLORS.secondary,
                 ...styles.categoryBtn,
               }}
@@ -220,7 +229,8 @@ export default function Home({ navigation }) {
   const Card = ({ food }) => {
     return (
       <TouchableHighlight
-        underlayColor={COLORS.primary}
+        // underlayColor={COLORS.primary}
+        underlayColor="#f5eebb"
         activeOpacity={0.9}
         onPress={() => navigation.navigate("DetailsScreen", food)}
       >
@@ -281,15 +291,49 @@ export default function Home({ navigation }) {
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
       {/* <Tooltip popover={<Text>Tap to logout</Text>}> */}
-      {/* <Button ></Button> */}
+
+      {/* <Icon
+        name="logout"
+        size={24}
+        color="black"
+        onPress={logout}
+        onPress={showAlerts}
+        style={{ marginLeft: 360 }}
+      /> */}
 
       <Icon
         name="logout"
         size={24}
         color="black"
-        onPress={logout}
+        onPress={() =>
+          Alert.alert(
+            "Logout",
+            "Are you sure you want to logout?",
+            [
+              { text: "Yes", onPress: logout },
+              { text: "Cancel", onPress: () => console.log("Cancel Pressed!") },
+            ],
+            { cancelable: true },
+          )
+        }
         style={{ marginLeft: 360 }}
       />
+
+      {/* <AwesomeAlert
+        show={showAlert}
+        showProgress={false}
+        title="Logout"
+        message="Are you sure you want to logout?"
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={true}
+        showConfirmButton={true}
+        cancelText="No, cancel"
+        confirmText="Yes, logout"
+        confirmButtonColor="#DD6B55"
+        onCancelPressed={hideAlert}
+        onConfirmPressed={logout}
+      /> */}
 
       {/* </Tooltip> */}
 
@@ -303,7 +347,7 @@ export default function Home({ navigation }) {
       >
         <View style={styles.inputContainer}>
           <TextInput
-            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
+            style={{ flex: 1, fontSize: 16, textAlign: "center"}}
             placeholder="Item code"
             onChangeText={onChangeNumber}
             value={textNumber}
@@ -363,6 +407,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: "center",
     paddingHorizontal: 20,
+   borderColor:"#f5eebb",
+   borderTopColor:"#f5eebb",
     // marginEnd: 7,
 
     //newly added
@@ -389,7 +435,7 @@ const styles = StyleSheet.create({
     height: 220,
     width: cardWidth,
     marginHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 10,
     borderRadius: 15,
     elevation: 13, //shadow

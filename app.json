@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "ReactNative-Navigation",
-    "slug": "ReactNative-Navigation",
+    "name": "Galaxy Rest Waiter App",
+    "slug": "galaxy-rest-waiter-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/waiter-app-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

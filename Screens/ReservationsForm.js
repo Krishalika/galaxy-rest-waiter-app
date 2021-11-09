@@ -152,7 +152,7 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
         visibilityTime: 1500,
         position: "top",
         type: "error",
-        text1: "Please fill all the details",
+        text1: "Please fill all the required details",
       });
     }
   };

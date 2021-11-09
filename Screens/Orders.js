@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, RefreshControl } from "react-native";
+import { View, StyleSheet, Text, Alert, RefreshControl,Dimensions } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+const { width } = Dimensions.get("screen");
+const cardWidth = width - 40;
 
 export default function Orders({ navigation }) {
   const [orderItems, setorderItems] = React.useState([]);
@@ -74,7 +76,7 @@ export default function Orders({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 80 }}
-          numColumns={2}
+          numColumns={1}
           data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
           ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     elevation: 15,
     shadowColor: "black",
-    width: 170,
+    width: cardWidth,
     backgroundColor: COLORS.white,
     marginVertical: 10,
     marginHorizontal: 10,

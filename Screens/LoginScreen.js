@@ -93,6 +93,7 @@ const LoginScreen = (props) => {
           }
         })
         .catch((err) => {
+          console.log("error");
           Toast.show({
             topOffset: 40,
             visibilityTime: 1500,
@@ -102,6 +103,7 @@ const LoginScreen = (props) => {
           });
         });
     } else {
+      console.log("Please enter email & password");
       Toast.show({
         topOffset: 40,
         visibilityTime: 1500,
@@ -117,13 +119,14 @@ const LoginScreen = (props) => {
       console.log("success");
       props.navigation.navigate("Home");
     } else {
-      Toast.show({
-        topOffset: 40,
-        visibilityTime: 1500,
-        position: "top",
-        type: "error",
-        text1: "Email or password is incorrect!",
-      });
+      console.log("Error!");
+      // Toast.show({
+      //   topOffset: 40,
+      //   visibilityTime: 1500,
+      //   position: "top",
+      //   type: "error",
+      //   text1: "Email or password is incorrect!",
+      // });
     }
   };
   useEffect(() => {
