@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
 import { Formik } from "formik";
@@ -8,6 +14,8 @@ import { PrimaryButton } from "../shared/Button";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+const { width } = Dimensions.get("screen");
+const inputWidth = width - 80;
 
 export default function ReservationsForm({ open, setOpen, navigation }) {
   const [tableNo, setTableNo] = useState("");
@@ -316,19 +324,24 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 14,
     height: 50,
-    width: 330,
+    // width: 330,
+    width: inputWidth,
     backgroundColor: "white",
   },
   inputContainer: {
     flexDirection: "row",
     marginTop: 17,
     alignItems: "center",
+
+    // paddingStart:20,
+    // paddingEnd:40,
   },
   commonCard: {
     height: 50,
     borderRadius: 10,
     elevation: 10,
-    width: 360,
+    // width: 360,
+    width: inputWidth + 24,
     backgroundColor: "white",
     marginVertical: 8,
     flexDirection: "row",

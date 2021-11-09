@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import axios from "axios";
+import { Tooltip } from "react-native-elements";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
@@ -219,7 +220,7 @@ export default function Home({ navigation }) {
   const Card = ({ food }) => {
     return (
       <TouchableHighlight
-        underlayColor={COLORS.white}
+        underlayColor={COLORS.primary}
         activeOpacity={0.9}
         onPress={() => navigation.navigate("DetailsScreen", food)}
       >
@@ -253,12 +254,17 @@ export default function Home({ navigation }) {
             }}
           >
             <Text
-              style={{ fontSize: 14, fontWeight: "bold", color: "#A9A9A9" }}
+              style={{ fontSize: 14, fontWeight: "bold", color: "#616161" }}
             >
               Rs.{food.price}
             </Text>
             <View style={styles.addToCartBtn}>
-              <Icon name="add" size={20} color={COLORS.white} />
+              <Icon
+                name="add"
+                size={20}
+                color={COLORS.white}
+                style={{ paddingRight: 2 }}
+              />
             </View>
           </View>
         </View>
@@ -274,6 +280,9 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
+      {/* <Tooltip popover={<Text>Tap to logout</Text>}> */}
+      {/* <Button ></Button> */}
+
       <Icon
         name="logout"
         size={24}
@@ -281,6 +290,9 @@ export default function Home({ navigation }) {
         onPress={logout}
         style={{ marginLeft: 360 }}
       />
+
+      {/* </Tooltip> */}
+
       <View
         style={{
           marginTop: 20,
@@ -291,13 +303,14 @@ export default function Home({ navigation }) {
       >
         <View style={styles.inputContainer}>
           <TextInput
-            style={{ flex: 1, fontSize: 16 }}
+            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
             placeholder="Item code"
             onChangeText={onChangeNumber}
             value={textNumber}
           />
           <Icon
             name="search"
+            // style={{paddingRight:10}}
             size={24}
             onPress={() => {
               if (textNumber != "")
@@ -307,7 +320,7 @@ export default function Home({ navigation }) {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            style={{ flex: 1, fontSize: 16 }}
+            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
             placeholder="Item name"
             onChangeText={onChangeText}
             value={textName}
@@ -350,7 +363,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: "center",
     paddingHorizontal: 20,
-    marginEnd: 7,
+    // marginEnd: 7,
+
+    //newly added
+    width: cardWidth,
+    marginHorizontal: 10,
+    alignItems: "center",
+    elevation: 13, //shadow
   },
   categoriesListContainer: {
     paddingVertical: 20,

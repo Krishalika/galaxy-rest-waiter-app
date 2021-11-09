@@ -8,14 +8,20 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   RefreshControl,
+  Dimensions,
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
+import { SecondaryButton,PrimaryButton,ReservationButton } from "../shared/Button";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReservationsForm from "./ReservationsForm";
+import ReservationsForm1 from "./ReservationsForm1";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import moment from "moment";
+const { width } = Dimensions.get("screen");
+const cardWidth = width - 40;
 
 export default function Reservations({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
@@ -132,19 +138,20 @@ export default function Reservations({ navigation }) {
       </TouchableWithoutFeedback>
 
       <View
-        style={{
-          alignSelf: "center",
-          width: 200,
-          marginTop: 10,
-          marginBottom: 10,
-          borderRadius: 10,
-        }}
+        // style={{
+        //   alignSelf: "center",
+        //   width: 200,
+        //   marginTop: 10,
+        //   marginBottom: 10,
+        //   borderRadius: 10,
+        // }}
       >
-        <Button
+        {/* <Button
           title="ADD"
-          style={{ fontWeight: "bold" }}
+          style={{ fontWeight: "bold",backgroundColor:"black" }}
           onPress={() => setModalVisible(true)}
-        />
+        /> */}
+        <ReservationButton title={"ADD"} onPress={() => setModalVisible(true)} />
       </View>
 
       <View style={styles.content}>
@@ -201,10 +208,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   ReservationsCard: {
-    height: 150,
+    height: 135,
     borderRadius: 10,
     elevation: 10,
-    width: 360,
+    // width: 360,
+    width: cardWidth,
     backgroundColor: COLORS.white,
     marginVertical: 10,
     marginHorizontal: 10,

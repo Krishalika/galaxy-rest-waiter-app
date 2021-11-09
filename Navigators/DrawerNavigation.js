@@ -5,6 +5,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from "@react-navigation/drawer";
 import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
@@ -16,8 +17,15 @@ import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function CustomDrawerContent(props) {
+  const logout = () => {
+    AsyncStorage.removeItem("token").then(() => {
+      // props.navigation.replace("login");
+      props.navigation.navigate("LoginScreen");
+    });
+  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
@@ -33,17 +41,23 @@ function CustomDrawerContent(props) {
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
+        {/* <DrawerItem
+          label="Logout"
+          // onPress={() => props.navigation.navigate("LoginScreen")}
+          // navigation.navigate('MyDrawer', { screen: 'LoginScreen' });
+          onPress={() =>
+            props.navigation.navigate("CustomDrawerContent", { screen: "LoginScreen" })
+          }
+
+          // onPress={logout}
+        /> */}
       </DrawerContentScrollView>
     </ScrollView>
   );
 }
 
 const Drawer = createDrawerNavigator();
-const logout = (props) => {
-  AsyncStorage.removeItem("token").then(() => {
-    navigation.replace("login");
-  });
-};
+
 function MyDrawer() {
   return (
     <Drawer.Navigator
@@ -51,9 +65,7 @@ function MyDrawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       style={styles.drawerItem}
     >
-
       <Drawer.Screen
-
         name="login"
         component={LoginScreen}
         options={{
@@ -91,9 +103,9 @@ function MyDrawer() {
         name="Reservations"
         component={Reservations}
         options={{
-          title: "Reservations",
+          title: "Table Reservations",
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24},
           headerTintColor: "#03498f",
           drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
         }}
@@ -130,6 +142,47 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
+      {/* <DrawerContentScrollView>
+        <DrawerItem
+          label="Logout"
+          onPress={() => props.navigation.navigate("LoginScreen")}
+        />
+      </DrawerContentScrollView> */}
+      {/* <DrawerContentScrollView >
+        <DrawerItemList/>
+        <DrawerItem
+          label="Logout"
+          onPress={() => props.navigation.navigate("LoginScreen")}
+        />
+      </DrawerContentScrollView> */}
+      {/* <Drawer.Screen
+        name="Cart1"
+        component={Cart}
+        options={{
+          title: "Cart",
+          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
+          headerTintColor: "#03498f",
+          drawerIcon: () => (
+            <Icon
+              name="logout"
+              size={24}
+              color="black"
+              onPress={logout}
+              style={{ marginLeft: 360 }}
+            />
+          ),
+        }}
+      /> */}
+
+      {/* <Drawer.Navigator initialRouteName="Home" drawerContent={props => {
+    return (
+      <DrawerContentScrollView {...props}>
+        <DrawerItemList {...props} />
+        <DrawerItem label="Logout" onPress={() => props.navigation.navigate("Login")} />
+      </DrawerContentScrollView>
+    )
+  }}> */}
     </Drawer.Navigator>
   );
 }
@@ -150,6 +203,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
+    left:20
   },
   headerLogo: {
     height: 50,
@@ -159,7 +213,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    right: 175,
+    right: 165,
     paddingBottom: 45,
     alignItems: "center",
     justifyContent: "center",

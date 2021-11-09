@@ -2,16 +2,21 @@ import React, { useState, useEffect } from "react";
 import { TextInput } from "react-native-paper";
 import {
   StyleSheet,
+  Text,
   Image,
   View,
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
+  Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { PrimaryButton } from "../shared/Button";
 import { AntDesign } from "@expo/vector-icons";
+import COLORS from "../styles/colors";
+const { width } = Dimensions.get("screen");
+const cardWidth = width - 40;
 
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
@@ -19,7 +24,7 @@ const LoginScreen = (props) => {
 
   const styles = StyleSheet.create({
     headerLogo: {
-      marginTop: 50,
+      marginTop: 20,
       height: 150,
       width: 150,
       borderRadius: 55,
@@ -36,14 +41,15 @@ const LoginScreen = (props) => {
       height: 200,
       borderRadius: 10,
       elevation: 10,
-      width: 360,
+      width: cardWidth,
       backgroundColor: "white",
-      marginHorizontal: 15,
+      marginHorizontal: 20,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      marginTop: 250,
-      marginBottom: 70,
+      marginTop: 230,
+      marginBottom: 30,
+      borderColor:COLORS.primary
     },
     tInput: {
       alignSelf: "center",
@@ -128,6 +134,18 @@ const LoginScreen = (props) => {
       <View style={styles.container}>
         <StatusBar backgroundColor="#03498f" barStyle="light-content" />
 
+        <Text
+          style={{
+            paddingTop: 40,
+            fontSize: 30,
+            textAlign: "center",
+            color: COLORS.primary,
+            fontWeight: "bold",
+          }}
+        >
+          Welcome
+        </Text>
+
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
@@ -152,7 +170,7 @@ const LoginScreen = (props) => {
                 />
               </View>
               <View style={styles.inputContainer}>
-                <AntDesign name="lock" size={28} color="black" />
+                <AntDesign name="lock" size={24} color="black" />
                 <TextInput
                   label="Password"
                   accessibilityLabel="Password"

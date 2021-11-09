@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
@@ -18,6 +19,7 @@ import { Formik } from "formik";
 import Header from "../shared/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { SecondaryButton } from "../shared/Button";
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -61,33 +63,43 @@ const Cart = ({ navigation }) => {
         };
       }),
     };
-    axios
-      .post(`https://galaxy-rest-be.herokuapp.com/order`, data)
-      .then(({ data }) => {
-        dispatch(resetCart());
-        clearData();
-        Toast.show({
-          topOffset: 40,
-          visibilityTime: 1500,
-          position: "top",
-          type: "success",
-          text1: "Order is placed successfully",
+    if (items.length > 0) {
+      axios
+        .post(`https://galaxy-rest-be.herokuapp.com/order`, data)
+        .then(({ data }) => {
+          dispatch(resetCart());
+          clearData();
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: "Order is placed successfully!",
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "error",
+            text1: "Order is not placed!",
+          });
         });
-      })
-      .catch((e) => {
-        console.log(e);
-        Toast.show({
-          topOffset: 40,
-          visibilityTime: 1500,
-          position: "top",
-          type: "error",
-          text1: "Order is not placed",
-        });
+    } else {
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Please select order items!",
       });
+    }
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header title="Cart" navigation={navigation} style={styles.header} />
       <View
         style={{
@@ -118,6 +130,19 @@ const Cart = ({ navigation }) => {
                     justifyContent: "space-between",
                   }}
                 >
+                  <View style={{ justifyContent: "center", marginLeft: 3 }}>
+                    <Image
+                      source={{ uri: item.img }}
+                      // testID="food"
+                      style={{
+                        height: 55,
+                        width: 55,
+                        resizeMode: "center",
+                        justifyContent: "center",
+                        borderRadius: 45,
+                      }}
+                    />
+                  </View>
                   <View
                     style={{
                       justifyContent: "center",
@@ -125,15 +150,17 @@ const Cart = ({ navigation }) => {
                       width: 120,
                     }}
                   >
-                    <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                    <Text style={{ fontSize: 16, justifyContent: "center" }}>
+                      {item.name}
+                    </Text>
                   </View>
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
-                    <Text style={{ fontWeight: "bold" }}>{item.quantity}</Text>
+                    <Text style={{ fontWeight: "bold" }}>x{item.quantity}</Text>
                   </View>
 
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
-                      Rs. {item.price} (1)
+                      Rs. {item.price}
                     </Text>
                   </View>
 
@@ -263,12 +290,17 @@ const Cart = ({ navigation }) => {
             onChangeText={(text) => settableNumber(text)}
             value={tableNumber}
           />
-          <Button
+          {/* <Button
             onPress={placeOrder}
             disabled={items.length > 0 ? false : true}
             buttonStyle={{ height: 55 }}
             containerStyle={styles.button}
             title="Place Order"
+          /> */}
+          <SecondaryButton
+            title="PLACE ORDER"
+            onPress={placeOrder}
+            disabled={items.length > 0 ? false : true}
           />
         </View>
       </View>
@@ -279,7 +311,7 @@ const Cart = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    // backgroundColor: "white",
     padding: 12,
   },
   details: {

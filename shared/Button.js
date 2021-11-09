@@ -22,6 +22,16 @@ const SecondaryButton = ({ title, onPress = () => {} }) => {
   );
 };
 
+const ReservationButton = ({ title, onPress = () => {} }) => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <View style={{ ...style.resBtnContainer, backgroundColor: COLORS.primary }}>
+        <Text style={{ ...style.title, color: COLORS.white }}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const style = StyleSheet.create({
   btnContainer: {
     backgroundColor: COLORS.primary,
@@ -34,6 +44,16 @@ const style = StyleSheet.create({
     marginTop:40
   },
   title: { color: COLORS.white, fontWeight: "bold", fontSize: 18 },
+  resBtnContainer: {
+    backgroundColor: COLORS.primary,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 200,
+    alignSelf:"center",
+    marginTop:10,
+    borderRadius: 30,
+  },
 });
 
-export { PrimaryButton, SecondaryButton };
+export { PrimaryButton, SecondaryButton,ReservationButton };

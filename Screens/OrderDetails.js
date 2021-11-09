@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, LogBox, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  LogBox,
+  Image,
+  Dimensions,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { PrimaryButton } from "../shared/Button";
@@ -9,6 +16,8 @@ import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 LogBox.ignoreAllLogs(true);
+const { width } = Dimensions.get("screen");
+const cardWidth = width - 40;
 
 const OrderDetails = ({ navigation, route, _id }) => {
   useEffect(() => {
@@ -183,12 +192,21 @@ const OrderDetails = ({ navigation, route, _id }) => {
         </Text>
         <View style={styles.tableNumCon}>
           <Text
-            style={{ fontSize: 25, color: COLORS.white, fontWeight: "bold" }}
+            style={{ fontSize: 20, color: COLORS.white, fontWeight: "bold" }}
           >
             {item.tableNumber}
           </Text>
         </View>
       </View>
+
+      {/* <View style={styles.header}>
+        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
+
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Update Order Status</Text>
+
+        <View style={{ flexDirection: "row" }}></View>
+      </View> */}
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.button}>
           <Dropdown
@@ -203,31 +221,40 @@ const OrderDetails = ({ navigation, route, _id }) => {
             Order Details
           </Text>
         </View>
-        <View style={styles.commonCard}>
-          <Text
-            style={{ fontSize: 18, color: COLORS.primary, fontWeight: "bold" }}
-          >
-            Total Price -
-          </Text>
-          <Text style={{ fontSize: 18, color: "black" }}>
-            - Rs. {calculateTotal()}
-          </Text>
+        <View style={styles.content}>
+          <View style={styles.commonCard}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: COLORS.primary,
+                fontWeight: "bold",
+              }}
+            >
+              Total Price -
+            </Text>
+            <Text style={{ fontSize: 18, color: "black" }}>
+              - Rs. {calculateTotal()}
+            </Text>
+          </View>
+          <View style={styles.commonCard}>
+            <Text
+              style={{
+                fontSize: 18,
+                color: COLORS.primary,
+                fontWeight: "bold",
+              }}
+            >
+              Customer Name -
+            </Text>
+            <Text style={{ fontSize: 18, color: "black" }}>
+              - {item.customerName}
+            </Text>
+          </View>
         </View>
-        <View style={styles.commonCard}>
-          <Text
-            style={{ fontSize: 18, color: COLORS.primary, fontWeight: "bold" }}
-          >
-            Customer Name -
-          </Text>
-          <Text style={{ fontSize: 18, color: "black" }}>
-            - {item.customerName}
-          </Text>
-        </View>
-
         <View style={styles.content}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            backgroundColor="white"
+            // backgroundColor="white"
             data={foodDetails}
             renderItem={({ item }) => <OrdersCard item={item} />}
             ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
@@ -242,11 +269,31 @@ const OrderDetails = ({ navigation, route, _id }) => {
 };
 
 const styles = StyleSheet.create({
+  // header: {
+  //   paddingVertical: 15,
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   // marginHorizontal: 20,
+  //   backgroundColor: COLORS.white,
+  // },
+  // header: {
+  //   paddingVertical: 20,
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   marginHorizontal: 10,
+  //   backgroundColor:COLORS.white,
+  //   // height:50,
+  // },
   header: {
-    paddingVertical: 20,
+    marginTop: 0,
+    height: "100%",
     flexDirection: "row",
+    // alignContent: "center",
+    // justifyContent: "center",
+    paddingLeft: 20,
+    backgroundColor: "white",
     alignItems: "center",
-    marginHorizontal: 20,
+    height: 56,
   },
   details: {
     paddingHorizontal: 20,
@@ -261,10 +308,11 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     elevation: 4,
-    width: 360,
+    // width: 360,
+    width: cardWidth,
     backgroundColor: COLORS.white,
-    marginVertical: 10,
-    marginHorizontal: 10,
+    marginVertical: 5,
+    marginHorizontal: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -273,17 +321,17 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     elevation: 4,
-    width: 360,
+    width: cardWidth,
     backgroundColor: COLORS.white,
-    marginVertical: 10,
-    marginHorizontal: 17,
+    marginVertical: 5,
+    marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
   },
   tableNumCon: {
-    height: 45,
-    width: 45,
+    height: 40,
+    width: 40,
     backgroundColor: COLORS.primary,
     borderRadius: 30,
     justifyContent: "center",
@@ -295,16 +343,18 @@ const styles = StyleSheet.create({
     paddingLeft: 45,
     justifyContent: "center",
     paddingBottom: 30,
+    paddingTop: 20,
+    elevation:10,
   },
   content: {
-    backgroundColor: COLORS.white,
+    // backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    // backgroundColor: COLORS.white,
   },
 });
 

@@ -31,7 +31,6 @@ const Header = ({ navigation, title }) => {
 const styles = StyleSheet.create({
   header: {
     marginTop: 0,
-
     height: "100%",
     flexDirection: "row",
     alignContent: "center",

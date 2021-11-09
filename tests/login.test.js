@@ -6,9 +6,10 @@ const flushMicrotasksQueue = () =>
   new Promise((resolve) => setImmediate(resolve));
 
 it("renders default elements", () => {
-  const { getByLabelText, getByTestId } = render(<LoginScreen />);
+  const { getByLabelText, getByTestId, getAllByText } = render(<LoginScreen />);
 
   getByTestId("logo");
+  getAllByText("Welcome");
   getByLabelText("Email");
   getByLabelText("Password");
 });

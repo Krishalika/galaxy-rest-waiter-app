@@ -36,9 +36,9 @@ const DetailsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white }}>
+    <SafeAreaView >
       <View style={styles.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
+        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} style={{paddingLeft:10}}/>
 
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
 
@@ -55,7 +55,7 @@ const DetailsScreen = ({ navigation, route }) => {
           <Image
             source={{ uri: item.img }}
             testID="food"
-            style={{ height: 220, width: 220, borderRadius: 20 }}
+            style={{ height: 220, width: 220, borderRadius: 20}}
           />
         </View>
         <View style={styles.details}>
@@ -100,7 +100,7 @@ const DetailsScreen = ({ navigation, route }) => {
           <Text style={styles.detailsText}>{item.description}</Text>
           <View style={{ marginTop: 40, marginBottom: 40 }}>
             <SecondaryButton
-              title={"Add to Cart"}
+              title={"ADD TO CART"}
               onPress={addThisToCart}
               disabled={quantity > 0 ? false : true}
             />
@@ -112,11 +112,23 @@ const DetailsScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
+  // header: {
+  //   paddingVertical: 20,
+  //   flexDirection: "row",
+  //   alignItems: "center",
+  //   marginHorizontal: 20,
+  //   backgroundColor:COLORS.white
+  // },
   header: {
-    paddingVertical: 20,
+    marginTop: 0,
+    height: "100%",
     flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 20,
+    // alignContent: "center",
+    // justifyContent: "center",
+    paddingLeft:20,
+    backgroundColor: "white",
+    alignItems:"center",
+    height: 56,
   },
   details: {
     paddingHorizontal: 20,

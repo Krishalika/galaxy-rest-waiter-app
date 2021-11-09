@@ -87,5 +87,19 @@
       "./mock.js"
     ]
   },
+  "expo": {
+    "name": "Galaxy Rest",
+    "icon": "./assets/logo.png",
+    "version": "1.0.0",
+    "slug": "your-app-slug",
+    "ios": {
+      "bundleIdentifier": "com.galaxyrest.waiterapp",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.cse.galaxyrestwaiter",
+      "versionCode": 1
+    }
+   },
   "private": true
 }
