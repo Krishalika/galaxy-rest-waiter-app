@@ -15,6 +15,7 @@ import COLORS from "../styles/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
+import ReservationsForm from "../Screens/ReservationsForm";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -135,6 +136,16 @@ function MyDrawer() {
       <Drawer.Screen
         name="OrderDetails"
         component={OrderDetails}
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+        }}
+      />
+
+      <Drawer.Screen
+        name="ReservationsForm"
+        component={ReservationsForm}
         options={{
           drawerLabel: () => null,
           title: null,

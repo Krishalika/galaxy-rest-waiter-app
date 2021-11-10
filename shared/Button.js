@@ -4,7 +4,17 @@ import COLORS from "../styles/colors";
 
 const PrimaryButton = ({ title, onPress = () => {} }) => {
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress} >
+      <View style={style.btnContainer}>
+        <Text style={style.title}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const PrimaryButtonReserve = ({ title, onPress = () => {} }) => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress} >
       <View style={style.btnContainer}>
         <Text style={style.title}>{title}</Text>
       </View>
@@ -56,4 +66,4 @@ const style = StyleSheet.create({
   },
 });
 
-export { PrimaryButton, SecondaryButton,ReservationButton };
+export { PrimaryButton, SecondaryButton,ReservationButton,PrimaryButtonReserve };

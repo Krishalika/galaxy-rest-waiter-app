@@ -17,7 +17,12 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 const { width } = Dimensions.get("screen");
 const inputWidth = width - 80;
 
-export default function ReservationsForm({ open, setOpen, navigation }) {
+export default function ReservationsForm({
+  open,
+  setOpen,
+  navigation,
+  category,
+}) {
   const [tableNo, setTableNo] = useState("");
   const [customerName, setName] = useState("");
   const [date, setDate] = useState(new Date());
@@ -86,7 +91,8 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
 
   const submitReservation = () => {
     const data = {
-      table: types[0]._id,
+      // table: types[0]._id,
+      table: category._id,
       customerName,
       date,
       startTime,
@@ -111,7 +117,8 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          table: types[0]._id,
+          // table: types[0]._id,
+          table: category._id,
           customerName,
           date,
           startTime,
@@ -262,7 +269,7 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
               date={endTime}
             />
 
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
               <Ionicons name="list-outline" size={24} color="black" />
               <TextInput
                 style={styles.tInput}
@@ -274,7 +281,7 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
                 accessibilityLabel="CustomerTable"
                 testID="ReservationsForm.table"
               />
-            </View>
+            </View> */}
 
             <View style={styles.inputContainer}>
               <Ionicons name="pricetag-outline" size={24} color="black" />
@@ -293,7 +300,8 @@ export default function ReservationsForm({ open, setOpen, navigation }) {
             <PrimaryButton
               testID="reservation.Button"
               title={"SAVE"}
-              onPress={(findTableID(tableNo), submitReservation)}
+              // onPress={(findTableID(tableNo), submitReservation)}
+              onPress={submitReservation}
               marginTop="50"
             />
           </View>

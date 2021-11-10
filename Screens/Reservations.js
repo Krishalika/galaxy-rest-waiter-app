@@ -27,6 +27,7 @@ import ReservationsForm from "./ReservationsForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import moment from "moment";
+
 const { width } = Dimensions.get("screen");
 const cardWidth = width - 40;
 
@@ -35,6 +36,7 @@ export default function Reservations({ navigation }) {
   const [reservationItem, setreservationItem] = React.useState([]);
   const [tableItem, setTableItem] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [selectedTable, setSelectedTable] = React.useState(null);
 
   const ListofReservations = async () => {
     setLoading(true);
@@ -85,6 +87,13 @@ export default function Reservations({ navigation }) {
           <TouchableOpacity
             key={index}
             activeOpacity={0.8}
+            onPress={() => {
+              setSelectedTable(category);
+              setModalVisible(true);
+            }}
+            key={index}
+            // onPress={() => navigation.navigate("ReservationsForm", category)}
+
             // onPress={() => {
             //   setselectedCategoryIndex(index);
             //   res(tableItem[selectedCategoryIndex].name);
@@ -99,12 +108,12 @@ export default function Reservations({ navigation }) {
               <View>
                 <View
                   style={{
-                    height: 40,
-                    width: 40,
+                    height: 45,
+                    width: 45,
                     resizeMode: "center",
                     justifyContent: "center",
-                    borderRadius: 40,
-                    backgroundColor: COLORS.blue,
+                    borderRadius: 45,
+                    backgroundColor: COLORS.orange,
                     alignItems: "center",
                     alignContent: "center",
                   }}
@@ -122,7 +131,7 @@ export default function Reservations({ navigation }) {
                   </Text>
                 </View>
               </View>
-              <View style={{alignItems:"center"}}>
+              <View style={{ alignItems: "center" }}>
                 {/* <Text
                   style={{
                     fontSize: 15,
@@ -166,6 +175,7 @@ export default function Reservations({ navigation }) {
               navigation={navigation}
               open={modalVisible}
               setOpen={setModalVisible}
+              category={selectedTable}
             />
           </Modal>
           <View style={styles.tableNumCon}>
@@ -211,7 +221,7 @@ export default function Reservations({ navigation }) {
               style={{
                 fontWeight: "bold",
                 fontSize: 16,
-                color: COLORS.orange,
+                color: COLORS.primary,
               }}
             >
               {item.date.substr(0, 10)}
@@ -249,17 +259,17 @@ export default function Reservations({ navigation }) {
         // borderRadius: 10,
       }}
       > */}
-        {/* <Button
+      {/* <Button
           title="ADD"
           style={{ fontWeight: "bold",backgroundColor:"black" }}
           onPress={() => setModalVisible(true)}
         /> */}
-        <Tooltip popover={<Text>Info here</Text>}>
-          <ReservationButton
-            title={"ADD"}
-            onPress={() => setModalVisible(true)}
-          />
-        </Tooltip>
+      {/* <Tooltip popover={<Text>Info here</Text>}>
+        <ReservationButton
+          title={"ADD"}
+          onPress={() => setModalVisible(true)}
+        />
+      </Tooltip> */}
       {/* </View> */}
       <View>
         <ListTables />
@@ -355,12 +365,12 @@ const styles = StyleSheet.create({
   tableNumCon: {
     height: 45,
     width: 45,
-    backgroundColor: COLORS.orange,
-    borderRadius: 30,
+    backgroundColor: COLORS.blue,
+    borderRadius:45,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
-    paddingBottom:0,
+    paddingBottom: 0,
   },
   categoriesListContainer: {
     paddingVertical: 20,
@@ -368,10 +378,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   categoryBtn: {
-    height: 45,
-    width: 140,
+    height: 55,
+    width: 150,
     marginRight: 7,
-    borderRadius: 40,
+    borderRadius: 30,
     alignItems: "center",
     paddingHorizontal: 5,
     flexDirection: "row",

@@ -80,7 +80,7 @@ export default function Orders({ navigation }) {
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 16 , color:"#808080"}}>
+            <Text style={{ fontWeight: "bold", fontSize: 15 , color:"#808080"}}>
               status updated at:{" "}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 15 }}>
@@ -93,7 +93,7 @@ export default function Orders({ navigation }) {
            // style={{color: text === "foo" ? "trueColor" : "falseColor"}}
               style={{
                 fontWeight: "bold",
-                fontSize: 18,
+                fontSize: 16,
                 color: getColor(item.state)
               }}
             >

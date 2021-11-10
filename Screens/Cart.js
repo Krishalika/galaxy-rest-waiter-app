@@ -88,7 +88,7 @@ const Cart = ({ navigation }) => {
             visibilityTime: 1500,
             position: "top",
             type: "error",
-            text1: "Order is not placed!",
+            text1: "Error, try again!",
           });
         });
     } else {
