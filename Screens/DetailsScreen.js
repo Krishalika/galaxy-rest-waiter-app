@@ -36,12 +36,15 @@ const DetailsScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView >
+    <SafeAreaView>
       <View style={styles.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} style={{paddingLeft:10}}/>
-
+        <Icon
+          name="arrow-back-ios"
+          size={28}
+          onPress={navigation.goBack}
+          style={{ paddingLeft: 10 }}
+        />
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Details</Text>
-
         <View style={{ flexDirection: "row" }}></View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -50,13 +53,12 @@ const DetailsScreen = ({ navigation, route }) => {
             justifyContent: "center",
             alignItems: "center",
             height: 280,
-          //  backgroundColor:"#F5EBEB"
           }}
         >
           <Image
             source={{ uri: item.img }}
             testID="food"
-            style={{ height: 220, width: 220, borderRadius: 20}}
+            style={{ height: 220, width: 220, borderRadius: 20 }}
           />
         </View>
         <View style={styles.details}>
@@ -113,33 +115,21 @@ const DetailsScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  // header: {
-  //   paddingVertical: 20,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   marginHorizontal: 20,
-  //   backgroundColor:COLORS.white
-  // },
   header: {
     marginTop: 0,
     height: "100%",
     flexDirection: "row",
-    // alignContent: "center",
-    // justifyContent: "center",
-    paddingLeft:20,
+
+    paddingLeft: 20,
     backgroundColor: "white",
-    alignItems:"center",
+    alignItems: "center",
     height: 56,
   },
   details: {
     paddingHorizontal: 20,
     paddingTop: 40,
     paddingBottom: 220,
-    // backgroundColor: COLORS.primary,
-    // backgroundColor: "#356da5",
-    backgroundColor:COLORS.blue,
-    // backgroundColor:"#bf9b30",
-    // #ffdc73
+    backgroundColor: COLORS.blue,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },

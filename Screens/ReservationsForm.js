@@ -23,7 +23,6 @@ export default function ReservationsForm({
   navigation,
   category,
 }) {
-  const [tableNo, setTableNo] = useState("");
   const [customerName, setName] = useState("");
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
@@ -35,20 +34,6 @@ export default function ReservationsForm({
   const [isStartTimePickerVisible, setStartTimePickerVisibility] =
     useState(false);
   const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
-  const [types, setTypes] = React.useState([]);
-
-  const findTableID = async (tableNumber) =>
-    await axios
-
-      .get(`https://galaxy-rest-be.herokuapp.com/table/by-tableNo`, {
-        params: { tableNumber: tableNumber },
-      })
-      .then(({ data }) => {
-        setTypes(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -91,7 +76,6 @@ export default function ReservationsForm({
 
   const submitReservation = () => {
     const data = {
-      // table: types[0]._id,
       table: category._id,
       customerName,
       date,
@@ -117,7 +101,6 @@ export default function ReservationsForm({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          // table: types[0]._id,
           table: category._id,
           customerName,
           date,
@@ -132,7 +115,6 @@ export default function ReservationsForm({
         .then((data) => {
           setOpen(false);
           console.log(data);
-          // Alert.alert("success");
           Toast.show({
             topOffset: 40,
             visibilityTime: 1500,
@@ -269,20 +251,6 @@ export default function ReservationsForm({
               date={endTime}
             />
 
-            {/* <View style={styles.inputContainer}>
-              <Ionicons name="list-outline" size={24} color="black" />
-              <TextInput
-                style={styles.tInput}
-                label="Table Number"
-                theme={{ colors: { primary: "#08b8e1" } }}
-                onChangeText={(text) => setTableNo(text)}
-                value={tableNo}
-                keyboardType="numeric"
-                accessibilityLabel="CustomerTable"
-                testID="ReservationsForm.table"
-              />
-            </View> */}
-
             <View style={styles.inputContainer}>
               <Ionicons name="pricetag-outline" size={24} color="black" />
               <TextInput
@@ -300,7 +268,6 @@ export default function ReservationsForm({
             <PrimaryButton
               testID="reservation.Button"
               title={"SAVE"}
-              // onPress={(findTableID(tableNo), submitReservation)}
               onPress={submitReservation}
               marginTop="50"
             />
@@ -324,7 +291,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#03498f",
-
     fontSize: 15,
     textAlign: "center",
   },
@@ -332,7 +298,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     fontSize: 14,
     height: 50,
-    // width: 330,
     width: inputWidth,
     backgroundColor: "white",
   },
@@ -340,15 +305,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 17,
     alignItems: "center",
-
-    // paddingStart:20,
-    // paddingEnd:40,
   },
   commonCard: {
     height: 50,
     borderRadius: 10,
     elevation: 10,
-    // width: 360,
     width: inputWidth + 24,
     backgroundColor: "white",
     marginVertical: 8,

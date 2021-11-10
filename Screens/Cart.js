@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Button, Divider } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
 import { Provider, TextInput } from "react-native-paper";
@@ -21,7 +21,6 @@ import Header from "../shared/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SecondaryButton } from "../shared/Button";
-import { AntDesign } from "@expo/vector-icons";
 const { width } = Dimensions.get("screen");
 const inputWidth = width - 80;
 
@@ -137,7 +136,6 @@ const Cart = ({ navigation }) => {
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Image
                       source={{ uri: item.img }}
-                      // testID="food"
                       style={{
                         height: 55,
                         width: 55,
@@ -174,7 +172,6 @@ const Cart = ({ navigation }) => {
                         onPress={() => dispatch(removeCartItem(item))}
                         name="delete"
                         size={24}
-                        // color="#F7685B"
                         color={COLORS.orange}
                       />
                     </TouchableOpacity>
@@ -204,7 +201,11 @@ const Cart = ({ navigation }) => {
               }}
             >
               <Text
-                style={{ fontSize: 16, fontWeight: "bold", color: COLORS.orange}}
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: COLORS.orange,
+                }}
               >
                 Total Price
               </Text>
@@ -250,7 +251,6 @@ const Cart = ({ navigation }) => {
                     color={COLORS.white}
                   />
                   <View>
-                    {/* <AntDesign name="email" color="#000" size={14} /> */}
                     <TextInput
                       style={globalStyles.input}
                       label="Customer Name"
@@ -277,7 +277,6 @@ const Cart = ({ navigation }) => {
         </Provider>
         <View style={{ alignItems: "center" }}>
           <View style={styles.inputContainer}>
-            {/* <AntDesign name="user" size={24} color="black" /> */}
             <TextInput
               style={styles.tInput}
               label="Customer Name"
@@ -289,50 +288,31 @@ const Cart = ({ navigation }) => {
               clearButtonMode="always"
             />
           </View>
-          {/* <TextInput
-            height="55px"
-            style={styles.button}
-            placeholder="Customer Name"
-            mode="outlined"
-            onChangeText={(text) => setcustomerName(text)}
-            value={customerName}
-            clearButtonMode="always"
-          /> */}
+
           <View style={styles.inputContainer}>
             <TextInput
-              // height="55px"
-              // style={styles.button}
               height="50"
               style={styles.tInput}
               accessibilityLabel="CustomerNIC"
               testID="CartForm.nic"
               theme={{ colors: { primary: "#08b8e1" } }}
               label="Customer NIC Number"
-              // mode="outlined"
               onChangeText={(text) => setidNumber(text)}
               value={idNumber}
             />
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              // height="55px"
               height="50"
               style={styles.tInput}
               theme={{ colors: { primary: "#08b8e1" } }}
               label="Table Number"
-              // mode="outlined"
               keyboardType="numeric"
               onChangeText={(text) => settableNumber(text)}
               value={tableNumber}
             />
           </View>
-          {/* <Button
-            onPress={placeOrder}
-            disabled={items.length > 0 ? false : true}
-            buttonStyle={{ height: 55 }}
-            containerStyle={styles.button}
-            title="Place Order"
-          /> */}
+
           <SecondaryButton
             title="PLACE ORDER"
             onPress={placeOrder}
@@ -347,17 +327,13 @@ const Cart = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "white",
     padding: 12,
   },
   details: {
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 20,
-    // backgroundColor: COLORS.primary,
     backgroundColor: "#4e7fb0",
-    // backgroundColor:"#bf9b30",
-    // backgroundColor:"#2196F3",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },
@@ -375,34 +351,17 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: COLORS.primary,
   },
-  // tInput: {
-  //   alignSelf: "center",
-  //   height: 50,
-  //   width:
-  //   backgroundColor: "white",
-  // },
-  // inputContainer: {
-  //   flexDirection: "row",
-  //   marginTop: 18,
-  //   alignItems: "center",
-  // },
   tInput: {
     alignSelf: "center",
     fontSize: 14,
     height: 50,
-    // width: 330,
     width: inputWidth,
-
     backgroundColor: "white",
   },
   inputContainer: {
     flexDirection: "row",
     marginTop: 10,
     alignItems: "center",
-    // paddingBottom: 10,
-
-    // paddingStart:20,
-    // paddingEnd:40,
   },
 });
 

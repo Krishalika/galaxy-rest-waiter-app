@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
   Text,
   Modal,
-  Button,
   TouchableWithoutFeedback,
   Keyboard,
   RefreshControl,
@@ -15,12 +14,6 @@ import {
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
-import Tooltip from "rn-tooltip";
-import {
-  SecondaryButton,
-  PrimaryButton,
-  ReservationButton,
-} from "../shared/Button";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import ReservationsForm from "./ReservationsForm";
 
@@ -92,12 +85,6 @@ export default function Reservations({ navigation }) {
               setModalVisible(true);
             }}
             key={index}
-            // onPress={() => navigation.navigate("ReservationsForm", category)}
-
-            // onPress={() => {
-            //   setselectedCategoryIndex(index);
-            //   res(tableItem[selectedCategoryIndex].name);
-            // }}
           >
             <View
               style={{
@@ -132,16 +119,6 @@ export default function Reservations({ navigation }) {
                 </View>
               </View>
               <View style={{ alignItems: "center" }}>
-                {/* <Text
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
-                    marginLeft: 10,
-                    color: COLORS.white,
-                  }}
-                >
-                  SEATS
-                </Text> */}
                 <Text
                   style={{
                     fontSize: 15,
@@ -249,28 +226,6 @@ export default function Reservations({ navigation }) {
           <ReservationsForm />
         </Modal>
       </TouchableWithoutFeedback>
-
-      {/* <View
-      style={{
-        // alignSelf: "center",
-        // width: 200,
-        // marginTop: 10,
-        // marginBottom: 5,
-        // borderRadius: 10,
-      }}
-      > */}
-      {/* <Button
-          title="ADD"
-          style={{ fontWeight: "bold",backgroundColor:"black" }}
-          onPress={() => setModalVisible(true)}
-        /> */}
-      {/* <Tooltip popover={<Text>Info here</Text>}>
-        <ReservationButton
-          title={"ADD"}
-          onPress={() => setModalVisible(true)}
-        />
-      </Tooltip> */}
-      {/* </View> */}
       <View>
         <ListTables />
       </View>
@@ -306,10 +261,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: COLORS.light,
   },
   content: {
-    // backgroundColor: COLORS.light,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -332,7 +285,6 @@ const styles = StyleSheet.create({
     height: 135,
     borderRadius: 10,
     elevation: 10,
-    // width: 360,
     width: cardWidth,
     backgroundColor: COLORS.white,
     marginVertical: 10,
@@ -366,7 +318,7 @@ const styles = StyleSheet.create({
     height: 45,
     width: 45,
     backgroundColor: COLORS.blue,
-    borderRadius:45,
+    borderRadius: 45,
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,

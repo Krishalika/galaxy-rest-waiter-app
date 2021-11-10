@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -36,23 +36,20 @@ export default function Orders({ navigation }) {
       });
   };
 
-
-
   useEffect(() => {
     ListofOrders();
   }, []);
 
-
   const getColor = (state) => {
     switch (state) {
-      case 'In Queue':
+      case "In Queue":
         return COLORS.inqueue;
-      case 'Processing':
+      case "Processing":
         return COLORS.processing;
-      case 'Prepared':
+      case "Prepared":
         return COLORS.orange;
       default:
-        return 'black';
+        return "black";
     }
   };
 
@@ -80,7 +77,9 @@ export default function Orders({ navigation }) {
               justifyContent: "center",
             }}
           >
-            <Text style={{ fontWeight: "bold", fontSize: 15 , color:"#808080"}}>
+            <Text
+              style={{ fontWeight: "bold", fontSize: 15, color: "#808080" }}
+            >
               status updated at:{" "}
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 15 }}>
@@ -90,22 +89,15 @@ export default function Orders({ navigation }) {
           </View>
           <View>
             <Text
-           // style={{color: text === "foo" ? "trueColor" : "falseColor"}}
               style={{
                 fontWeight: "bold",
                 fontSize: 16,
-                color: getColor(item.state)
+                color: getColor(item.state),
               }}
             >
               {item.state} {">>"}
             </Text>
           </View>
-          {/* <View>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              updated at: {moment(new Date(item.updatedAt)).format("h:mma")}
-              {","} {item.updatedAt.substr(0, 10)}
-            </Text>
-          </View> */}
           <View style={{ marginRight: 20, alignItems: "center" }}></View>
         </View>
       </TouchableHighlight>
@@ -127,10 +119,12 @@ export default function Orders({ navigation }) {
           numColumns={1}
           data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
-          ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20, paddingTop:10 }}
+          ListFooterComponentStyle={{
+            paddingHorizontal: 20,
+            marginTop: 20,
+            paddingTop: 10,
+          }}
           keyExtractor={(item, _id) => _id.toString()}
-          // onRefresh={() => ListofOrders()}
-          // refreshing={loading}
           refreshControl={
             <RefreshControl
               refreshing={loading}
@@ -154,10 +148,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // backgroundColor: COLORS.white,
   },
   content: {
-    // backgroundColor: COLORS.light,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -188,8 +180,7 @@ const styles = StyleSheet.create({
   tableNumCon: {
     height: 45,
     width: 45,
-    backgroundColor:"#4e7fb0",
-     // #ff6f3c -> orange color in home page
+    backgroundColor: "#4e7fb0",
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",

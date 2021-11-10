@@ -49,7 +49,7 @@ const LoginScreen = (props) => {
       justifyContent: "center",
       marginTop: 230,
       marginBottom: 30,
-      borderColor:COLORS.primary
+      borderColor: COLORS.primary,
     },
     tInput: {
       alignSelf: "center",
@@ -82,7 +82,6 @@ const LoginScreen = (props) => {
             await AsyncStorage.setItem("token", data.token);
             props.navigation.navigate("Home");
           } catch (e) {
-            // console.log("Error!");
             Toast.show({
               topOffset: 40,
               visibilityTime: 1500,
@@ -120,13 +119,6 @@ const LoginScreen = (props) => {
       props.navigation.navigate("Home");
     } else {
       console.log("Error!");
-      // Toast.show({
-      //   topOffset: 40,
-      //   visibilityTime: 1500,
-      //   position: "top",
-      //   type: "error",
-      //   text1: "Email or password is incorrect!",
-      // });
     }
   };
   useEffect(() => {

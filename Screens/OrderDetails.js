@@ -30,7 +30,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
     { value: "Prepared" },
     { value: "Closed" },
   ];
-  const [loading, setLoading] = useState(true);
 
   const getDetails = (type) => {
     switch (type) {
@@ -187,7 +186,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
-        <Text style={{ fontSize: 20, fontWeight: "bold",color:"black" }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>
           Update Order Status
         </Text>
         <View style={styles.tableNumCon}>
@@ -198,15 +197,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
           </Text>
         </View>
       </View>
-
-      {/* <View style={styles.header}>
-        <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
-
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Update Order Status</Text>
-
-        <View style={{ flexDirection: "row" }}></View>
-      </View> */}
-
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.button}>
           <Dropdown
@@ -217,7 +207,9 @@ const OrderDetails = ({ navigation, route, _id }) => {
           />
         </View>
         <View style={{ paddingLeft: 45 }}>
-          <Text style={{ fontSize: 19, fontWeight: "bold", color:COLORS.orange }}>
+          <Text
+            style={{ fontSize: 19, fontWeight: "bold", color: COLORS.orange }}
+          >
             Order Details
           </Text>
         </View>
@@ -254,7 +246,6 @@ const OrderDetails = ({ navigation, route, _id }) => {
         <View style={styles.content}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            // backgroundColor="white"
             data={foodDetails}
             renderItem={({ item }) => <OrdersCard item={item} />}
             ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
@@ -269,27 +260,10 @@ const OrderDetails = ({ navigation, route, _id }) => {
 };
 
 const styles = StyleSheet.create({
-  // header: {
-  //   paddingVertical: 15,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   // marginHorizontal: 20,
-  //   backgroundColor: COLORS.white,
-  // },
-  // header: {
-  //   paddingVertical: 20,
-  //   flexDirection: "row",
-  //   alignItems: "center",
-  //   marginHorizontal: 10,
-  //   backgroundColor:COLORS.white,
-  //   // height:50,
-  // },
   header: {
     marginTop: 0,
     height: "100%",
     flexDirection: "row",
-    // alignContent: "center",
-    // justifyContent: "center",
     paddingLeft: 20,
     backgroundColor: "white",
     alignItems: "center",
@@ -308,7 +282,6 @@ const styles = StyleSheet.create({
     height: 85,
     borderRadius: 10,
     elevation: 4,
-    // width: 360,
     width: cardWidth,
     backgroundColor: COLORS.white,
     marginVertical: 5,
@@ -344,17 +317,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingBottom: 15,
     paddingTop: 10,
-    elevation:10,
+    elevation: 10,
   },
   content: {
-    // backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
   },
   container: {
     flex: 1,
-    // backgroundColor: COLORS.white,
   },
 });
 

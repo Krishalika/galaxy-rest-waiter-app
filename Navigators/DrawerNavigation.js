@@ -5,7 +5,6 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
@@ -17,15 +16,8 @@ import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
 import ReservationsForm from "../Screens/ReservationsForm";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function CustomDrawerContent(props) {
-  const logout = () => {
-    AsyncStorage.removeItem("token").then(() => {
-      // props.navigation.replace("login");
-      props.navigation.navigate("LoginScreen");
-    });
-  };
   return (
     <ScrollView style={styles.container}>
       <View style={styles.drawerHeader}>
@@ -41,16 +33,6 @@ function CustomDrawerContent(props) {
       </View>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        {/* <DrawerItem
-          label="Logout"
-          // onPress={() => props.navigation.navigate("LoginScreen")}
-          // navigation.navigate('MyDrawer', { screen: 'LoginScreen' });
-          onPress={() =>
-            props.navigation.navigate("CustomDrawerContent", { screen: "LoginScreen" })
-          }
-
-          // onPress={logout}
-        /> */}
       </DrawerContentScrollView>
     </ScrollView>
   );
@@ -142,7 +124,6 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
-
       <Drawer.Screen
         name="ReservationsForm"
         component={ReservationsForm}
@@ -152,59 +133,6 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
-
-      {/* <Drawer.Screen
-        name="Logout"
-        component={Logout}
-        options={{
-          title: "Logout",
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24},
-          headerTintColor: "#03498f",
-          drawerIcon: () => <AntDesign name="table" size={24} color="black" />,
-        }}
-      /> */}
-      {/* <DrawerContentScrollView>
-        <DrawerItem
-          label="Logout"
-          onPress={() => props.navigation.navigate("LoginScreen")}
-        />
-      </DrawerContentScrollView> */}
-      {/* <DrawerContentScrollView >
-        <DrawerItemList/>
-        <DrawerItem
-          label="Logout"
-          onPress={() => props.navigation.navigate("LoginScreen")}
-        />
-      </DrawerContentScrollView> */}
-      {/* <Drawer.Screen
-        name="Cart1"
-        component={Cart}
-        options={{
-          title: "Cart",
-          headerStyle: { backgroundColor: "#08b8e1", height: 56 },
-          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
-          headerTintColor: "#03498f",
-          drawerIcon: () => (
-            <Icon
-              name="logout"
-              size={24}
-              color="black"
-              onPress={logout}
-              style={{ marginLeft: 360 }}
-            />
-          ),
-        }}
-      /> */}
-
-      {/* <Drawer.Navigator initialRouteName="Home" drawerContent={props => {
-    return (
-      <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
-        <DrawerItem label="Logout" onPress={() => props.navigation.navigate("Login")} />
-      </DrawerContentScrollView>
-    )
-  }}> */}
     </Drawer.Navigator>
   );
 }
