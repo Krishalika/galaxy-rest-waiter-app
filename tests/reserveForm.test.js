@@ -11,7 +11,6 @@ it("renders default elements", () => {
   getByLabelText("CustomerName");
   getByLabelText("CustomerEmail");
   getByLabelText("CustomerTel");
-  getByLabelText("CustomerTable");
   getByLabelText("Price");
 });
 
@@ -29,7 +28,6 @@ it("it should handle valid input submission", async () => {
     "customer@gmail.com"
   );
   fireEvent.changeText(getByTestId("ReservationsForm.tel"), "0702143765");
-  fireEvent.changeText(getByTestId("ReservationsForm.table"), "1");
   fireEvent.changeText(getByTestId("ReservationsForm.price"), "6000");
 
   await act(flushMicrotasksQueue);
