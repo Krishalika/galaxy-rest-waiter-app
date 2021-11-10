@@ -91,7 +91,7 @@ function MyDrawer() {
         name="Orders"
         component={Orders}
         options={{
-          title: "Orders",
+          title: "Order Details",
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",

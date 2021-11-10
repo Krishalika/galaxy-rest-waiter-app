@@ -190,10 +190,10 @@ export default function Home({ navigation }) {
           >
             <View
               style={{
-                backgroundColor:
-                  selectedCategoryIndex == index
-                    ? "#356da5"
-                    : COLORS.secondary,
+                backgroundColor: 
+                  // selectedCategoryIndex == index ? "#bf9b30" : COLORS.secondary,
+                  selectedCategoryIndex == index ? COLORS.orange : COLORS.secondary,
+
                 ...styles.categoryBtn,
               }}
             >
@@ -231,6 +231,8 @@ export default function Home({ navigation }) {
       <TouchableHighlight
         // underlayColor={COLORS.primary}
         underlayColor="#f5eebb"
+        // underlayColor="#ccdae8"
+        // underlayColor="#f5ebfb"
         activeOpacity={0.9}
         onPress={() => navigation.navigate("DetailsScreen", food)}
       >
@@ -300,7 +302,6 @@ export default function Home({ navigation }) {
         onPress={showAlerts}
         style={{ marginLeft: 360 }}
       /> */}
-
       <Icon
         name="logout"
         size={24}
@@ -310,15 +311,14 @@ export default function Home({ navigation }) {
             "Logout",
             "Are you sure you want to logout?",
             [
-              { text: "Yes", onPress: logout },
               { text: "Cancel", onPress: () => console.log("Cancel Pressed!") },
+              { text: "Yes", onPress: logout, style: { color: "red" } },
             ],
-            { cancelable: true },
+            { cancelable: true }
           )
         }
         style={{ marginLeft: 360 }}
       />
-
       {/* <AwesomeAlert
         show={showAlert}
         showProgress={false}
@@ -341,20 +341,20 @@ export default function Home({ navigation }) {
         style={{
           marginTop: 20,
           flexDirection: "row",
-          paddingHorizontal: 10,
+          // paddingHorizontal: 10,
           alignSelf: "center",
         }}
       >
         <View style={styles.inputContainer}>
           <TextInput
-            style={{ flex: 1, fontSize: 16, textAlign: "center"}}
+            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
             placeholder="Item code"
             onChangeText={onChangeNumber}
             value={textNumber}
           />
           <Icon
             name="search"
-            // style={{paddingRight:10}}
+            style={{ marginEnd: 10 }}
             size={24}
             onPress={() => {
               if (textNumber != "")
@@ -372,6 +372,7 @@ export default function Home({ navigation }) {
           <Icon
             name="search"
             size={24}
+            style={{ marginEnd: 10 }}
             onPress={() => {
               if (textName != "") resNames(textName), console.log(names.length);
             }}
@@ -406,19 +407,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: COLORS.white,
     alignItems: "center",
-    paddingHorizontal: 20,
-   borderColor:"#f5eebb",
-   borderTopColor:"#f5eebb",
+    borderColor: "#f5eebb",
+    borderTopColor: "#f5eebb",
     // marginEnd: 7,
 
     //newly added
     width: cardWidth,
     marginHorizontal: 10,
     alignItems: "center",
+    marginBottom: 0,
+    marginTop: 0,
     elevation: 13, //shadow
   },
   categoriesListContainer: {
-    paddingVertical: 20,
+    paddingVertical: 12,
     alignItems: "center",
     paddingHorizontal: 20,
   },

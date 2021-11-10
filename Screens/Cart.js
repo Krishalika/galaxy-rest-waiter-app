@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Button, Divider } from "react-native-elements";
@@ -20,6 +21,9 @@ import Header from "../shared/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { SecondaryButton } from "../shared/Button";
+import { AntDesign } from "@expo/vector-icons";
+const { width } = Dimensions.get("screen");
+const inputWidth = width - 80;
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -170,7 +174,8 @@ const Cart = ({ navigation }) => {
                         onPress={() => dispatch(removeCartItem(item))}
                         name="delete"
                         size={24}
-                        color="#F7685B"
+                        // color="#F7685B"
+                        color={COLORS.orange}
                       />
                     </TouchableOpacity>
                   </View>
@@ -198,7 +203,9 @@ const Cart = ({ navigation }) => {
                 marginTop: 15,
               }}
             >
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              <Text
+                style={{ fontSize: 16, fontWeight: "bold", color: COLORS.orange}}
+              >
                 Total Price
               </Text>
               <Text
@@ -210,7 +217,9 @@ const Cart = ({ navigation }) => {
           </>
         ) : (
           <View style={{ alignItems: "center", marginTop: 50 }}>
-            <Text style={{ color: "#4B76D1", fontSize: 18 }}>
+            <Text
+              style={{ color: COLORS.orange, fontSize: 18, fontWeight: "bold" }}
+            >
               Your Cart is Empty !
             </Text>
           </View>
@@ -240,15 +249,18 @@ const Cart = ({ navigation }) => {
                     value={tableNumber}
                     color={COLORS.white}
                   />
-                  <TextInput
-                    style={globalStyles.input}
-                    label="Customer Name"
-                    accessibilityLabel="name"
-                    testID="Cart.customerName"
-                    mode="outlined"
-                    onChangeText={(text) => setcustomerName(text)}
-                    value={customerName}
-                  />
+                  <View>
+                    {/* <AntDesign name="email" color="#000" size={14} /> */}
+                    <TextInput
+                      style={globalStyles.input}
+                      label="Customer Name"
+                      accessibilityLabel="name"
+                      testID="Cart.customerName"
+                      mode="outlined"
+                      onChangeText={(text) => setcustomerName(text)}
+                      value={customerName}
+                    />
+                  </View>
                   <TextInput
                     style={globalStyles.input}
                     label="Customer NIC"
@@ -264,7 +276,20 @@ const Cart = ({ navigation }) => {
           </ScrollView>
         </Provider>
         <View style={{ alignItems: "center" }}>
-          <TextInput
+          <View style={styles.inputContainer}>
+            {/* <AntDesign name="user" size={24} color="black" /> */}
+            <TextInput
+              style={styles.tInput}
+              label="Customer Name"
+              accessibilityLabel="CustomerName"
+              testID="CartForm.name"
+              theme={{ colors: { primary: "#08b8e1" } }}
+              onChangeText={(text) => setcustomerName(text)}
+              value={customerName}
+              clearButtonMode="always"
+            />
+          </View>
+          {/* <TextInput
             height="55px"
             style={styles.button}
             placeholder="Customer Name"
@@ -272,24 +297,35 @@ const Cart = ({ navigation }) => {
             onChangeText={(text) => setcustomerName(text)}
             value={customerName}
             clearButtonMode="always"
-          />
-          <TextInput
-            height="55px"
-            style={styles.button}
-            placeholder="Customer NIC Number"
-            mode="outlined"
-            onChangeText={(text) => setidNumber(text)}
-            value={idNumber}
-          />
-          <TextInput
-            height="55px"
-            style={styles.button}
-            placeholder="Table Number"
-            mode="outlined"
-            keyboardType="numeric"
-            onChangeText={(text) => settableNumber(text)}
-            value={tableNumber}
-          />
+          /> */}
+          <View style={styles.inputContainer}>
+            <TextInput
+              // height="55px"
+              // style={styles.button}
+              height="50"
+              style={styles.tInput}
+              accessibilityLabel="CustomerNIC"
+              testID="CartForm.nic"
+              theme={{ colors: { primary: "#08b8e1" } }}
+              label="Customer NIC Number"
+              // mode="outlined"
+              onChangeText={(text) => setidNumber(text)}
+              value={idNumber}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              // height="55px"
+              height="50"
+              style={styles.tInput}
+              theme={{ colors: { primary: "#08b8e1" } }}
+              label="Table Number"
+              // mode="outlined"
+              keyboardType="numeric"
+              onChangeText={(text) => settableNumber(text)}
+              value={tableNumber}
+            />
+          </View>
           {/* <Button
             onPress={placeOrder}
             disabled={items.length > 0 ? false : true}
@@ -318,7 +354,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
     paddingBottom: 20,
-    backgroundColor: COLORS.primary,
+    // backgroundColor: COLORS.primary,
+    backgroundColor: "#4e7fb0",
+    // backgroundColor:"#bf9b30",
+    // backgroundColor:"#2196F3",
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },
@@ -336,16 +375,34 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: COLORS.primary,
   },
+  // tInput: {
+  //   alignSelf: "center",
+  //   height: 50,
+  //   width:
+  //   backgroundColor: "white",
+  // },
+  // inputContainer: {
+  //   flexDirection: "row",
+  //   marginTop: 18,
+  //   alignItems: "center",
+  // },
   tInput: {
     alignSelf: "center",
+    fontSize: 14,
     height: 50,
-    width: 260,
+    // width: 330,
+    width: inputWidth,
+
     backgroundColor: "white",
   },
   inputContainer: {
     flexDirection: "row",
-    marginTop: 18,
+    marginTop: 10,
     alignItems: "center",
+    // paddingBottom: 10,
+
+    // paddingStart:20,
+    // paddingEnd:40,
   },
 });
 

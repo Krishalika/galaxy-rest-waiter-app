@@ -51,7 +51,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
   console.log(item._id);
   console.log(item.state);
   console.log(getDetails("customerName"));
-  console.log(getDetails("foodItems"));
+  // console.log(getDetails("foodItems"));
 
   const customerName = item.customerName;
   const idNumber = item.idNumber;
@@ -187,7 +187,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
       <View style={styles.header}>
         <Icon name="arrow-back-ios" size={28} onPress={navigation.goBack} />
 
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+        <Text style={{ fontSize: 20, fontWeight: "bold",color:"black" }}>
           Update Order Status
         </Text>
         <View style={styles.tableNumCon}>
@@ -217,7 +217,7 @@ const OrderDetails = ({ navigation, route, _id }) => {
           />
         </View>
         <View style={{ paddingLeft: 45 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+          <Text style={{ fontSize: 19, fontWeight: "bold", color:COLORS.orange }}>
             Order Details
           </Text>
         </View>
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
   },
   OrdersCard: {
-    height: 100,
+    height: 85,
     borderRadius: 10,
     elevation: 4,
     // width: 360,
@@ -342,8 +342,8 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingLeft: 45,
     justifyContent: "center",
-    paddingBottom: 30,
-    paddingTop: 20,
+    paddingBottom: 15,
+    paddingTop: 10,
     elevation:10,
   },
   content: {

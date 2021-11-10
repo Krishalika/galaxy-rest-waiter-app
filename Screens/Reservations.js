@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
+import Tooltip from 'rn-tooltip';
 import {
   SecondaryButton,
   PrimaryButton,
@@ -103,9 +104,9 @@ export default function Reservations({ navigation }) {
                     resizeMode: "center",
                     justifyContent: "center",
                     borderRadius: 45,
-                    backgroundColor:COLORS.primary,
-                    alignItems:"center",
-                    alignContent:"center"
+                    backgroundColor: COLORS.primary,
+                    alignItems: "center",
+                    alignContent: "center",
                   }}
                 >
                   <Text
@@ -113,8 +114,8 @@ export default function Reservations({ navigation }) {
                       fontSize: 15,
                       fontWeight: "bold",
                       color: COLORS.white,
-                      textAlign:"center",
-                      alignItems:"center"
+                      textAlign: "center",
+                      alignItems: "center",
                     }}
                   >
                     {category.tableNumber}
@@ -129,7 +130,7 @@ export default function Reservations({ navigation }) {
                   color: COLORS.white,
                 }}
               >
-                seats: {category.seatCount}
+                SEATS: {category.seatCount}
               </Text>
             </View>
           </TouchableOpacity>
@@ -241,10 +242,12 @@ export default function Reservations({ navigation }) {
           style={{ fontWeight: "bold",backgroundColor:"black" }}
           onPress={() => setModalVisible(true)}
         /> */}
-        <ReservationButton
-          title={"ADD"}
-          onPress={() => setModalVisible(true)}
-        />
+        <Tooltip popover={<Text>Info here</Text>}>
+          <ReservationButton
+            title={"ADD"}
+            onPress={() => setModalVisible(true)}
+          />
+        </Tooltip>
       </View>
       <View>
         <ListTables />

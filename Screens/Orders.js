@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, RefreshControl,Dimensions } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Alert,
+  RefreshControl,
+  Dimensions,
+} from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
 import { FlatList, TouchableHighlight } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
+
 const { width } = Dimensions.get("screen");
 const cardWidth = width - 40;
 
@@ -27,9 +36,30 @@ export default function Orders({ navigation }) {
       });
   };
 
+
+
   useEffect(() => {
     ListofOrders();
   }, []);
+
+
+  const getColor = (state) => {
+    switch (state) {
+      case 'In Queue':
+        return '#ffca1e';
+      case 'Processing':
+        return '#4bc518';
+      case 'Prepared':
+        return '#c55518';
+      case 'Closed':
+        return '#183bc5';
+      case 'Canceled':
+        return '#fd3434';
+      default:
+        return 'black';
+    }
+  };
+
   const OrderCard = ({ item }) => {
     return (
       <TouchableHighlight
@@ -51,13 +81,35 @@ export default function Orders({ navigation }) {
               marginLeft: 10,
               paddingVertical: 10,
               flex: 1,
+              justifyContent: "center",
             }}
-          ></View>
-          <View>
-            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-              {item.state}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 16 , color:"#808080"}}>
+              status updated at:{" "}
+            </Text>
+            <Text style={{ fontWeight: "bold", fontSize: 15 }}>
+              {moment(new Date(item.updatedAt)).format("h:mma")}
+              {","} {item.updatedAt.substr(0, 10)}
             </Text>
           </View>
+          <View>
+            <Text
+           // style={{color: text === "foo" ? "trueColor" : "falseColor"}}
+              style={{
+                fontWeight: "bold",
+                fontSize: 18,
+                color: getColor(item.state)
+              }}
+            >
+              {item.state} {">>"}
+            </Text>
+          </View>
+          {/* <View>
+            <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+              updated at: {moment(new Date(item.updatedAt)).format("h:mma")}
+              {","} {item.updatedAt.substr(0, 10)}
+            </Text>
+          </View> */}
           <View style={{ marginRight: 20, alignItems: "center" }}></View>
         </View>
       </TouchableHighlight>
@@ -79,7 +131,7 @@ export default function Orders({ navigation }) {
           numColumns={1}
           data={orderItems}
           renderItem={({ item }) => <OrderCard item={item} />}
-          ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
+          ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20, paddingTop:10 }}
           keyExtractor={(item, _id) => _id.toString()}
           // onRefresh={() => ListofOrders()}
           // refreshing={loading}
@@ -120,13 +172,13 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   orderCard: {
-    height: 90,
+    height: 75,
     borderRadius: 10,
     elevation: 15,
     shadowColor: "black",
     width: cardWidth,
     backgroundColor: COLORS.white,
-    marginVertical: 10,
+    marginVertical: 7,
     marginHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -140,7 +192,8 @@ const styles = StyleSheet.create({
   tableNumCon: {
     height: 45,
     width: 45,
-    backgroundColor: COLORS.primary,
+    backgroundColor:"#4e7fb0",
+     // #ff6f3c -> orange color in home page
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
