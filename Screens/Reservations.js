@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import Header from "../shared/Header";
 import COLORS from "../styles/colors";
-import Tooltip from 'rn-tooltip';
+import Tooltip from "rn-tooltip";
 import {
   SecondaryButton,
   PrimaryButton,
@@ -99,19 +99,19 @@ export default function Reservations({ navigation }) {
               <View>
                 <View
                   style={{
-                    height: 45,
-                    width: 45,
+                    height: 40,
+                    width: 40,
                     resizeMode: "center",
                     justifyContent: "center",
-                    borderRadius: 45,
-                    backgroundColor: COLORS.primary,
+                    borderRadius: 40,
+                    backgroundColor: COLORS.blue,
                     alignItems: "center",
                     alignContent: "center",
                   }}
                 >
                   <Text
                     style={{
-                      fontSize: 15,
+                      fontSize: 18,
                       fontWeight: "bold",
                       color: COLORS.white,
                       textAlign: "center",
@@ -122,16 +122,28 @@ export default function Reservations({ navigation }) {
                   </Text>
                 </View>
               </View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  marginLeft: 10,
-                  color: COLORS.white,
-                }}
-              >
-                SEATS: {category.seatCount}
-              </Text>
+              <View style={{alignItems:"center"}}>
+                {/* <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    marginLeft: 10,
+                    color: COLORS.white,
+                  }}
+                >
+                  SEATS
+                </Text> */}
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    marginLeft: 10,
+                    color: COLORS.white,
+                  }}
+                >
+                  SEATS: {category.seatCount}
+                </Text>
+              </View>
             </View>
           </TouchableOpacity>
         ))}
@@ -184,12 +196,12 @@ export default function Reservations({ navigation }) {
               Rs.{item.price}
             </Text>
             <Text
-              style={{ fontWeight: "bold", fontSize: 14, color: "#808080" }}
+              style={{ fontWeight: "bold", fontSize: 16, color: "#808080" }}
             >
               {item.customerEmail}
             </Text>
             <Text
-              style={{ fontWeight: "bold", fontSize: 14, color: "#A9A9A9" }}
+              style={{ fontWeight: "bold", fontSize: 16, color: "#808080" }}
             >
               {item.customerContactNumber}
             </Text>
@@ -199,7 +211,7 @@ export default function Reservations({ navigation }) {
               style={{
                 fontWeight: "bold",
                 fontSize: 16,
-                color: COLORS.primary,
+                color: COLORS.orange,
               }}
             >
               {item.date.substr(0, 10)}
@@ -228,15 +240,15 @@ export default function Reservations({ navigation }) {
         </Modal>
       </TouchableWithoutFeedback>
 
-      <View
-      // style={{
-      //   alignSelf: "center",
-      //   width: 200,
-      //   marginTop: 10,
-      //   marginBottom: 10,
-      //   borderRadius: 10,
-      // }}
-      >
+      {/* <View
+      style={{
+        // alignSelf: "center",
+        // width: 200,
+        // marginTop: 10,
+        // marginBottom: 5,
+        // borderRadius: 10,
+      }}
+      > */}
         {/* <Button
           title="ADD"
           style={{ fontWeight: "bold",backgroundColor:"black" }}
@@ -248,7 +260,7 @@ export default function Reservations({ navigation }) {
             onPress={() => setModalVisible(true)}
           />
         </Tooltip>
-      </View>
+      {/* </View> */}
       <View>
         <ListTables />
       </View>
@@ -343,11 +355,12 @@ const styles = StyleSheet.create({
   tableNumCon: {
     height: 45,
     width: 45,
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.orange,
     borderRadius: 30,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 5,
+    marginLeft: 10,
+    paddingBottom:0,
   },
   categoriesListContainer: {
     paddingVertical: 20,
@@ -355,10 +368,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   categoryBtn: {
-    height: 55,
-    width: 150,
+    height: 45,
+    width: 140,
     marginRight: 7,
-    borderRadius: 30,
+    borderRadius: 40,
     alignItems: "center",
     paddingHorizontal: 5,
     flexDirection: "row",

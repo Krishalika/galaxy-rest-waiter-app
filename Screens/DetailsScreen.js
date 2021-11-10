@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingBottom: 220,
     // backgroundColor: COLORS.primary,
     // backgroundColor: "#356da5",
-    backgroundColor:"#4e7fb0",
+    backgroundColor:COLORS.blue,
     // backgroundColor:"#bf9b30",
     // #ffdc73
     borderTopRightRadius: 40,

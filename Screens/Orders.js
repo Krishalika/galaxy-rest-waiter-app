@@ -46,15 +46,11 @@ export default function Orders({ navigation }) {
   const getColor = (state) => {
     switch (state) {
       case 'In Queue':
-        return '#ffca1e';
+        return COLORS.inqueue;
       case 'Processing':
-        return '#4bc518';
+        return COLORS.processing;
       case 'Prepared':
-        return '#c55518';
-      case 'Closed':
-        return '#183bc5';
-      case 'Canceled':
-        return '#fd3434';
+        return COLORS.orange;
       default:
         return 'black';
     }
