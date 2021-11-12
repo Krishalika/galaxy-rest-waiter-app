@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/galaxy-rest.png",
     "splash": {
-      "image": "./assets/waiter-app-splash-new.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/galaxy-rest.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.krishalika.ReactNativeNavigation"
