@@ -93,7 +93,8 @@ export default function ReservationsForm({
       data.date &&
       data.startTime &&
       data.endTime &&
-      data.price
+      data.price && 
+      data.endTime > data.startTime
     ) {
       fetch("https://galaxy-rest-be.herokuapp.com/tableres/add/", {
         method: "POST",
@@ -120,7 +121,7 @@ export default function ReservationsForm({
             visibilityTime: 1500,
             position: "top",
             type: "success",
-            text1: "Table Reservation Added Successfully",
+            text1: "Table Reservation Added Successfully!",
           });
         })
         .catch((err) => {
@@ -129,9 +130,9 @@ export default function ReservationsForm({
             visibilityTime: 1500,
             position: "top",
             type: "success",
-            text1: err,
+            text1: "Something went wrong!",
           });
-          console.log("Something went wrong");
+          console.log("Something went wrong!");
           setOpen(false);
         });
     } else {
@@ -141,7 +142,7 @@ export default function ReservationsForm({
         visibilityTime: 1500,
         position: "top",
         type: "error",
-        text1: "Please fill all the required details",
+        text1: "Please fill all fields with valid details!",
       });
     }
   };

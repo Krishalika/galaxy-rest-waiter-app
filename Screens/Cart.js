@@ -87,7 +87,7 @@ const Cart = ({ navigation }) => {
             visibilityTime: 1500,
             position: "top",
             type: "error",
-            text1: "Error, try again!",
+            text1: "Please fill all fields with valid details!",
           });
         });
     } else {
