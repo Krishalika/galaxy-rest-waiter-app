@@ -10,12 +10,12 @@ import Home from "../Screens/Home";
 import Orders from "../Screens/Orders";
 import Reservations from "../Screens/Reservations";
 import Cart from "../Screens/Cart";
-import COLORS from "../src/consts/colors";
+import COLORS from "../styles/colors";
 import DetailsScreen from "../Screens/DetailsScreen";
 import LoginScreen from "../Screens/LoginScreen";
 import OrderDetails from "../Screens/OrderDetails";
+import ReservationsForm from "../Screens/ReservationsForm";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function CustomDrawerContent(props) {
   return (
@@ -39,11 +39,7 @@ function CustomDrawerContent(props) {
 }
 
 const Drawer = createDrawerNavigator();
-const logout = (props) => {
-  AsyncStorage.removeItem("token").then(() => {
-    navigation.replace("login");
-  });
-};
+
 function MyDrawer() {
   return (
     <Drawer.Navigator
@@ -51,9 +47,7 @@ function MyDrawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       style={styles.drawerItem}
     >
-
-      {/* <Drawer.Screen
-
+      <Drawer.Screen
         name="login"
         component={LoginScreen}
         options={{
@@ -64,7 +58,7 @@ function MyDrawer() {
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
         }}
-      /> */}
+      />
       <Drawer.Screen
         name="Home"
         component={Home}
@@ -80,7 +74,7 @@ function MyDrawer() {
         name="Orders"
         component={Orders}
         options={{
-          title: "Orders",
+          title: "Order Details",
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
@@ -91,7 +85,7 @@ function MyDrawer() {
         name="Reservations"
         component={Reservations}
         options={{
-          title: "Reservations",
+          title: "Table Reservations",
           headerStyle: { backgroundColor: "#08b8e1", height: 56 },
           headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
           headerTintColor: "#03498f",
@@ -130,6 +124,15 @@ function MyDrawer() {
           drawerIcon: () => null,
         }}
       />
+      <Drawer.Screen
+        name="ReservationsForm"
+        component={ReservationsForm}
+        options={{
+          drawerLabel: () => null,
+          title: null,
+          drawerIcon: () => null,
+        }}
+      />
     </Drawer.Navigator>
   );
 }
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
+    left: 20,
   },
   headerLogo: {
     height: 50,
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     position: "absolute",
-    right: 175,
+    right: 165,
     paddingBottom: 45,
     alignItems: "center",
     justifyContent: "center",

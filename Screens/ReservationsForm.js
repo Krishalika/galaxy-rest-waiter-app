@@ -1,109 +1,276 @@
 import React, { useState } from "react";
-import { Button, TextInput, View } from "react-native";
-import { Formik } from "formik";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import { TextInput } from "react-native-paper";
 import { globalStyles } from "../styles/global";
-import COLORS from "../src/consts/colors";
+import { Formik } from "formik";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { PrimaryButton } from "../shared/Button";
+import axios from "axios";
+import Toast from "react-native-toast-message";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+const { width } = Dimensions.get("screen");
+const inputWidth = width - 80;
 
-import CustomInput from './CustomInput'
-
-
-// import moment from "moment";
-
-export default function ReservationsForm() {
+export default function ReservationsForm({
+  open,
+  setOpen,
+  navigation,
+  category,
+}) {
+  const [customerName, setName] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
+  const [customerEmail, setcustomerEmail] = useState("");
+  const [price, setPrice] = useState("");
+  const [customerContactNumber, setcustomerContactNumber] = useState("");
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [isStartTimePickerVisible, setStartTimePickerVisibility] =
+    useState(false);
+  const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
 
-  //datepicker
-  const [startDate, setDate] = useState(new Date());
   const showDatePicker = () => {
     setDatePickerVisibility(true);
-    chosenDate: "";
   };
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleDateConfirm = (date) => {
+    setDate(date);
     hideDatePicker();
   };
 
-  //timePicker
-  const showTimePicker = () => {
-    setTimePickerVisibility(true);
-    chosenDate: "";
+  const showStartTimePicker = () => {
+    setStartTimePickerVisibility(true);
   };
 
-  const hideTimePicker = () => {
-    setTimePickerVisibility(false);
+  const hideStartTimePicker = () => {
+    setStartTimePickerVisibility(false);
   };
 
-  const handleConfirmTime = (time) => {
-    hideTimePicker();
+  const handleStartTimeConfirm = (startTime) => {
+    setStartTime(startTime);
+    hideStartTimePicker();
+  };
+
+  const showEndTimePicker = () => {
+    setEndTimePickerVisibility(true);
+  };
+
+  const hideEndTimePicker = () => {
+    setEndTimePickerVisibility(false);
+  };
+
+  const handleEndTimeConfirm = (endTime) => {
+    setEndTime(endTime);
+    hideEndTimePicker();
+  };
+
+  const submitReservation = () => {
+    const data = {
+      table: category._id,
+      customerName,
+      date,
+      startTime,
+      endTime,
+      price,
+      customerContactNumber,
+      customerEmail,
+    };
+    if (
+      data.table &&
+      data.customerEmail &&
+      data.customerContactNumber &&
+      data.customerName &&
+      data.date &&
+      data.startTime &&
+      data.endTime &&
+      data.price && 
+      data.endTime > data.startTime
+    ) {
+      fetch("https://galaxy-rest-be.herokuapp.com/tableres/add/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          table: category._id,
+          customerName,
+          date,
+          startTime,
+          endTime,
+          price,
+          customerContactNumber,
+          customerEmail,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setOpen(false);
+          console.log(data);
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: "Table Reservation Added Successfully!",
+          });
+        })
+        .catch((err) => {
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: "Something went wrong!",
+          });
+          console.log("Something went wrong!");
+          setOpen(false);
+        });
+    } else {
+      setOpen(false);
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Please fill all fields with valid details!",
+      });
+    }
   };
   return (
     <View style={globalStyles.container}>
       <Formik
         initialValues={{
-          Table: "",
-          Name: "",
-          Date: "",
-          Time: "",
-          TimeEnd: "",
-          Price: "",
-        }}
-        onSubmit={(values) => {
-          console.log(values);
+          tableNo: "",
+          customerName: "",
+          date: "",
+          startTime: "",
+          endTime: "",
+          price: "",
+          customerContactNumber: "",
+          customerEmail: "",
         }}
       >
         {(props) => (
           <View>
-            <TextInput
-              required
-              style={globalStyles.input}
-              placeholder="Table Number" //on the values it updates table prop
-              onChangeText={props.handleChange("Table")}
-              value={props.values.Table}
-            />
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Customer Name"
-              onChangeText={props.handleChange("Name")}
-              value={props.values.Name}
-            />
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Date"
-              onChangeText={props.handleChange("Date")}
-              value={props.values.Date}
-              editable={false}
+            <View style={styles.inputContainer}>
+              <AntDesign name="user" size={24} color="black" />
+              <TextInput
+                style={styles.tInput}
+                label="Customer Name"
+                accessibilityLabel="CustomerName"
+                testID="ReservationsForm.name"
+                theme={{ colors: { primary: "#08b8e1" } }}
+                onChangeText={(text) => setName(text)}
+                value={customerName}
+                clearButtonMode="always"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <AntDesign name="mail" size={24} color="black" />
+              <TextInput
+                style={styles.tInput}
+                label="Customer Email Address"
+                accessibilityLabel="CustomerEmail"
+                testID="ReservationsForm.email"
+                theme={{ colors: { primary: "#08b8e1" } }}
+                onChangeText={(text) => setcustomerEmail(text)}
+                value={customerEmail}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <AntDesign name="phone" size={24} color="black" />
+              <TextInput
+                style={styles.tInput}
+                label="Customer Contact Number"
+                accessibilityLabel="CustomerTel"
+                testID="ReservationsForm.tel"
+                theme={{ colors: { primary: "#08b8e1" } }}
+                onChangeText={(text) => setcustomerContactNumber(text)}
+                value={customerContactNumber}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <TouchableOpacity onPress={showDatePicker}>
+              <View style={styles.commonCard}>
+                <Text style={styles.buttonText}>Select Reservation Date</Text>
+              </View>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleDateConfirm}
+              onCancel={hideDatePicker}
+              minimumDate={new Date()}
+              date={date}
+              onDateChange={(date1) => setDate(date1)}
             />
 
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Start Time"
-              onChangeText={props.handleChange("Date")}
-              value={props.values.Date}
-              editable={false}
+            <TouchableOpacity onPress={showStartTimePicker}>
+              <View style={styles.commonCard}>
+                <Text style={styles.buttonText}>
+                  Select Reservation Starting Time
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isStartTimePickerVisible}
+              mode="time"
+              onConfirm={handleStartTimeConfirm}
+              onCancel={hideStartTimePicker}
+              date={startTime}
+              is24Hour={true}
+              onDateChange={(time1) => setStartTime(time1)}
             />
 
-            <TextInput
-              style={globalStyles.input}
-              placeholder="End Time"
-              onChangeText={props.handleChange("TimeEnd")}
-              value={props.values.TimeEnd}
-            />
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Total Price"
-              onChangeText={props.handleChange("Price")}
-              value={props.values.Price}
+            <TouchableOpacity onPress={showEndTimePicker}>
+              <View style={styles.commonCard}>
+                <Text style={styles.buttonText}>
+                  Select Reservation Ending Time
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <DateTimePickerModal
+              isVisible={isEndTimePickerVisible}
+              mode="time"
+              onConfirm={handleEndTimeConfirm}
+              onCancel={hideEndTimePicker}
+              onDateChange={(time2) => setEndTime(time2)}
+              is24Hour={true}
+              date={endTime}
             />
 
-            <Button
-              title="SAVE"
-              color={COLORS.primary}
-              onPress={props.handleSubmit}
+            <View style={styles.inputContainer}>
+              <Ionicons name="pricetag-outline" size={24} color="black" />
+              <TextInput
+                style={styles.tInput}
+                label="Price"
+                accessibilityLabel="Price"
+                testID="ReservationsForm.price"
+                theme={{ colors: { primary: "#08b8e1" } }}
+                onChangeText={(text) => setPrice(text)}
+                value={price}
+                keyboardType="numeric"
+              />
+            </View>
+
+            <PrimaryButton
+              testID="reservation.Button"
+              title={"SAVE"}
+              onPress={submitReservation}
+              marginTop="50"
             />
           </View>
         )}
@@ -111,3 +278,44 @@ export default function ReservationsForm() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    marginTop: 4,
+    borderRadius: 6,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    backgroundColor: "white",
+    borderColor: "#03498f",
+    opacity: 0.8,
+  },
+  buttonText: {
+    color: "#03498f",
+    fontSize: 15,
+    textAlign: "center",
+  },
+  tInput: {
+    alignSelf: "center",
+    fontSize: 14,
+    height: 50,
+    width: inputWidth,
+    backgroundColor: "white",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    marginTop: 17,
+    alignItems: "center",
+  },
+  commonCard: {
+    height: 50,
+    borderRadius: 10,
+    elevation: 10,
+    width: inputWidth + 24,
+    backgroundColor: "white",
+    marginVertical: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

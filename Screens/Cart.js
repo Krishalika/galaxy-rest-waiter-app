@@ -4,22 +4,25 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
-  TextInput,
   ScrollView,
   TouchableOpacity,
+  Image,
+  Dimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Button, Divider } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import { removeCartItem, resetCart } from "../redux/cart/cartActions";
-
-import Icon from "react-native-vector-icons/MaterialIcons";
-import COLORS from "../src/consts/colors";
-
-import Header from "../Header/Header";
+import { Provider, TextInput } from "react-native-paper";
+import { globalStyles } from "../styles/global";
+import COLORS from "../styles/colors";
+import { Formik } from "formik";
+import Header from "../shared/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { SecondaryButton } from "../shared/Button";
+const { width } = Dimensions.get("screen");
+const inputWidth = width - 80;
 
 const Cart = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -41,61 +44,15 @@ const Cart = ({ navigation }) => {
     return totalQty;
   };
 
-  const CartCard = ({ item }) => {
-    return (
-      <View style={styles.cartCard}>
-        <Image source={item.image} style={{ height: 80, width: 80 }} />
-        <View
-          style={{ height: 100, marginLeft: 10, paddingVertical: 10, flex: 1 }}
-        >
-          <Text style={{ fontWeight: "bold", fontSize: 16 }}>{item.name}</Text>
-          <Text style={{ fontWeight: "bold", fontSize: 17 }}>{item.price}</Text>
-        </View>
-        <View style={{ marginRight: 20, alignItems: "center" }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{quantity}</Text>
-          <View style={styles.actionBtn}>
-            <Icon
-              name="remove"
-              size={25}
-              color={COLORS.white}
-              onPress={decQuantity}
-            ></Icon>
-            <Icon
-              name="add"
-              size={25}
-              color={COLORS.white}
-              onPress={incQuantity}
-            ></Icon>
-          </View>
-        </View>
-      </View>
-    );
+  const [customerName, setcustomerName] = React.useState("");
+  const [idNumber, setidNumber] = React.useState("");
+  const [tableNumber, settableNumber] = React.useState("");
+
+  const clearData = () => {
+    setcustomerName("");
+    setidNumber("");
+    settableNumber("");
   };
-
-  const cartIteam = [
-    {
-      id: "2",
-      name: "Cheese Pizza",
-      price: "2100.00",
-      image: require("../assets/cheesePizza.jpg"),
-    },
-  ];
-  const [tableNumber, settableNumber] = React.useState();
-
-  const [quantity, setQuantity] = React.useState(1);
-
-  const incQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const decQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-  const [customerName, setcustomerName] = React.useState("By Waiter");
-  const [idNumber, setidNumber] = React.useState("000000000V");
-
   const placeOrder = () => {
     const data = {
       customerName,
@@ -104,36 +61,48 @@ const Cart = ({ navigation }) => {
       foodItems: items.map((el) => {
         return {
           item: el._id,
-          quantity: el.quantity,
+          qty: el.quantity,
           soldPrice: el.price,
         };
       }),
     };
-    axios
-      .post(`http://10.0.2.2:5000/order`, data)
-      .then(({ data }) => {
-        dispatch(resetCart());
-        Toast.show({
-          topOffset: 40,
-          visibilityTime: 1500,
-          position: "top",
-          type: "success",
-          text1: "Order is placed successfully",
+    if (items.length > 0) {
+      axios
+        .post(`https://galaxy-rest-be.herokuapp.com/order`, data)
+        .then(({ data }) => {
+          dispatch(resetCart());
+          clearData();
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "success",
+            text1: "Order is placed successfully!",
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+          Toast.show({
+            topOffset: 40,
+            visibilityTime: 1500,
+            position: "top",
+            type: "error",
+            text1: "Please fill all fields with valid details!",
+          });
         });
-      })
-      .catch((e) => {
-        Toast.show({
-          topOffset: 40,
-          visibilityTime: 1500,
-          position: "top",
-          type: "error",
-          text1: "Order is not placed",
-        });
+    } else {
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Please select order items!",
       });
+    }
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Header title="Cart" navigation={navigation} style={styles.header} />
       <View
         style={{
@@ -141,25 +110,7 @@ const Cart = ({ navigation }) => {
           alignItems: "center",
           marginLeft: 30,
         }}
-      >
-        <Text
-          style={{
-            fontWeight: "bold",
-            fontSize: 20,
-            alignItems: "center",
-            marginLeft: -20,
-          }}
-        >
-          Table
-        </Text>
-        <TextInput
-          required
-          keyboardType={"numeric"}
-          placeholder="Enter Table Number"
-          style={{ width: 150 }}
-          value={tableNumber}
-        ></TextInput>
-      </View>
+      />
 
       <ScrollView style={styles.container}>
         {items.length > 0 ? (
@@ -182,6 +133,18 @@ const Cart = ({ navigation }) => {
                     justifyContent: "space-between",
                   }}
                 >
+                  <View style={{ justifyContent: "center", marginLeft: 3 }}>
+                    <Image
+                      source={{ uri: item.img }}
+                      style={{
+                        height: 55,
+                        width: 55,
+                        resizeMode: "center",
+                        justifyContent: "center",
+                        borderRadius: 45,
+                      }}
+                    />
+                  </View>
                   <View
                     style={{
                       justifyContent: "center",
@@ -189,15 +152,17 @@ const Cart = ({ navigation }) => {
                       width: 120,
                     }}
                   >
-                    <Text style={{ fontSize: 16 }}>{item.name}</Text>
+                    <Text style={{ fontSize: 16, justifyContent: "center" }}>
+                      {item.name}
+                    </Text>
                   </View>
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
-                    <Text style={{ fontWeight: "bold" }}>{item.quantity}</Text>
+                    <Text style={{ fontWeight: "bold" }}>x{item.quantity}</Text>
                   </View>
 
                   <View style={{ justifyContent: "center", marginLeft: 3 }}>
                     <Text style={{ fontWeight: "bold", color: COLORS.primary }}>
-                      Rs. {item.price} (1)
+                      Rs. {item.price}
                     </Text>
                   </View>
 
@@ -207,7 +172,7 @@ const Cart = ({ navigation }) => {
                         onPress={() => dispatch(removeCartItem(item))}
                         name="delete"
                         size={24}
-                        color="#F7685B"
+                        color={COLORS.orange}
                       />
                     </TouchableOpacity>
                   </View>
@@ -235,7 +200,13 @@ const Cart = ({ navigation }) => {
                 marginTop: 15,
               }}
             >
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: COLORS.orange,
+                }}
+              >
                 Total Price
               </Text>
               <Text
@@ -247,21 +218,107 @@ const Cart = ({ navigation }) => {
           </>
         ) : (
           <View style={{ alignItems: "center", marginTop: 50 }}>
-            <Text style={{ color: "#4B76D1", fontSize: 18 }}>
+            <Text
+              style={{ color: COLORS.orange, fontSize: 18, fontWeight: "bold" }}
+            >
               Your Cart is Empty !
             </Text>
           </View>
         )}
         <View style={{ height: 30 }} />
       </ScrollView>
-      <View style={{ alignItems: "center" }}>
-        <Button
-          onPress={placeOrder}
-          disabled={items.length > 0 ? false : true}
-          buttonStyle={{ height: 55 }}
-          containerStyle={styles.button}
-          title="Place Order"
-        />
+      <View style={styles.details}>
+        <Provider>
+          <ScrollView>
+            <Formik
+              initialValues={{
+                customerName: "",
+                idNumber: "",
+                tableNumber: "",
+              }}
+            >
+              {(props) => (
+                <View style={{ alignItems: "center" }}>
+                  <TextInput
+                    style={globalStyles.input}
+                    accessibilityLabel="number"
+                    testID="Cart.tableNumber"
+                    label="Table Number"
+                    mode="outlined"
+                    keyboardType="numeric"
+                    onChangeText={(text) => settableNumber(text)}
+                    value={tableNumber}
+                    color={COLORS.white}
+                  />
+                  <View>
+                    <TextInput
+                      style={globalStyles.input}
+                      label="Customer Name"
+                      accessibilityLabel="name"
+                      testID="Cart.customerName"
+                      mode="outlined"
+                      onChangeText={(text) => setcustomerName(text)}
+                      value={customerName}
+                    />
+                  </View>
+                  <TextInput
+                    style={globalStyles.input}
+                    label="Customer NIC"
+                    accessibilityLabel="nic"
+                    testID="Cart.customerNIC"
+                    mode="outlined"
+                    onChangeText={(text) => setidNumber(text)}
+                    value={idNumber}
+                  />
+                </View>
+              )}
+            </Formik>
+          </ScrollView>
+        </Provider>
+        <View style={{ alignItems: "center" }}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.tInput}
+              label="Customer Name"
+              accessibilityLabel="CustomerName"
+              testID="CartForm.name"
+              theme={{ colors: { primary: "#08b8e1" } }}
+              onChangeText={(text) => setcustomerName(text)}
+              value={customerName}
+              clearButtonMode="always"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              height="50"
+              style={styles.tInput}
+              accessibilityLabel="CustomerNIC"
+              testID="CartForm.nic"
+              theme={{ colors: { primary: "#08b8e1" } }}
+              label="Customer NIC Number"
+              onChangeText={(text) => setidNumber(text)}
+              value={idNumber}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              height="50"
+              style={styles.tInput}
+              theme={{ colors: { primary: "#08b8e1" } }}
+              label="Table Number"
+              keyboardType="numeric"
+              onChangeText={(text) => settableNumber(text)}
+              value={tableNumber}
+            />
+          </View>
+
+          <SecondaryButton
+            title="PLACE ORDER"
+            onPress={placeOrder}
+            disabled={items.length > 0 ? false : true}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -270,8 +327,15 @@ const Cart = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
     padding: 12,
+  },
+  details: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    backgroundColor: "#4e7fb0",
+    borderTopRightRadius: 40,
+    borderTopLeftRadius: 40,
   },
   header: {
     marginTop: 20,
@@ -280,38 +344,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 20,
   },
-  cartCard: {
-    height: 100,
-    borderRadius: 10,
-    elevation: 15,
-    backgroundColor: COLORS.white,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  actionBtn: {
-    width: 80,
-    height: 30,
-    backgroundColor: COLORS.primary,
-    borderRadius: 30,
-    paddingHorizontal: 5,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignContent: "center",
-  },
-  image: {
-    width: 60,
-    height: 45,
-    resizeMode: "cover",
-    borderRadius: 8,
-  },
   button: {
     width: "90%",
     marginBottom: 10,
     marginTop: 10,
     borderRadius: 8,
     color: COLORS.primary,
+  },
+  tInput: {
+    alignSelf: "center",
+    fontSize: 14,
+    height: 50,
+    width: inputWidth,
+    backgroundColor: "white",
+  },
+  inputContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    alignItems: "center",
   },
 });
 

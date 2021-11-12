@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Button, TextInput } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import {
   StyleSheet,
+  Text,
   Image,
   View,
-  Text,
   StatusBar,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
+  Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
-import { useNavigation } from "@react-navigation/native";
-// async removeItemValue(key) {
-//     try {
-//         await AsyncStorage.removeItem(key);
-//         return true;
-//     }
-//     catch(exception) {
-//         return false;
-//     }
-// }
+import { PrimaryButton } from "../shared/Button";
+import { AntDesign } from "@expo/vector-icons";
+import COLORS from "../styles/colors";
+const { width } = Dimensions.get("screen");
+const cardWidth = width - 40;
+
 const LoginScreen = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const styles = StyleSheet.create({
     headerLogo: {
-      marginTop: 30,
-      height: 100,
-      width: 100,
+      marginTop: 20,
+      height: 150,
+      width: 150,
       borderRadius: 55,
       position: "absolute",
     },
@@ -41,29 +37,62 @@ const LoginScreen = (props) => {
     logo: {
       alignItems: "center",
     },
+    commonCard: {
+      height: 200,
+      borderRadius: 10,
+      elevation: 10,
+      width: cardWidth,
+      backgroundColor: "white",
+      marginHorizontal: 20,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 230,
+      marginBottom: 30,
+      borderColor: COLORS.primary,
+    },
+    tInput: {
+      alignSelf: "center",
+      height: 50,
+      width: 260,
+      backgroundColor: "white",
+    },
+    inputContainer: {
+      flexDirection: "row",
+      marginTop: 18,
+      alignItems: "center",
+    },
   });
   const sendCred = async (props) => {
-    fetch("http://10.0.2.2:5000/waiters/signin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
+    if (email && password) {
+      fetch("https://galaxy-rest-be.herokuapp.com/waiters/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
 
-      .then(async (data) => {
-        try {
-          await AsyncStorage.setItem("token", data.token);
-          // props.navigation.replace("Home");
-          props.navigation.navigate("Home");
-          // props.navigation.replace("homeScreen");
-        } catch (e) {
-          //console.log("error hai", e);
-          // Alert(e);
+        .then(async (data) => {
+          try {
+            await AsyncStorage.setItem("token", data.token);
+            props.navigation.navigate("Home");
+          } catch (e) {
+            Toast.show({
+              topOffset: 40,
+              visibilityTime: 1500,
+              position: "top",
+              type: "error",
+              text1: "Email or password is incorrect!",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log("error");
           Toast.show({
             topOffset: 40,
             visibilityTime: 1500,
@@ -71,19 +100,25 @@ const LoginScreen = (props) => {
             type: "error",
             text1: "Email or password is incorrect!",
           });
-        }
+        });
+    } else {
+      console.log("Please enter email & password");
+      Toast.show({
+        topOffset: 40,
+        visibilityTime: 1500,
+        position: "top",
+        type: "error",
+        text1: "Email or password is incorrect!",
       });
+    }
   };
   const detectLogin = async () => {
     const token = await AsyncStorage.getItem("token");
     if (token) {
       console.log("success");
-      // props.navigation.replace("homeScreen");
-      // props.navigation.replace("Home");
       props.navigation.navigate("Home");
     } else {
-      console.log("error");
-      //props.navigation.replace("LoginScreen");
+      console.log("Error!");
     }
   };
   useEffect(() => {
@@ -92,84 +127,67 @@ const LoginScreen = (props) => {
   return (
     <>
       <View style={styles.container}>
-        {/* <KeyboardAvoidingView behavior="position" backgroundColor='white'> */}
         <StatusBar backgroundColor="#03498f" barStyle="light-content" />
 
         <Text
           style={{
-            fontSize: 25,
+            paddingTop: 40,
+            fontSize: 30,
             textAlign: "center",
-            marginTop: 30,
-            color: "#08b8e1",
-            // fontFamily: "nunito-bold",
+            color: COLORS.primary,
+            fontWeight: "bold",
           }}
         >
-          Welcome to
+          Welcome
         </Text>
+
         <View style={styles.logo}>
           <Image
             style={styles.headerLogo}
+            testID="logo"
             source={require("../assets/logo.png")}
           />
         </View>
 
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <TextInput
-              label="Email"
-              mode="outlined"
-              value={email}
-              style={{
-                marginTop: 150,
-                alignSelf: "center",
-                height: 30,
-                width: "60%",
-                // fontFamily: "nunito-bold",
-              }}
-              theme={{ colors: { primary: "#08b8e1" } }}
-              onChangeText={(text) => setEmail(text)}
-            />
-            <TextInput
-              label="Password"
-              mode="outlined"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={(text) => {
-                setPassword(text);
-              }}
-              style={{
-                marginTop: 18,
-                alignSelf: "center",
-                height: 30,
-                width: "60%",
-                // fontFamily: "nunito-bold",
-              }}
-              theme={{ colors: { primary: "#08b8e1" } }}
-            />
+          <View style={styles.commonCard}>
+            <View>
+              <View style={styles.inputContainer}>
+                <AntDesign name="mail" size={24} color="black" />
+                <TextInput
+                  label="Email"
+                  accessibilityLabel="Email"
+                  testID="LoginScreen.emailInput"
+                  value={email}
+                  style={styles.tInput}
+                  theme={{ colors: { primary: "#08b8e1" } }}
+                  onChangeText={(text) => setEmail(text)}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <AntDesign name="lock" size={24} color="black" />
+                <TextInput
+                  label="Password"
+                  accessibilityLabel="Password"
+                  testID="LoginScreen.pwInput"
+                  secureTextEntry={true}
+                  value={password}
+                  onChangeText={(text) => {
+                    setPassword(text);
+                  }}
+                  style={styles.tInput}
+                  theme={{ colors: { primary: "#08b8e1" } }}
+                />
+              </View>
+            </View>
           </View>
         </TouchableWithoutFeedback>
-        <Button
+        <PrimaryButton
+          title={"LOGIN"}
           mode="contained"
-          style={{
-            marginTop: 38,
-            alignSelf: "center",
-            height: 30,
-            width: "60%",
-            backgroundColor: "#08b8e1",
-          }}
+          testID="LoginScreen.Button"
           onPress={() => sendCred(props)}
-          // onPress={() => props.navigation.navigate("Home")}
-        >
-          <Text
-            style={{
-              fontSize: 13,
-              // fontFamily: "nunito-bold",
-              color: "#03498f",
-            }}
-          >
-            Login
-          </Text>
-        </Button>
+        />
       </View>
     </>
   );

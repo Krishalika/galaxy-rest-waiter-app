@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import Header from "../Header/Header";
-import COLORS from "../src/consts/colors";
+import React from "react";
+import Header from "../shared/Header";
+import COLORS from "../styles/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Dimensions, Image, StyleSheet, Text, View, Alert } from "react-native";
 import {
@@ -15,66 +15,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("screen");
 const cardWidth = width / 2 - 20;
-// window.location.reload(false);
 
-//send props for navigation that it can navigate between screen
 export default function Home({ navigation }) {
   const [selectedCategoryIndex, setselectedCategoryIndex] = React.useState(0);
-  const [categoryItems, setcategoryItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [sortedItems, setsortedItems] = useState([]);
+  const [categoryItems, setcategoryItems] = React.useState([]);
   const [types, setTypes] = React.useState([]);
   const [names, setNames] = React.useState([]);
   const [codes, setCodes] = React.useState([]);
   const [textName, onChangeText] = React.useState("");
   const [textNumber, onChangeNumber] = React.useState("");
 
-  const ListofCategories = async () => {
-    const token = await AsyncStorage.getItem("token");
-    console.log(token);
-
-    // fetch("http://10.0.2.2:5000/category")
-    fetch("https://galaxy-rest-be.herokuapp.com/category")
-
-      .then((res) => res.json())
-      .then((results) => {
-        setcategoryItems(results);
-
-        console.log(results);
-        setLoading(false);
+  React.useEffect(() => {
+    axios
+      .get(`https://galaxy-rest-be.herokuapp.com/category`)
+      .then(({ data }) => {
+        setcategoryItems(data);
+        res("Pizza");
       })
-      .catch((err) => {
-        Alert.alert(err);
+      .catch((e) => {
+        console.log(e);
       });
-  };
-
-  useEffect(() => {
-    ListofCategories();
   }, []);
-
-  const ListofCategoryItems = async (category) => {
-    const token = await AsyncStorage.getItem("token");
-    console.log(token);
-    // fetch("http://10.0.2.2:5000/food/by-category?category=${category}")
-    fetch("https://galaxy-rest-be.herokuapp.com/food/by-category?category=${category}")
-
-      .then((res) => res.json())
-      .then((results) => {
-        setsortedItems(results);
-
-        console.log(results);
-        setLoading(false);
-      })
-      .catch((err) => {
-        Alert.alert(err);
-      });
-  };
 
   const res = async (category) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-category`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-category`, {
         params: { category: category },
       })
       .then(({ data }) => {
@@ -84,15 +49,9 @@ export default function Home({ navigation }) {
         console.log(e);
       });
 
-  useEffect(() => {
-    res("Pizza");
-  }, []);
-
   const resNames = async (name) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-name`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-name`, {
         params: { name: name },
       })
       .then(({ data }) => {
@@ -104,9 +63,7 @@ export default function Home({ navigation }) {
 
   const resCodes = async (code) =>
     await axios
-      // .get(`http://10.0.2.2:5000/food/by-code`, {
-        .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
-
+      .get(`https://galaxy-rest-be.herokuapp.com/food/by-code`, {
         params: { code: code },
       })
       .then(({ data }) => {
@@ -136,14 +93,16 @@ export default function Home({ navigation }) {
               style={{
                 backgroundColor:
                   selectedCategoryIndex == index
-                    ? COLORS.primary
+                    ? COLORS.orange
                     : COLORS.secondary,
+
                 ...styles.categoryBtn,
               }}
             >
               <View>
                 <Image
                   source={{ uri: category.img }}
+                  testID="food"
                   style={{
                     height: 45,
                     width: 45,
@@ -172,7 +131,7 @@ export default function Home({ navigation }) {
   const Card = ({ food }) => {
     return (
       <TouchableHighlight
-        underlayColor={COLORS.white}
+        underlayColor="#f5eebb"
         activeOpacity={0.9}
         onPress={() => navigation.navigate("DetailsScreen", food)}
       >
@@ -182,30 +141,41 @@ export default function Home({ navigation }) {
               source={{ uri: food.img }}
               style={{
                 height: 130,
-                width: 120,
+                width: 130,
                 borderRadius: 30,
                 paddingTop: 10,
+                marginTop: 10,
               }}
             />
           </View>
           <View style={{ marginHorizontal: 20 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              {food.code}
+            </Text>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>
               {food.name}
             </Text>
           </View>
           <View
             style={{
-              marginTop: 10,
+              marginTop: 2,
               marginHorizontal: 20,
               flexDirection: "row",
               justifyContent: "space-between",
             }}
           >
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            <Text
+              style={{ fontSize: 14, fontWeight: "bold", color: "#616161" }}
+            >
               Rs.{food.price}
             </Text>
             <View style={styles.addToCartBtn}>
-              <Icon name="add" size={20} color={COLORS.white} />
+              <Icon
+                name="add"
+                size={20}
+                color={COLORS.white}
+                style={{ paddingRight: 2 }}
+              />
             </View>
           </View>
         </View>
@@ -221,45 +191,63 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Header title="Home" navigation={navigation} />
+
       <Icon
         name="logout"
         size={24}
         color="black"
-        onPress={logout}
+        onPress={() =>
+          Alert.alert(
+            "Logout",
+            "Are you sure you want to logout?",
+            [
+              { text: "Cancel", onPress: () => console.log("Cancel Pressed!") },
+              { text: "Yes", onPress: logout, style: { color: "red" } },
+            ],
+            { cancelable: true }
+          )
+        }
         style={{ marginLeft: 360 }}
       />
+
       <View
-        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 20 }}
+        style={{
+          marginTop: 20,
+          flexDirection: "row",
+          alignSelf: "center",
+        }}
       >
         <View style={styles.inputContainer}>
+          <TextInput
+            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
+            placeholder="Item code"
+            onChangeText={onChangeNumber}
+            value={textNumber}
+          />
           <Icon
             name="search"
-            size={28}
+            style={{ marginEnd: 10 }}
+            size={24}
             onPress={() => {
               if (textNumber != "")
                 resCodes(textNumber), console.log(codes.length);
             }}
           />
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="item code"
-            onChangeText={onChangeNumber}
-            value={textNumber}
-          />
         </View>
         <View style={styles.inputContainer}>
+          <TextInput
+            style={{ flex: 1, fontSize: 16, textAlign: "center" }}
+            placeholder="Item name"
+            onChangeText={onChangeText}
+            value={textName}
+          />
           <Icon
             name="search"
-            size={28}
+            size={24}
+            style={{ marginEnd: 10 }}
             onPress={() => {
               if (textName != "") resNames(textName), console.log(names.length);
             }}
-          />
-          <TextInput
-            style={{ flex: 1, fontSize: 18 }}
-            placeholder="item name"
-            onChangeText={onChangeText}
-            value={textName}
           />
         </View>
       </View>
@@ -269,7 +257,7 @@ export default function Home({ navigation }) {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={types} //import foods
+        data={types}
         renderItem={({ item }) => <Card food={item} />}
         keyExtractor={(item, _id) => _id.toString()}
       />
@@ -289,21 +277,19 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     flexDirection: "row",
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.white,
     alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  sortBtn: {
-    width: 50,
-    height: 50,
-    marginLeft: 10,
-    backgroundColor: COLORS.primary,
-    borderRadius: 10,
-    justifyContent: "center",
+    borderColor: "#f5eebb",
+    borderTopColor: "#f5eebb",
+    width: cardWidth,
+    marginHorizontal: 10,
     alignItems: "center",
+    marginBottom: 0,
+    marginTop: 0,
+    elevation: 13,
   },
   categoriesListContainer: {
-    paddingVertical: 20,
+    paddingVertical: 12,
     alignItems: "center",
     paddingHorizontal: 20,
   },
@@ -316,22 +302,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     flexDirection: "row",
   },
-  categoryBtnImgCon: {
-    height: 45,
-    width: 45,
-    backgroundColor: COLORS.white,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   card: {
     height: 220,
     width: cardWidth,
     marginHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 10,
     borderRadius: 15,
-    elevation: 13, //shadow
+    elevation: 13,
     backgroundColor: COLORS.white,
   },
   addToCartBtn: {

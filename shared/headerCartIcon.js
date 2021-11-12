@@ -6,13 +6,10 @@ import { useSelector } from "react-redux";
 
 function HeaderCartIcon({ navigation }) {
   const items = useSelector((state) => state.cartReducer.items);
-  const [modalVisible, setModalVisible] = React.useState(true);
   return (
     <>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity onPress={() => navigation.navigate("Cart", foods)}>
-          {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}> */}
-
           <AntDesign name="shoppingcart" size={30} color="black" />
         </TouchableOpacity>
         <Badge
